@@ -22,17 +22,7 @@ class User extends BaseEntity {
     $this->setUserId($user_id);
     $this->setStateHandler(new StateHandler($this->getUserId()));
   }
-
-
-  /**
-   * [Example of] methods to verify user properties
-   */
-  public function isActive() {
-    return true;
-  }
-  public function isSubscripted() {
-    return true;
-  }
+  
 
 }
 

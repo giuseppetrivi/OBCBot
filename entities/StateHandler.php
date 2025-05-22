@@ -33,7 +33,7 @@ class StateHandler extends BaseEntity {
     }
   }
 
-  public function updateState(string $new_state_name, ?string $new_state_data=null) {
+  public function updateState($new_state_name, $new_state_data=null) {
     return DB::update("obc_users", 
       ["user_statename" => $new_state_name, "user_statedata" => $new_state_data], 
       ["user_idtelegram" => $this->getUserId()]
