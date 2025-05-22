@@ -20,49 +20,44 @@ class StateHandler extends BaseEntity {
 
 
   /**
-   * 
+   * Gets the unique state name related to a User
    */
   public function getStateName() {
-    /** [Example of] db query to get user state info */
-    /*
-    $result = DB::queryFirstRow("SELECT * FROM [CHANGE THIS: state_table] WHERE [CHANGE THIS: user_id]=%i", $this->getUserId());
-    if ($result) { 
-      return $result['state_path'];
+    $result = DB::queryFirstRow("SELECT user_statename FROM obc_users WHERE user_idtelegram=%i", $this->getUserId());
+    if ($result['user_statename']!=null) { 
+      return $result['user_statename'];
     }
     else {
       // If there is no state in database, so you need to start the Main state class
-      return "Main";
+      return "Main"; // TODO: classe generica per i nomi degli stati
     }
-    */
   }
 
-
-  /**
-   * 
-   */
-  public function createNewState() {
-    /** db query to insert a new state for the user */
-  }
-
-  /**
-   * 
-   */
-  public function updateState($new_state_name, $new_state_data=null) {
-    /** db query to update user state attributes */
+  public function updateState(string $new_state_name, ?string $new_state_data=null) {
+    return DB::update("obc_users", 
+      ["user_statename" => $new_state_name, "user_statedata" => $new_state_data], 
+      ["user_idtelegram" => $this->getUserId()]
+    );
   }
 
   /**
-   * 
+   * Updates only the "state_data" field, without modify "state_name" field
    */
   public function updateOnlyStateData($new_state_data) {
-    /** db query to update user state data */
+    return DB::update("obc_users", 
+      ["user_statedata" => $new_state_data], 
+      ["user_idtelegram" => $this->getUserId()]
+    );
   }
 
   /**
-   * 
+   * Updates the "state_name" and "state_data" to NULL
    */
   public function deleteState() {
-    /** db query to delete user state */
+    return DB::update("obc_users", 
+      ["user_statename" => null, "user_statedata" => null], 
+      ["user_idtelegram" => $this->getUserId()]
+    );
   }
 
 }
