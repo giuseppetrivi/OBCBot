@@ -4,8 +4,8 @@
 require_once __DIR__ . "/vendor/autoload.php";
 /** autoload for project's files */
 require_once __DIR__ . "/project_autoloader.php";
-/** autoload for processes (that have different rules of autoloading and namespace handling) */
-require_once __DIR__ . "/control/processes_autoloader.php";
+/** autoload for states (that have different rules of autoloading and namespace handling) */
+require_once __DIR__ . "/control/states_autoloader.php";
 
 
 use CustomBotName\init\Init;
