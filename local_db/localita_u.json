@@ -1,0 +1,86 @@
+[
+  {
+    "codice": "99",
+    "denominazione": "Brindisi",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "198",
+    "denominazione": "Castellana Grotte",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "265",
+    "denominazione": "Conversano",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "268",
+    "denominazione": "Corato",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "297",
+    "denominazione": "Fasano",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "330",
+    "denominazione": "Gallipoli",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "411",
+    "denominazione": "Manduria",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "412",
+    "denominazione": "Manfredonia",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "535",
+    "denominazione": "Ostuni",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "549",
+    "denominazione": "Palo del Colle",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "624",
+    "denominazione": "Putignano",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  },
+  {
+    "codice": "700",
+    "denominazione": "San Giovanni Rotondo",
+    "localitaArrivo": null,
+    "localitaArrivoIncroci": null,
+    "aziende": null
+  }
+]
