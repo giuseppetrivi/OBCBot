@@ -19,31 +19,36 @@ class DepartureLocation extends AbstractState {
 
   protected function validateDynamicInputs() {
     $input_text = $this->_Bot->getInputFromChat()->getText();
-    //regex per avere solo lettere e al massimo il carattere -
+    //regex per avere solo lettere e il carattere -
     $locations_regex = "/\b[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+(?:\s*-\s*[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+|\s+[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+)*\b/";
     $match_result = preg_match($locations_regex, $input_text);
     if ($match_result) {
-      $this->function_to_call = "selectLocationProcedure";
+      $this->function_to_call = "selectDepartureLocationProcedure";
       return true;
     }
   }
 
 
   /**
-   * 
+   * States:
+   * SearchEU\DepartureLocation -> NULL (Main)
    */
   protected function backProcedure() {
     $this->_Bot->sendMessage([
       'text' => "📜 Menu principale",
       'reply_markup' => Keyboards::getMainMenu()
     ]);
+
+    $this->setNextState(NULL);
   }
 
 
   /**
    * DA MODIFICARE
+   * States:
+   * SearchEU\DepartureLocation -> SearchEU\DepartureLocation\ArrivalLocation
    */
-  protected function selectLocationProcedure() {
+  protected function selectDepartureLocationProcedure() {
     $location_to_search = $this->_Bot->getInputFromChat()->getText();
 
     $db_localita_eu_json = file_get_contents("local_db/localita_eu.json");
@@ -56,21 +61,33 @@ class DepartureLocation extends AbstractState {
       $location_name = $db_localita_eu_array[$i]["denominazione"];
 
       /* Toglie gli spazi bianchi da inizio e fine stringa e mette tutto in minuscolo */
-      $s1 = trim(strtolower($location_name));
-      $s2 = trim(strtolower($location_to_search));
-      similar_text($s1, $s2, $similarity_perc);
+      $formatted_location_name = trim(strtolower($location_name));
+      $formatted_location_to_search = trim(strtolower($location_to_search));
+      similar_text($formatted_location_name, $formatted_location_to_search, $similarity_perc);
 
       $assoc_array_perc[$location_name] = $similarity_perc;
     }
 
     arsort($assoc_array_perc);
+    $first_location_name = array_key_first($assoc_array_perc);
+    $first_location_similarity_perc = $assoc_array_perc[$first_location_name];
 
-    $key = array_key_first($assoc_array_perc);
+    $message_to_send = "Hai selezionato <b>$first_location_name</b> come città di partenza";
+    if ($first_location_similarity_perc < 95) {
+      $message_to_send = "Forse intendevi <i>$location_to_search</i> → <b>$first_location_name</b>\n\n" . $message_to_send;
+    }
+
+
     $this->_Bot->sendMessage([
-      'text' => $key . " => " . $assoc_array_perc[$key]
+      'text' => $message_to_send
     ]);
 
+    $this->_Bot->sendMessage([
+      'text' => "➤ Invia il nome della località di <u>arrivo</u>",
+      'reply_markup' => Keyboards::getOnlyBack()
+    ]);
 
+    $this->setNextState($this->appendNextState("ArrivalLocation"));
   }
 
 }

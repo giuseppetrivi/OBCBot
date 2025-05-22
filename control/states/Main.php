@@ -20,7 +20,10 @@ class Main extends AbstractState {
 
 
   /**
-   * Method to handle the behavior after static input MenuOptions::COMMAND_START
+   * States:
+   * NULL (Main) -> SearchEU\DepartureLocation
+   *                SearchU\???
+   *                Settings
    */
   protected function startProcedure() {
     $this->_Bot->sendMessage([
@@ -30,9 +33,13 @@ class Main extends AbstractState {
   }
 
 
+  /**
+   * States:
+   * NULL (Main) -> SearchEU\DepartureLocation
+   */
   protected function searchEuProcedure() {
     $this->_Bot->sendMessage([
-      'text' => "Invia il nome della località di partenza",
+      'text' => "➤ Invia il nome della località di <u>partenza</u>",
       'reply_markup' => Keyboards::getOnlyBack()
     ]);
 
@@ -40,11 +47,18 @@ class Main extends AbstractState {
   }
 
 
+  /**
+   * States:
+   * NULL (Main) -> SearchU\???
+   */
   protected function searchUProcedure() {
     
   }
 
-
+  /**
+   * States:
+   * NULL (Main) -> Settings
+   */
   protected function settingsProcedure() {
     
   }
