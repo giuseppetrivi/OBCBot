@@ -74,7 +74,7 @@ abstract class AbstractState {
 
   /**
    * Validate some dynamic rules, not present in the valid_static_inputs list.
-   * The default return is true, but can be overrided and implemented
+   * The default return is false, but can be overrided and implemented
    * pesonally
    * [CAN OVERRIDE, for personal rules]
    * 
@@ -122,8 +122,7 @@ abstract class AbstractState {
    * state (eventually also with data)
    */
   private function changeState() {
-    $this->_User->getStateHandler()->updateState($this->state_name);
-    $this->_User->getStateHandler()->updateState($this->state_data);
+    $this->_User->getStateHandler()->updateState($this->state_name, $this->state_data);
   }
 
 
