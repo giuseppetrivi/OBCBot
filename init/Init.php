@@ -28,8 +28,8 @@ class Init {
     self::initializeBotSdk();
     self::initializeUser();
 
-    self::checkBotAuthorization();
-    self::checkUserAuthorization();
+    //self::checkBotAuthorization();
+    //self::checkUserAuthorization();
 
     self::handleRestartCommand();
     self::handleCommand();
@@ -129,7 +129,7 @@ class Init {
    */
   private static function handleCommand() {
     $state_name = self::$_User->getStateHandler()->getStateName();
-    var_dump($state_name);
+    echo "Stato di entrata: " . $state_name;
     try {
       $_State = new $state_name(self::$_Bot, self::$_User);
       $_State->codeToRun(); // TODO: chand method name (maybe)
