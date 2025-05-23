@@ -110,6 +110,13 @@ abstract class AbstractState {
   }
 
   /**
+   * Keeps the actual state
+   */
+  protected function keepThisState() {
+    $this->state_name = get_class($this);
+  }
+
+  /**
    * Set the next_state attribute
    */
   protected function setNextState($state_name=null, $state_data=null) {
