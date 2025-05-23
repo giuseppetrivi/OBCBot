@@ -5,7 +5,7 @@ namespace SearchEU\DepartureLocation;
 use CustomBotName\control\AbstractState;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-
+use CustomBotName\view\TextMessages;
 
 class ArrivalLocation extends AbstractState {
 
@@ -30,7 +30,7 @@ class ArrivalLocation extends AbstractState {
    */
   protected function backProcedure() {
     $this->_Bot->sendMessage([
-      'text' => "➤ Invia il nome della località di partenza",
+      'text' => TextMessages::chooseDepartureLocation(),
       'reply_markup' => Keyboards::getOnlyBack()
     ]);
 

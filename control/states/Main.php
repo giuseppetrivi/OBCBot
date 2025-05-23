@@ -4,7 +4,7 @@ use CustomBotName\view;
 use CustomBotName\control\AbstractState;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-
+use CustomBotName\view\TextMessages;
 
 /**
  * 
@@ -21,13 +21,11 @@ class Main extends AbstractState {
 
   /**
    * States:
-   * NULL (Main) -> SearchEU\DepartureLocation
-   *                SearchU\???
-   *                Settings
+   * NULL (Main) -> NULL (Main)
    */
   protected function startProcedure() {
     $this->_Bot->sendMessage([
-      'text' => "Questo è il messaggio di start",
+      'text' => TextMessages::startingMessage($this->_Bot->getChatWithChecks()->getUsername()),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
   }
@@ -38,8 +36,10 @@ class Main extends AbstractState {
    * NULL (Main) -> SearchEU\DepartureLocation
    */
   protected function searchEuProcedure() {
+    
+
     $this->_Bot->sendMessage([
-      'text' => "➤ Invia il nome della località di <u>partenza</u>",
+      'text' => TextMessages::chooseDepartureLocation(),
       'reply_markup' => Keyboards::getOnlyBack()
     ]);
 
