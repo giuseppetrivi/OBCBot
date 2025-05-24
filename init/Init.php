@@ -36,6 +36,12 @@ class Init {
   }
 
 
+  public static function initOnlyDatabase(string $development_mode) {
+    self::initializeConfiguration($development_mode);
+    self::initializeDatabase();
+  }
+
+
   /**
    * @param string $development_mode Mode to take right configuration properties (for example production, testing, ...)
    */
