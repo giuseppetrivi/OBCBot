@@ -3,3 +3,4 @@ config/actual_config.json
 control/PROCESSES_README.md
 
 file_to_test_snippets.php
+snippets/*
