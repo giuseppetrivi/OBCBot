@@ -72,7 +72,7 @@ class LocalitaEU extends BaseEntity {
       return $b['similarity_perc'] <=> $a['similarity_perc'];
     });
 
-    return $results_array[0];
+    return array_slice($results_array, 0, 5);
   }
 
 

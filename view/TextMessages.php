@@ -29,13 +29,13 @@ final class TextMessages {
     return "➤ Invia nuovamente il nome della località di <u>partenza</u>";
   }
 
-  public static function departureLocationValid100($location_name) {
+  public static function departureLocationMatched($location_name) {
     return "Hai selezionato <b>$location_name</b> come città di partenza";
   }
-  public static function departureLocationValidNot100($location_name) {
+  public static function departureLocationAlmostMatched($location_name) {
     return "Forse intendevi <i>$location_name</i>";
   }
-  public static function departureLocationNotValid($location_to_search) {
+  public static function departureLocationNotMatched($location_to_search) {
     return "La località <i>$location_to_search</i> non è tra le scelte possibili";
   }
 
@@ -46,14 +46,22 @@ final class TextMessages {
     return "➤ Invia nuovamente il nome della località di <u>arrivo</u>";
   }
 
-  public static function arrivalLocationValid100($location_name) {
+  public static function arrivalLocationMatched($location_name) {
     return "Hai selezionato <b>$location_name</b> come città di arrivo";
   }
-  public static function arrivalLocationValidNot100($location_name) {
+  public static function arrivalLocationAlmostMatched($location_name) {
     return "Forse intendevi <i>$location_name</i>";
   }
-  public static function arrivalLocationNotValid($location_to_search) {
+  public static function arrivalLocationNotMatched($location_to_search) {
     return "La località <i>$location_to_search</i> non è tra le scelte possibili";
+  }
+
+  public static function alternativeLocations($location_info) {
+    $text = "";
+    foreach ($location_info as $index => $info) {
+      $text .= "<code>" . $info["location_name"] . "</code>\n";
+    }
+    return $text;
   }
 
 

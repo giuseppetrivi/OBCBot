@@ -58,24 +58,27 @@ class DepartureLocation extends AbstractState {
 
     $_LocalitaEU = new LocalitaEU();
     $all_departure_locations = $_LocalitaEU->getAllDepartureLocations();
-    $location_info = $_LocalitaEU->findBestLocationNameMatch($all_departure_locations, $location_to_search);
+    $locations_info = $_LocalitaEU->findBestLocationNameMatch($all_departure_locations, $location_to_search);
 
-    $first_location_code = $location_info["location_code"];
-    $first_location_name = $location_info["location_name"];
-    $first_location_similarity_perc = $location_info["similarity_perc"];
+    $first_location_code = $locations_info[0]["location_code"];
+    $first_location_name = $locations_info[0]["location_name"];
+    $first_location_similarity_perc = $locations_info[0]["similarity_perc"];
     
     
     /* pur non essendoci corrispondenza perfetta, la località inviata è valida */
-
     if ($first_location_similarity_perc >= LocalitaEU::ALMOST_MATCHED) {
 
       if ($first_location_similarity_perc >= LocalitaEU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::departureLocationValid100($first_location_name)
+          'text' => TextMessages::departureLocationMatched($first_location_name)
         ]);
       }
-      else { 
-        $message_to_send = TextMessages::departureLocationValidNot100($first_location_name) . "\n\n" . TextMessages::departureLocationValid100($first_location_name);
+      else {
+        $message_to_send = TextMessages::departureLocationAlmostMatched($first_location_name) . 
+          "\noppure cercavi:\n" .
+          TextMessages::alternativeLocations(array_slice($locations_info, 1)) .
+          "\n" .
+          TextMessages::departureLocationMatched($first_location_name);
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);
@@ -88,13 +91,15 @@ class DepartureLocation extends AbstractState {
         'text' => TextMessages::chooseArrivalLocation(),
         'reply_markup' => Keyboards::getOnlyBack()
       ]);
-      
+
       $this->setNextState($this->appendNextState("ArrivalLocation"));
       
     }
     /* c'è poca corrispondenza tra il db e la località inviata, bisogna riinviarla */
     else {
-      $message_to_send = TextMessages::departureLocationNotValid($location_to_search) . "\n\n" . TextMessages::chooseDepartureLocationAgain();
+      $message_to_send = TextMessages::departureLocationNotMatched($location_to_search) . 
+        "\n\n" . 
+        TextMessages::chooseDepartureLocationAgain();
       $this->_Bot->sendMessage([
         'text' => $message_to_send
       ]);
