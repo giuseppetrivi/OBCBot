@@ -3,6 +3,7 @@
 namespace SearchEU\DepartureLocation;
 
 use CustomBotName\control\AbstractState;
+use CustomBotName\entities\api_cotrap\LocalitaEU;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
@@ -43,7 +44,6 @@ class ArrivalLocation extends AbstractState {
 
 
   /**
-   * DA MODIFICARE COMPLETAMENTE
    * States:
    * SearchEU\DepartureLocation\ArrivalLocation 
    *  -> SearchEU\DepartureLocation\ArrivalLocation\???
@@ -51,43 +51,49 @@ class ArrivalLocation extends AbstractState {
   protected function selectArrivalLocationProcedure() {
     $location_to_search = $this->_Bot->getInputFromChat()->getText();
 
-    $db_localita_eu_json = file_get_contents("local_db/localita_eu.json");
-    $db_localita_eu_array = json_decode($db_localita_eu_json, true);
-    $count_localita_eu = count($db_localita_eu_array);
+    $_LocalitaEU = new LocalitaEU();
+    $all_arrival_locations = $_LocalitaEU->getAllArrivalLocations($this->_User->getUserId());
+    $location_info = $_LocalitaEU->findBestLocationNameMatch($all_arrival_locations, $location_to_search);
 
-    $assoc_array_perc = [];
-    for ($i=0; $i<$count_localita_eu; $i++) {
-      $similarity_perc = 0;
-      $location_name = $db_localita_eu_array[$i]["denominazione"];
+    $first_location_code = $location_info["location_code"];
+    $first_location_name = $location_info["location_name"];
+    $first_location_similarity_perc = $location_info["similarity_perc"];
+    
+    
+    /* pur non essendoci corrispondenza perfetta, la località inviata è valida */
+    if ($first_location_similarity_perc >= LocalitaEU::ALMOST_MATCHED) {
+      if ($first_location_similarity_perc >= LocalitaEU::MATCHED) {
+        $this->_Bot->sendMessage([
+          'text' => TextMessages::arrivalLocationValid100($first_location_name)
+        ]);
+      }
+      else { 
+        $message_to_send = TextMessages::arrivalLocationValidNot100($first_location_name) . "\n\n" . TextMessages::departureLocationValid100($first_location_name);
+        $this->_Bot->sendMessage([
+          'text' => $message_to_send
+        ]);
+      }
 
-      /* Toglie gli spazi bianchi da inizio e fine stringa e mette tutto in minuscolo */
-      $formatted_location_name = trim(strtolower($location_name));
-      $formatted_location_to_search = trim(strtolower($location_to_search));
-      similar_text($formatted_location_name, $formatted_location_to_search, $similarity_perc);
+      $_SearchEU = new SearchEU($this->_User->getUserId());
+      $result = $_SearchEU->setArrivalLocation($first_location_code);
 
-      $assoc_array_perc[$location_name] = $similarity_perc;
+      $this->_Bot->sendMessage([
+        'text' => "Prossima richiesta ...",
+        'reply_markup' => Keyboards::getOnlyBack()
+      ]);
+
+      $this->keepThisState(); // !!
+      
     }
+    /* c'è poca corrispondenza tra il db e la località inviata, bisogna riinviarla */
+    else {
+      $message_to_send = TextMessages::arrivalLocationNotValid($location_to_search) . "\n\n" . TextMessages::chooseDepartureLocationAgain();
+      $this->_Bot->sendMessage([
+        'text' => $message_to_send
+      ]);
 
-    arsort($assoc_array_perc);
-    $first_location_name = array_key_first($assoc_array_perc);
-    $first_location_similarity_perc = $assoc_array_perc[$first_location_name];
-
-    $message_to_send = "Hai selezionato <b>$first_location_name</b> come città di partenza";
-    if ($first_location_similarity_perc < 95) {
-      $message_to_send = "Forse intendevi <i>$location_to_search</i> → <b>$first_location_name</b>\n\n" . $message_to_send;
+      $this->keepThisState();
     }
-
-
-    $this->_Bot->sendMessage([
-      'text' => $message_to_send
-    ]);
-
-    $this->_Bot->sendMessage([
-      'text' => "➤ Invia il nome della località di <u>arrivo</u>",
-      'reply_markup' => Keyboards::getOnlyBack()
-    ]);
-
-    $this->setNextState($this->appendNextState("ArrivalLocation"));
   }
 
 }

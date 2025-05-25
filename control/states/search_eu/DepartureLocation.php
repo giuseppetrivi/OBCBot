@@ -10,9 +10,6 @@ use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
 
 
-/**
- * 
- */
 class DepartureLocation extends AbstractState {
 
   protected array $valid_static_inputs = [
@@ -60,7 +57,8 @@ class DepartureLocation extends AbstractState {
     $location_to_search = $this->_Bot->getInputFromChat()->getText();
 
     $_LocalitaEU = new LocalitaEU();
-    $location_info = $_LocalitaEU->findBestLocationNameMatch($location_to_search);
+    $all_departure_locations = $_LocalitaEU->getAllDepartureLocations();
+    $location_info = $_LocalitaEU->findBestLocationNameMatch($all_departure_locations, $location_to_search);
 
     $first_location_code = $location_info["location_code"];
     $first_location_name = $location_info["location_name"];
@@ -68,8 +66,10 @@ class DepartureLocation extends AbstractState {
     
     
     /* pur non essendoci corrispondenza perfetta, la località inviata è valida */
-    if ($first_location_similarity_perc >= 60 ) {
-      if ($first_location_similarity_perc > 95) {
+
+    if ($first_location_similarity_perc >= LocalitaEU::ALMOST_MATCHED) {
+
+      if ($first_location_similarity_perc >= LocalitaEU::MATCHED) {
         $this->_Bot->sendMessage([
           'text' => TextMessages::departureLocationValid100($first_location_name)
         ]);
@@ -88,7 +88,7 @@ class DepartureLocation extends AbstractState {
         'text' => TextMessages::chooseArrivalLocation(),
         'reply_markup' => Keyboards::getOnlyBack()
       ]);
-
+      
       $this->setNextState($this->appendNextState("ArrivalLocation"));
       
     }
