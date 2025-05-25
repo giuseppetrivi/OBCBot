@@ -3,6 +3,7 @@
 namespace SearchEU\DepartureLocation;
 
 use CustomBotName\control\AbstractState;
+use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
@@ -29,12 +30,14 @@ class ArrivalLocation extends AbstractState {
    * SearchEU\DepartureLocation\ArrivalLocation -> SearchEU\DepartureLocation
    */
   protected function backProcedure() {
+    $_SearchEU = new SearchEU($this->_User->getUserId());
+    $result = $_SearchEU->unsetDepartureLocation();
+
     $this->_Bot->sendMessage([
       'text' => TextMessages::chooseDepartureLocation(),
       'reply_markup' => Keyboards::getOnlyBack()
     ]);
 
-    var_dump($this->getPreviousState());
     $this->setNextState($this->getPreviousState());
   }
 
