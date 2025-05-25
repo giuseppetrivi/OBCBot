@@ -7,9 +7,7 @@ use MeekroDBException;
 
 class SearchEU extends Search {
 
-  /**
-   * Create the record with only user_idtelegram in the search table
-   */
+
   public function initializeSearch() {
     $result = 0;
     try {
@@ -22,9 +20,6 @@ class SearchEU extends Search {
     }
   }
 
-  /**
-   * Delete the record of search
-   */
   public function destroySearch() {
     $result = 0;
     try {
@@ -37,9 +32,7 @@ class SearchEU extends Search {
     }
   }
 
-  /**
-   * Set the departure location id in the initialized search record
-   */
+  
   public function setDepartureLocation($departure_location_id) {
     $result = 0;
     try {
@@ -53,14 +46,38 @@ class SearchEU extends Search {
     }
   }
 
-  /**
-   * 
-   */
   public function unsetDepartureLocation() {
     $result = 0;
     try {
       $result = DB::update("obc_searches", 
         ["sea_departure_id" => NULL], 
+        ["user_idtelegram" => $this->getUserIdtelegram()]
+      );
+      return $result;
+    } catch(MeekroDBException $e) {
+      return $result;
+    }
+  }
+
+  
+  public function setArrivalLocation($arrival_location_id) {
+    $result = 0;
+    try {
+      $result = DB::update("obc_searches", 
+        ["sea_arrival_id" => $arrival_location_id], 
+        ["user_idtelegram" => $this->getUserIdtelegram()]
+      );
+      return $result;
+    } catch(MeekroDBException $e) {
+      return $result;
+    }
+  }
+  
+  public function unsetArrivalLocation() {
+    $result = 0;
+    try {
+      $result = DB::update("obc_searches", 
+        ["sea_arrival_id" => NULL], 
         ["user_idtelegram" => $this->getUserIdtelegram()]
       );
       return $result;

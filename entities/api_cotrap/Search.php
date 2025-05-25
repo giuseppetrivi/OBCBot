@@ -14,15 +14,26 @@ abstract class Search extends BaseEntity {
   }
 
 
+  /**
+   * Create the record with only user_idtelegram in the search table
+   */
   abstract public function initializeSearch();
+  
+  /**
+   * Delete the record of search
+   */
   abstract public function destroySearch();
 
+  /**
+   * Set/unset the departure location id in the initialized search record
+   */
   abstract public function setDepartureLocation($departure_location_id);
   abstract public function unsetDepartureLocation();
-  
-  /*
+
+  /**
+   * Set/unset the arrival location id in the initialized search record
+   */
   abstract public function setArrivalLocation($arrival_location_id);
   abstract public function unsetArrivalLocation();
-  */
 
 }
