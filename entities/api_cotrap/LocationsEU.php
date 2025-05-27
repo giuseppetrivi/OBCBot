@@ -5,7 +5,11 @@ namespace CustomBotName\entities\api_cotrap;
 use CustomBotName\entities\BaseEntity;
 use DB;
 
-class LocalitaEU extends BaseEntity {
+
+/**
+ * Class to communicate with `cotrap_localita_eu` table in database
+ */
+class LocationsEU extends BaseEntity {
 
   public const MATCHED = 95;
   public const ALMOST_MATCHED = 70;
@@ -15,18 +19,19 @@ class LocalitaEU extends BaseEntity {
 
 
   /**
-   * Get all locations in the database
+   * Get all locations (for departure) in the database
    */
   public function getAllDepartureLocations() {
-    return DB::query("SELECT codice, denominazione FROM cotrap_localita_eu");
+    return DB::query("SELECT codice, denominazione FROM cotrap_localita_eu ORDER BY codice ASC");
   }
 
+
   /**
-   * Get all the possible arrival locations (for a departure) and return array with info about them
+   * Get all the possible arrival locations (for a specific departure location) and return array with info about them
    */
-  public function getAllArrivalLocations($user_idtelegram) {
-    $query_result = DB::query("SELECT eu.codice, eu.denominazione, eu.localitaArrivo FROM obc_searches as sea JOIN cotrap_localita_eu as eu WHERE sea.user_idtelegram=%i_user_idtelegram AND eu.codice=sea.sea_departure_id", [
-      "user_idtelegram" => $user_idtelegram
+  public function getArrivalLocationsFromDepartureLocation($departure_location_id) {
+    $query_result = DB::query("SELECT codice, denominazione, localitaArrivo FROM cotrap_localita_eu WHERE codice=%s_departure_location_id", [
+      "departure_location_id" => $departure_location_id
     ]);
     //controllare se il risultato è null
     $arrival_location_ids = array_slice(explode("|", $query_result[0]["localitaArrivo"]), 1, -1);
@@ -41,16 +46,15 @@ class LocalitaEU extends BaseEntity {
    */
   public function findBestLocationNameMatch(array $all_locations, string $location_to_search) {
     $count_locations = count($all_locations);
-
     $results_array = [];
 
-    /* per ogni località nel database da la percentuale di similarità con la località da cercare */
+    /* this loop for each location in database calculates and saves the similarity percentage with the location to search */
     for ($i=0; $i<$count_locations; $i++) {
       $similarity_perc = 0;
       $location_code = $all_locations[$i]["codice"];
       $location_name = $all_locations[$i]["denominazione"];
 
-      /* toglie gli spazi bianchi da inizio e fine stringa e mette tutto in minuscolo */
+      /* removes white spaces from the beginning and the ending of the strings; also transform strings to lowercase */
       $formatted_location_name = trim(strtolower($location_name));
       $formatted_location_to_search = trim(strtolower($location_to_search));
 
@@ -68,16 +72,12 @@ class LocalitaEU extends BaseEntity {
     }
 
     usort($results_array, function ($a, $b) {
-      /* ordina in modo decrescente in base alla percentuale di similarità */
+      /* sorts locations in descending order based on similarity percentage */
       return $b['similarity_perc'] <=> $a['similarity_perc'];
     });
 
+    /* returns the first 5 best matching locations */
     return array_slice($results_array, 0, 5);
   }
-
-
-  /**
-   * 
-   */
 
 }
