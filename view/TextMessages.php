@@ -65,4 +65,9 @@ final class TextMessages {
   }
 
 
+  public static function chooseDepartureStop() {
+    return "➤ Seleziona la fermata di partenza";
+  }
+
+
 }
