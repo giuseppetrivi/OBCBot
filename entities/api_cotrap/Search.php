@@ -15,6 +15,12 @@ abstract class Search extends BaseEntity {
 
 
   /**
+   * Get all info about search
+   */
+  abstract public function getSearchInfo();
+
+
+  /**
    * Create the record with only user_idtelegram in the search table
    */
   abstract public function initializeSearch();

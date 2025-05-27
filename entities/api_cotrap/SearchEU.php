@@ -8,6 +8,19 @@ use MeekroDBException;
 class SearchEU extends Search {
 
 
+  public function getSearchInfo() {
+    $result = 0;
+    try {
+      $result = DB::query("SELECT * FROM obc_searches WHERE user_idtelegram=%i_user_idtelegram", [
+        "user_idtelegram" => $this->getUserIdtelegram()
+      ]);
+      return $result[0];
+    } catch(MeekroDBException $e) {
+      return $result;
+    }
+  }
+
+
   public function initializeSearch() {
     $result = 0;
     try {
