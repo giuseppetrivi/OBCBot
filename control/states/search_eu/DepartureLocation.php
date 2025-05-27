@@ -3,7 +3,7 @@
 namespace SearchEU;
 
 use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\LocalitaEU;
+use CustomBotName\entities\api_cotrap\LocationsEU;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
@@ -19,7 +19,7 @@ class DepartureLocation extends AbstractState {
 
   protected function validateDynamicInputs() {
     $input_text = $this->_Bot->getInputFromChat()->getText();
-    //regex per avere solo lettere e il carattere "-"
+    /* regex to get words, eventually containing "-", as valid command. this word should be a location */
     $locations_regex = "/\b[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+(?:\s*-\s*[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+|\s+[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+)*\b/";
     $match_result = preg_match($locations_regex, $input_text);
     if ($match_result) {
@@ -36,7 +36,6 @@ class DepartureLocation extends AbstractState {
   protected function backProcedure() {
     $_SearchEU = new SearchEU($this->_User->getUserId());
     $result = $_SearchEU->destroySearch();
-    //var_dump($result);
 
     $this->_Bot->sendMessage([
       'text' => TextMessages::mainMenu(),
@@ -56,19 +55,19 @@ class DepartureLocation extends AbstractState {
   protected function selectDepartureLocationProcedure() {
     $location_to_search = $this->_Bot->getInputFromChat()->getText();
 
-    $_LocalitaEU = new LocalitaEU();
-    $all_departure_locations = $_LocalitaEU->getAllDepartureLocations();
-    $locations_info = $_LocalitaEU->findBestLocationNameMatch($all_departure_locations, $location_to_search);
+    $_LocationsEU = new LocationsEU();
+    $all_departure_locations = $_LocationsEU->getAllDepartureLocations();
+    $locations_info = $_LocationsEU->findBestLocationNameMatch($all_departure_locations, $location_to_search);
 
     $first_location_code = $locations_info[0]["location_code"];
     $first_location_name = $locations_info[0]["location_name"];
     $first_location_similarity_perc = $locations_info[0]["similarity_perc"];
     
     
-    /* pur non essendoci corrispondenza perfetta, la località inviata è valida */
-    if ($first_location_similarity_perc >= LocalitaEU::ALMOST_MATCHED) {
+    /* takes the location as valid even if there is not a perfect match */
+    if ($first_location_similarity_perc >= LocationsEU::ALMOST_MATCHED) {
 
-      if ($first_location_similarity_perc >= LocalitaEU::MATCHED) {
+      if ($first_location_similarity_perc >= LocationsEU::MATCHED) {
         $this->_Bot->sendMessage([
           'text' => TextMessages::departureLocationMatched($first_location_name)
         ]);
@@ -95,7 +94,7 @@ class DepartureLocation extends AbstractState {
       $this->setNextState($this->appendNextState("ArrivalLocation"));
       
     }
-    /* c'è poca corrispondenza tra il db e la località inviata, bisogna riinviarla */
+    /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
     else {
       $message_to_send = TextMessages::departureLocationNotMatched($location_to_search) . 
         "\n\n" . 
