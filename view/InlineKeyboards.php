@@ -25,6 +25,18 @@ class InlineKeyboards extends ViewWrapper {
 
   use InlineKeyboardsTrait;
 
+  public static function locationStops($location_stops) {
+    $inline_keyboard = [];
+    foreach($location_stops as $info) {
+      array_push($inline_keyboard, [[
+        "text" => $info["denominazione"],
+        "callback_data" => "polo_" . $info["id"]
+      ]]);
+    }
+    
+    return InlineKeyboards::createInlineKeyboard($inline_keyboard);
+  }
+
 }
 
 

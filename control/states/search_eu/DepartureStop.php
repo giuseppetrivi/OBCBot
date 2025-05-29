@@ -4,7 +4,9 @@ namespace SearchEU\DepartureLocation\ArrivalLocation;
 
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocalitaEU;
+use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
+use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
@@ -17,9 +19,8 @@ class DepartureStop extends AbstractState {
 
   protected function validateDynamicInputs() {
     $input_text = $this->_Bot->getInputFromChat()->getText();
-    // TODO: da modificare...
-    /* regex to get words, eventually containing "-", as valid command. this word should be a location */
-    $locations_regex = "/\b[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+(?:\s*-\s*[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+|\s+[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+)*\b/";
+    /* regex to get callback_data like polo_ID */
+    $locations_regex = "/^polo_[0-9][0-9]*$/";
     $match_result = preg_match($locations_regex, $input_text);
     if ($match_result) {
       $this->function_to_call = "selectDepartureStopProcedure";
@@ -34,7 +35,7 @@ class DepartureStop extends AbstractState {
    */
   protected function backProcedure() {
     $_SearchEU = new SearchEU($this->_User->getUserId());
-    $result = $_SearchEU->unsetArrivalLocation();
+    $_SearchEU->unsetArrivalLocation();
 
     $this->_Bot->sendMessage([
       'text' => TextMessages::chooseArrivalLocation(),
@@ -51,9 +52,24 @@ class DepartureStop extends AbstractState {
    *  -> SearchEU\DepartureLocation\ArrivalLocation\DepartureStop\ArrivalStop
    */
   protected function selectDepartureStopProcedure() {
+    $departure_stop_callback_data = $this->_Bot->getInputFromChat()->getText();
+    $departure_stop_id = explode("_", $departure_stop_callback_data)[1];
+
+    $_SearchEU = new SearchEU($this->_User->getUserId());
+    $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
+
+
+    $_LocationStops = new LocationStops();
+    $location_stops_info = $_LocationStops->getValidArrivalLocationStops($departure_stop_id, $arrival_location_id);
+
+    var_dump(json_encode($location_stops_info, JSON_PRETTY_PRINT));
+
     $this->_Bot->sendMessage([
-      'text' => "Procedura di selezione fermata"
+      'text' => TextMessages::chooseArrivalStop(),
+      'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
     ]);
+
+    $this->keepThisState();
   }
 
 }
