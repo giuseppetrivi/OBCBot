@@ -4,7 +4,7 @@ use CustomBotName\view;
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\view\Keyboards;
-
+use CustomBotName\view\TextMessages;
 
 /**
  * 
@@ -21,10 +21,10 @@ class Restart extends AbstractState {
    */
   protected function restartProcedure() {
     $_SearchEU = new SearchEU($this->_User->getUserId());
-    $result = $_SearchEU->destroySearch();
+    $_SearchEU->destroySearch();
 
     $this->_Bot->sendMessage([
-      'text' => "This is the forced restart of the bot...",
+      'text' => TextMessages::mainMenuFromRestart(),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
   }

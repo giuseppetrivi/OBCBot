@@ -21,6 +21,9 @@ final class TextMessages {
   public static function mainMenu() {
     return "📜 Menu principale";
   }
+  public static function mainMenuFromRestart() {
+    return "↻ Hai riavviato il bot.\n\n📜 Menu principale";
+  }
 
   public static function chooseDepartureLocation() {
     return "➤ Invia il nome della località di <u>partenza</u>";
