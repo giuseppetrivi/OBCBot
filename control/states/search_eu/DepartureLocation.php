@@ -35,7 +35,7 @@ class DepartureLocation extends AbstractState {
    */
   protected function backProcedure() {
     $_SearchEU = new SearchEU($this->_User->getUserId());
-    $result = $_SearchEU->destroySearch();
+    $_SearchEU->destroySearch();
 
     $this->_Bot->sendMessage([
       'text' => TextMessages::mainMenu(),
