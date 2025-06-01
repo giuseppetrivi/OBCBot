@@ -89,7 +89,7 @@ class ArrivalLocation extends AbstractState {
       $location_stops_info = $_LocationStops->getValidDepartureLocationStops($departure_location_id, $first_location_code);
 
       if ($location_stops_info==null || count($location_stops_info)==0) {
-        // TODO: valore da controllare
+        // TODO: valore da controllare e gestire meglio
         $this->_Bot->sendMessage([
           'text' => TextMessages::errorInRetriveStops()
         ]);
