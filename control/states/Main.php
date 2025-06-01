@@ -40,18 +40,17 @@ class Main extends AbstractState {
     $_SearchEU = new SearchEU($this->_User->getUserId());
     $result = $_SearchEU->initializeSearch();
 
-    if ($result==1) {
-      $this->_Bot->sendMessage([
-        'text' => TextMessages::chooseDepartureLocation(),
-        'reply_markup' => Keyboards::getOnlyBack()
-      ]);
+    if ($result!=1) {
+      $_SearchEU->destroySearch();
+      $_SearchEU->initializeSearch();
+    }
 
-      $this->setNextState("SearchEU\DepartureLocation");
-    }
-    else {
-      // TODO: errore DUPLICATE ENTRY
-    }
-    
+    $this->_Bot->sendMessage([
+      'text' => TextMessages::chooseDepartureLocation(),
+      'reply_markup' => Keyboards::getOnlyBack()
+    ]);
+
+    $this->setNextState("SearchEU\DepartureLocation");
   }
 
 
@@ -60,7 +59,7 @@ class Main extends AbstractState {
    * NULL (Main) -> SearchU\???
    */
   protected function searchUProcedure() {
-    
+    // TODO
   }
 
   /**
@@ -68,7 +67,7 @@ class Main extends AbstractState {
    * NULL (Main) -> Settings
    */
   protected function settingsProcedure() {
-    
+    // TODO
   }
 
 

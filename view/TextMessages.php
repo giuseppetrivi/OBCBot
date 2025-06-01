@@ -15,7 +15,7 @@ final class TextMessages {
 
   public static function startingMessage($username) {
     return "👋 Ciao @$username!\n\n".
-    "🤖 Con questo bot puoi cercare rapidamente gli orari delle tratte COTRAP";
+    "🤖 Con questo bot puoi cercare rapidamente gli orari delle tratte COTRAP, partendo dal menu principale qui sotto.";
   }
   
   public static function mainMenu() {
