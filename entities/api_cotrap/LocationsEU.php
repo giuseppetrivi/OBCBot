@@ -54,8 +54,18 @@ class LocationsEU extends BaseEntity {
       $location_code = $all_locations[$i]["codice"];
       $location_name = $all_locations[$i]["denominazione"];
 
+      /* the $location_name_to_match handles some exceptional manipulations to match with location to search */
+      $location_name_to_match = $location_name;
+      if (str_contains($location_name_to_match, "-")) {
+        $location_name_to_match = explode("-", $location_name_to_match)[0];
+      }
+
+      if (str_contains($location_name_to_match, "di Puglia")) {
+        $location_name_to_match = explode("di Puglia", $location_name_to_match)[0];
+      }
+
       /* removes white spaces from the beginning and the ending of the strings; also transform strings to lowercase */
-      $formatted_location_name = trim(strtolower($location_name));
+      $formatted_location_name = trim(strtolower($location_name_to_match));
       $formatted_location_to_search = trim(strtolower($location_to_search));
 
       similar_text(

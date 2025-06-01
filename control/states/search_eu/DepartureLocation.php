@@ -82,7 +82,7 @@ class DepartureLocation extends AbstractState {
       }
 
       $_SearchEU = new SearchEU($this->_User->getUserId());
-      $result = $_SearchEU->setDepartureLocation($first_location_code);
+      $_SearchEU->setDepartureLocation($first_location_code);
 
       $this->_Bot->sendMessage([
         'text' => TextMessages::chooseArrivalLocation(),
@@ -95,8 +95,7 @@ class DepartureLocation extends AbstractState {
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
     else {
       $message_to_send = TextMessages::locationNotMatched($location_to_search) . 
-        "\n\n" . 
-        TextMessages::chooseDepartureLocationAgain();
+        "\n\n" . TextMessages::chooseDepartureLocationAgain();
       $this->_Bot->sendMessage([
         'text' => $message_to_send
       ]);
