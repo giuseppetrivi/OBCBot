@@ -73,11 +73,9 @@ class DepartureLocation extends AbstractState {
         ]);
       }
       else {
-        $message_to_send = TextMessages::departureLocationAlmostMatched($first_location_name) . 
-          "\noppure cercavi:\n" .
-          TextMessages::alternativeLocations(array_slice($locations_info, 1)) .
-          "\n" .
-          TextMessages::departureLocationMatched($first_location_name);
+        $message_to_send = TextMessages::locationAlmostMatched($first_location_name) . 
+          "\n\n" . TextMessages::alternativeLocations(array_slice($locations_info, 1)) .
+          "\n" . TextMessages::departureLocationMatched($first_location_name);
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);
@@ -96,7 +94,7 @@ class DepartureLocation extends AbstractState {
     }
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
     else {
-      $message_to_send = TextMessages::departureLocationNotMatched($location_to_search) . 
+      $message_to_send = TextMessages::locationNotMatched($location_to_search) . 
         "\n\n" . 
         TextMessages::chooseDepartureLocationAgain();
       $this->_Bot->sendMessage([

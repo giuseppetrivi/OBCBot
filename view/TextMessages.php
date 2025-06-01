@@ -22,57 +22,49 @@ final class TextMessages {
     return "📜 Menu principale";
   }
   public static function mainMenuFromRestart() {
-    return "↻ Hai riavviato il bot.\n\n📜 Menu principale";
+    return "↻ Hai riavviato il bot\n\n📜 Menu principale";
   }
 
   public static function chooseDepartureLocation() {
-    return "➤ Invia il nome della località di <u>partenza</u>";
+    return "📍 Invia il nome della <b>località di partenza</b>";
   }
   public static function chooseDepartureLocationAgain() {
-    return "➤ Invia nuovamente il nome della località di <u>partenza</u>";
+    return "📍 Invia nuovamente il nome della <b>località di partenza</b>";
   }
-
   public static function departureLocationMatched($location_name) {
-    return "Hai selezionato <b>$location_name</b> come città di partenza";
-  }
-  public static function departureLocationAlmostMatched($location_name) {
-    return "Forse intendevi <i>$location_name</i>";
-  }
-  public static function departureLocationNotMatched($location_to_search) {
-    return "La località <i>$location_to_search</i> non è tra le scelte possibili";
+    return "✅ Hai selezionato <b>$location_name</b> come città di partenza";
   }
 
   public static function chooseArrivalLocation() {
-    return "➤ Invia il nome della località di <u>arrivo</u>";
+    return "📍 Invia il nome della <b>località di arrivo</b>";
   }
   public static function chooseArrivalLocationAgain() {
-    return "➤ Invia nuovamente il nome della località di <u>arrivo</u>";
+    return "📍 Invia nuovamente il nome della <b>località di arrivo</b>";
   }
-
   public static function arrivalLocationMatched($location_name) {
-    return "Hai selezionato <b>$location_name</b> come città di arrivo";
-  }
-  public static function arrivalLocationAlmostMatched($location_name) {
-    return "Forse intendevi <i>$location_name</i>";
-  }
-  public static function arrivalLocationNotMatched($location_to_search) {
-    return "La località <i>$location_to_search</i> non è tra le scelte possibili";
+    return "✅ Hai selezionato <b>$location_name</b> come città di arrivo";
   }
 
+  public static function locationAlmostMatched($location_name) {
+    return "❓ Forse intendevi <i>$location_name</i>";
+  }
   public static function alternativeLocations($location_info) {
-    $text = "";
+    $text = "🤔 Oppure cercavi:\n";
     foreach ($location_info as $index => $info) {
-      $text .= "<code>" . $info["location_name"] . "</code>\n";
+      $text .= "• <code>" . $info["location_name"] . "</code>\n";
     }
     return $text;
+  }
+  public static function locationNotMatched($location_to_search) {
+    return "❌ La località <i>$location_to_search</i> non è tra le scelte possibili...";
   }
 
 
   public static function chooseDepartureStop() {
-    return "➤ Seleziona la fermata di partenza";
+    return "🛑 Seleziona la <b>fermata di partenza</b> tra quelle proposte";
   }
   public static function chooseArrivalStop() {
-    return "➤ Seleziona la fermata di arrivo";
+    return "🛑 Seleziona la <b>fermata di arrivo</b> tra quelle proposte";
   }
 
 
