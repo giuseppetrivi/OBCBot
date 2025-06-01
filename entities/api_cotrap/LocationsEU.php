@@ -33,7 +33,7 @@ class LocationsEU extends BaseEntity {
     $query_result = DB::query("SELECT codice, denominazione, localitaArrivo FROM cotrap_localita_eu WHERE codice=%s_departure_location_id", [
       "departure_location_id" => $departure_location_id
     ]);
-    //controllare se il risultato è null
+    // TODO: controllare se il risultato è null
     $arrival_location_ids = array_slice(explode("|", $query_result[0]["localitaArrivo"]), 1, -1);
     
     $arrival_location_info = DB::query("SELECT codice, denominazione FROM cotrap_localita_eu WHERE codice IN %ls", $arrival_location_ids);
