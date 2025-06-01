@@ -38,10 +38,10 @@ class ArrivalStop extends AbstractState {
     $_SearchEU->unsetDepartureStop();
 
     // TODO: da cambiare
-    $this->_Bot->sendMessage([
+    /*$this->_Bot->sendMessage([
       'text' => TextMessages::chooseArrivalLocation(),
       'reply_markup' => Keyboards::getOnlyBack()
-    ]);
+    ]);*/
 
     $this->setNextState($this->getPreviousState());
   }

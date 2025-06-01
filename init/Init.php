@@ -11,6 +11,7 @@ use CustomBotName\entities\BotAuthorization;
 use CustomBotName\entities\UserAuthorization;
 use Restart;
 use CustomBotName\exceptions\state_exceptions\StateInputException;
+use CustomBotName\view\TextMessages;
 
 class Init {
 
@@ -138,10 +139,10 @@ class Init {
     echo "Stato di entrata: " . $state_name;
     try {
       $_State = new $state_name(self::$_Bot, self::$_User);
-      $_State->codeToRun(); // TODO: chand method name (maybe)
+      $_State->codeToRun();
     } catch(StateInputException $e) {
       self::$_Bot->sendMessage([
-        'text' => $e->getMessage()
+        'text' => TextMessages::inputError()
       ]);
     }
   }

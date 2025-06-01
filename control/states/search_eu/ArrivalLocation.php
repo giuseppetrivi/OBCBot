@@ -82,18 +82,28 @@ class ArrivalLocation extends AbstractState {
           'text' => $message_to_send
         ]);
       }
-      
+
       $_SearchEU->setArrivalLocation($first_location_code);
       
       $_LocationStops = new LocationStops();
       $location_stops_info = $_LocationStops->getValidDepartureLocationStops($departure_location_id, $first_location_code);
 
-      $this->_Bot->sendMessage([
-        'text' => TextMessages::chooseDepartureStop(),
-        'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
-      ]);
+      if ($location_stops_info==null || count($location_stops_info)==0) {
+        // TODO: valore da controllare
+        $this->_Bot->sendMessage([
+          'text' => TextMessages::errorInRetriveStops()
+        ]);
 
-      $this->setNextState($this->appendNextState("DepartureStop"));
+        $this->backProcedure();
+      }
+      else {
+        $this->_Bot->sendMessage([
+          'text' => TextMessages::chooseDepartureStop(),
+          'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
+        ]);
+
+        $this->setNextState($this->appendNextState("DepartureStop"));
+      }
       
     }
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */

@@ -12,6 +12,9 @@ final class TextMessages {
    */
   private function __construct() {}
 
+  public static function inputError() {
+    return "⚠️ Il messaggio inviato non è valido.\nInvia un messaggio valido per la procedura in cui ti trovi.";
+  }
 
   public static function startingMessage($username) {
     return "👋 Ciao @$username!\n\n".
@@ -65,6 +68,10 @@ final class TextMessages {
   }
   public static function chooseArrivalStop() {
     return "🛑 Seleziona la <b>fermata di arrivo</b> tra quelle proposte";
+  }
+
+  public static function errorInRetriveStops() {
+    return "⚠️ Si è verificato un errore nella ricerca delle fermate";
   }
 
 

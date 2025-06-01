@@ -56,23 +56,36 @@ class DepartureStop extends AbstractState {
     $departure_stop_id = explode("_", $departure_stop_callback_data)[1];
 
     $_SearchEU = new SearchEU($this->_User->getUserId());
-
     $_SearchEU->setDepartureStop($departure_stop_id);
 
-    $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
+    // TODO: controllare il departure_stop_id
 
+    $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
 
     $_LocationStops = new LocationStops();
     $location_stops_info = $_LocationStops->getValidArrivalLocationStops($departure_stop_id, $arrival_location_id);
 
-    var_dump(json_encode($location_stops_info, JSON_PRETTY_PRINT));
+    if ($location_stops_info==null || count($location_stops_info)==0) {
+      // TODO: valore da controllare
+    }
 
-    $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseArrivalStop(),
-      'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
-    ]);
+    if ($location_stops_info==null || count($location_stops_info)==0) {
+      // TODO: valore da controllare
+      $this->_Bot->sendMessage([
+        'text' => TextMessages::errorInRetriveStops()
+      ]);
 
-    $this->setNextState($this->appendNextState("ArrivalStop"));
+      $this->backProcedure();
+    }
+    else {
+      $this->_Bot->sendMessage([
+        'text' => TextMessages::chooseArrivalStop(),
+        'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
+      ]);
+
+      $this->setNextState($this->appendNextState("ArrivalStop"));
+    }
+
   }
 
 }

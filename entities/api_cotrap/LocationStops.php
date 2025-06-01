@@ -16,6 +16,8 @@ class LocationStops extends BaseEntity {
 
   /**
    * Get all the possible departure stops based on the arrival location
+   * 
+   * TODO: descrizione migliore delle query, che non sono banali
    */
   public function getValidDepartureLocationStops($departure_location_id, $arrival_location_id) {
     $select_query = "SELECT * FROM cotrap_polilocalita 
@@ -48,6 +50,8 @@ class LocationStops extends BaseEntity {
    * DESCRIZIONE:
    * devo prendere le informazioni relative alla fermata di partenza
    * devo prendere le informazioni relative ai poli di arrivo
+   * 
+   * TODO: descrizione migliore delle query, che non sono banali
    */
   public function getValidArrivalLocationStops($departure_stop_id, $arrival_location_id) {
     $departure_stop_info = $this->getStopInfoById($departure_stop_id);
