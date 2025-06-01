@@ -56,7 +56,7 @@ final class TextMessages {
     return $text;
   }
   public static function locationNotMatched($location_to_search) {
-    return "❌ La località <i>$location_to_search</i> non è tra le scelte possibili...";
+    return "❌  La località <i>$location_to_search</i> non è tra le scelte possibili...";
   }
 
 
