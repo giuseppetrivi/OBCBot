@@ -56,6 +56,9 @@ class DepartureStop extends AbstractState {
     $departure_stop_id = explode("_", $departure_stop_callback_data)[1];
 
     $_SearchEU = new SearchEU($this->_User->getUserId());
+
+    $_SearchEU->setDepartureStop($departure_stop_id);
+
     $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
 
 
@@ -69,7 +72,7 @@ class DepartureStop extends AbstractState {
       'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
     ]);
 
-    $this->keepThisState();
+    $this->setNextState($this->appendNextState("ArrivalStop"));
   }
 
 }

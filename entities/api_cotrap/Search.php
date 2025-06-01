@@ -42,4 +42,16 @@ abstract class Search extends BaseEntity {
   abstract public function setArrivalLocation($arrival_location_id);
   abstract public function unsetArrivalLocation();
 
+  /**
+   * Set/unset the departure stop id, based on departure and arrival options
+   */
+  abstract public function setDepartureStop($departure_stop_id);
+  abstract public function unsetDepartureStop();
+
+  /**
+   * Set/unset the arrival stop id, based on departure stop and arrival options
+   */
+  abstract public function setArrivalStop($arrival_stop_id);
+  abstract public function unsetArrivalStop();
+
 }
