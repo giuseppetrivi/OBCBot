@@ -68,6 +68,7 @@ class ArrivalLocation extends AbstractState {
     
     /* takes the location as valid even if there is not a perfect match */
     if ($first_location_similarity_perc >= LocationsEU::ALMOST_MATCHED) {
+
       if ($first_location_similarity_perc >= LocationsEU::MATCHED) {
         $this->_Bot->sendMessage([
           'text' => TextMessages::arrivalLocationMatched($first_location_name)
@@ -81,9 +82,9 @@ class ArrivalLocation extends AbstractState {
           'text' => $message_to_send
         ]);
       }
+      
       $_SearchEU->setArrivalLocation($first_location_code);
       
-
       $_LocationStops = new LocationStops();
       $location_stops_info = $_LocationStops->getValidDepartureLocationStops($departure_location_id, $first_location_code);
 
@@ -98,8 +99,7 @@ class ArrivalLocation extends AbstractState {
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
     else {
       $message_to_send = TextMessages::locationNotMatched($location_to_search) . 
-        "\n\n" . 
-        TextMessages::chooseArrivalLocationAgain();
+        "\n\n" . TextMessages::chooseArrivalLocationAgain();
       $this->_Bot->sendMessage([
         'text' => $message_to_send
       ]);
