@@ -3,7 +3,6 @@
 namespace SearchEU\DepartureLocation\ArrivalLocation;
 
 use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\LocalitaEU;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\view\InlineKeyboards;
