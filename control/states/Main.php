@@ -1,6 +1,5 @@
 <?php
 
-use CustomBotName\view;
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\view\Keyboards;
