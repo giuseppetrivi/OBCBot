@@ -36,11 +36,17 @@ class ArrivalStop extends AbstractState {
     $_SearchEU = new SearchEU($this->_User->getUserId());
     $_SearchEU->unsetDepartureStop();
 
-    // TODO: da cambiare
-    /*$this->_Bot->sendMessage([
-      'text' => TextMessages::chooseArrivalLocation(),
-      'reply_markup' => Keyboards::getOnlyBack()
-    ]);*/
+    $search_info = $_SearchEU->getSearchInfo();
+    $departure_location_id = $search_info["sea_departure_id"];
+    $arrival_location_id = $search_info["sea_arrival_id"];
+
+    $_LocationStops = new LocationStops();
+    $location_stops_info = $_LocationStops->getValidDepartureLocationStops($departure_location_id, $arrival_location_id);
+
+    $this->_Bot->sendMessage([
+      'text' => TextMessages::chooseDepartureStop(),
+      'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
+    ]);
 
     $this->setNextState($this->getPreviousState());
   }
