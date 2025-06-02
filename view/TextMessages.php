@@ -22,7 +22,7 @@ final class TextMessages {
   }
   
   public static function mainMenu() {
-    return "📜 Menu principale";
+    return "🏠  Menu principale";
   }
   public static function mainMenuFromRestart() {
     return "↻ Hai riavviato il bot\n\n📜 Menu principale";
