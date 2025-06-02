@@ -58,26 +58,20 @@ class ArrivalStop extends AbstractState {
    *  -> SearchEU\DepartureLocation\ArrivalLocation\DepartureStop\ArrivalStop\Datetime
    */
   protected function selectArrivalStopProcedure() {
-    $departure_stop_callback_data = $this->_Bot->getInputFromChat()->getText();
-    $departure_stop_id = explode("_", $departure_stop_callback_data)[1];
+    $arrival_stop_callback_data = $this->_Bot->getInputFromChat()->getText();
+    $arrival_stop_id = explode("_", $arrival_stop_callback_data)[1];
 
     $_SearchEU = new SearchEU($this->_User->getUserId());
 
-    $_SearchEU->setArrivalStop($departure_stop_id);
+    $_SearchEU->setArrivalStop($arrival_stop_id);
 
-    /*
-    $_LocationStops = new LocationStops();
-    $location_stops_info = $_LocationStops->getValidArrivalLocationStops($departure_stop_id, $arrival_location_id);
-
-    var_dump(json_encode($location_stops_info, JSON_PRETTY_PRINT));
+    // TODO: datetime picker
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseArrivalStop(),
-      'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
+      'text' => "Messaggio per fare il pick della data e dell'ora"
     ]);
-    */
 
-    $this->keepThisState();
+    $this->setNextState($this->appendNextState("PickDatetime"));
   }
 
 }
