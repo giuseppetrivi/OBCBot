@@ -19,8 +19,8 @@ class ArrivalStop extends AbstractState {
   protected function validateDynamicInputs() {
     $input_text = $this->_Bot->getInputFromChat()->getText();
     /* regex to get callback_data like polo_ID */
-    $locations_regex = "/^polo_[0-9][0-9]*$/";
-    $match_result = preg_match($locations_regex, $input_text);
+    $stops_regex = "/^polo_[0-9][0-9]*$/";
+    $match_result = preg_match($stops_regex, $input_text);
     if ($match_result) {
       $this->function_to_call = "selectArrivalStopProcedure";
       return true;
