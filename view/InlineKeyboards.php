@@ -42,18 +42,15 @@ class InlineKeyboards extends ViewWrapper {
 
 
   public static function calendar(DateTimeIT $_SelectedDatetime) {
-
-    $_TodayDatetime = new DateTimeIT(date("Y-m-d H:00"));
-    $_ReferenceMonth = new DateTimeIT($_SelectedDatetime->format("Y-m-01"));
-    if ($_TodayDatetime < $_ReferenceMonth) {
-      $_TodayDatetime = $_ReferenceMonth;
+    $_TodayDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
+    $_FirstDayMonth = new DateTimeIT($_SelectedDatetime->format("Y-m-01"));
+    if ($_TodayDatetime < $_FirstDayMonth) {
+      $_TodayDatetime = $_FirstDayMonth;
     }
 
-    $month = $_TodayDatetime->format("m");
-    $actual_month = $month;
-
-    /* month handler */
-    $calendar_keyboard[0]= [
+    /* month selector */
+    $index_keyboard_row = 0;
+    $calendar_keyboard[$index_keyboard_row]= [
       [
         "text" => "◀️",
         "callback_data" => "previous_month"
@@ -69,7 +66,8 @@ class InlineKeyboards extends ViewWrapper {
     ];
 
     /* week day header */
-    $calendar_keyboard[1]= [
+    $index_keyboard_row++;
+    $calendar_keyboard[$index_keyboard_row]= [
       [
         "text" => "Lun",
         "callback_data" => "week_day"
@@ -100,20 +98,22 @@ class InlineKeyboards extends ViewWrapper {
       ],
     ];
 
+    /* calendar for date */
+    $month = $_TodayDatetime->format("m");
+    $actual_month = $month;
+
     $empty_day = [
       "text" => " ",
       "callback_data" => "blank_day"
     ];
     
-    /* calendar for date */
-    $counter_week = 2;
+    $counter_week = ++$index_keyboard_row;
     $calendar_keyboard[$counter_week] = array_fill(0, 7, $empty_day);
-    $start = 0;
+    $start = false;
     while ($month==$actual_month) {
-      $start++;
       $week_day = $_TodayDatetime->format("w")==0 ? 6 : ($_TodayDatetime->format("w")-1);
 
-      if ($week_day==0 && $start>1) {
+      if ($week_day==0 && $start) {
         $counter_week++;
         $calendar_keyboard[$counter_week] = array_fill(0, 7, $empty_day);
       }
@@ -131,10 +131,13 @@ class InlineKeyboards extends ViewWrapper {
 
       $_TodayDatetime->modify("+1 day");
       $actual_month = $_TodayDatetime->format("m");
+      $start = true;
     }
+    $index_keyboard_row = $counter_week;
 
     /* time selector */
-    $calendar_keyboard[$counter_week+1]= [
+    $index_keyboard_row++;
+    $calendar_keyboard[$index_keyboard_row]= [
       [
         "text" => "◀️",
         "callback_data" => "previous_hour"
@@ -150,7 +153,8 @@ class InlineKeyboards extends ViewWrapper {
     ];
 
     /* search button */
-    $calendar_keyboard[$counter_week+2]= [
+    $index_keyboard_row++;
+    $calendar_keyboard[$index_keyboard_row]= [
       [
         "text" => "🔎  Avvia la ricerca",
         "callback_data" => "search"
