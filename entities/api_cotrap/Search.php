@@ -54,4 +54,10 @@ abstract class Search extends BaseEntity {
   abstract public function setArrivalStop($arrival_stop_id);
   abstract public function unsetArrivalStop();
 
+  /**
+   * Set/unset the start datetime
+   */
+  abstract public function setDatetime($datetime);
+  abstract public function unsetDatetime();
+
 }

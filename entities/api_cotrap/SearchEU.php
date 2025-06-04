@@ -153,4 +153,31 @@ class SearchEU extends Search {
     }
   }
 
+
+  public function setDatetime($datetime) {
+    $result = 0;
+    try {
+      $result = DB::update("obc_searches", 
+        ["sea_datetime" => $datetime], 
+        ["user_idtelegram" => $this->getUserIdtelegram()]
+      );
+      return $result;
+    } catch(MeekroDBException $e) {
+      return $result;
+    }
+  }
+  
+  public function unsetDatetime() {
+    $result = 0;
+    try {
+      $result = DB::update("obc_searches", 
+        ["sea_datetime" => NULL], 
+        ["user_idtelegram" => $this->getUserIdtelegram()]
+      );
+      return $result;
+    } catch(MeekroDBException $e) {
+      return $result;
+    }
+  }
+
 }
