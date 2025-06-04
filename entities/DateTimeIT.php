@@ -48,4 +48,20 @@ class DateTimeIT extends DateTime {
   public function databaseFormat() {
     return $this->format(DateTimeIT::DATABASE_FORMAT);
   }
+
+  /**
+   * 
+   */
+  public function isDatetimeInThePast() {
+    $_TodayDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
+    if ($this < $_TodayDatetime) {
+      return -1; // datetime in the past
+    }
+    else if ($this == $_TodayDatetime) {
+      return 0; // equal datetime
+    }
+    else {
+      return 1; // datetime in the future
+    }
+  }
 }
