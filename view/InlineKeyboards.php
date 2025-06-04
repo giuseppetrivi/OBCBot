@@ -2,6 +2,8 @@
 
 namespace CustomBotName\view;
 
+use DateTime;
+
 /**
  * Class to handle all inline keyboards 
  */
@@ -35,6 +37,118 @@ class InlineKeyboards extends ViewWrapper {
     }
     
     return InlineKeyboards::createInlineKeyboard($inline_keyboard);
+  }
+
+
+  public static function calendar(DateTime $_SelectedDatetime) {
+
+    $_TodayDatetime = new DateTime(date("Y-m-d"));
+    $_ReferenceMonth = new DateTime($_SelectedDatetime->format("Y-m-01"));
+    if ($_TodayDatetime < $_ReferenceMonth) {
+      $_TodayDatetime = $_ReferenceMonth;
+    }
+
+    $month = $_TodayDatetime->format("m");
+    $actual_month = $month;
+
+    /* month handler */
+    $calendar_keyboard[0]= [
+      [
+        "text" => "◀️",
+        "callback_data" => "previous_month"
+      ],
+      [
+        "text" => $_TodayDatetime->format("F Y"),
+        "callback_data" => $_TodayDatetime->format("Y-m")
+      ],
+      [
+        "text" => "▶️",
+        "callback_data" => "next_month"
+      ]
+    ];
+
+    /* week day header */
+    $calendar_keyboard[1]= [
+      [
+        "text" => "Lun",
+        "callback_data" => "week_day"
+      ],
+      [
+        "text" => "Mar",
+        "callback_data" => "week_day"
+      ],
+      [
+        "text" => "Mer",
+        "callback_data" => "week_day"
+      ],
+      [
+        "text" => "Gio",
+        "callback_data" => "week_day"
+      ],
+      [
+        "text" => "Ven",
+        "callback_data" => "week_day"
+      ],
+      [
+        "text" => "Sab",
+        "callback_data" => "week_day"
+      ],
+      [
+        "text" => "Dom",
+        "callback_data" => "week_day"
+      ],
+    ];
+
+    $empty_day = [
+      "text" => " ",
+      "callback_data" => "blank_day"
+    ];
+    
+    /* calendar for date */
+    $counter_week = 2;
+    $calendar_keyboard[$counter_week] = array_fill(0, 7, $empty_day);
+    $start = 0;
+    while ($month==$actual_month) {
+      $start++;
+      $week_day = $_TodayDatetime->format("w")==0 ? 6 : ($_TodayDatetime->format("w")-1);
+
+      if ($week_day==0 && $start>1) {
+        $counter_week++;
+        $calendar_keyboard[$counter_week] = array_fill(0, 7, $empty_day);
+      }
+
+      $day_text = $_TodayDatetime->format("d");
+      $day_callback = $_TodayDatetime->format("Y-m-d");
+      if ($_TodayDatetime->format("Y-m-d")==$_SelectedDatetime->format("Y-m-d")) {
+        $day_text = "⚬ " . $day_text;
+      }
+
+      $calendar_keyboard[$counter_week][$week_day] = [
+        "text" => $day_text,
+        "callback_data" => $day_callback
+      ];
+
+      $_TodayDatetime->modify("+1 day");
+      $actual_month = $_TodayDatetime->format("m");
+    }
+
+    /* time selector */
+    $calendar_keyboard[$counter_week+1]= [
+      [
+        "text" => "◀️",
+        "callback_data" => "previous_hour"
+      ],
+      [
+        "text" => "🕒  " . $_SelectedDatetime->format("H:00"),
+        "callback_data" => $_SelectedDatetime->format("H:00")
+      ],
+      [
+        "text" => "▶️",
+        "callback_data" => "next_hour"
+      ]
+    ];
+
+    return InlineKeyboards::createInlineKeyboard($calendar_keyboard);
   }
 
 }
