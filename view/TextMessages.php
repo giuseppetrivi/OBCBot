@@ -2,6 +2,8 @@
 
 namespace CustomBotName\view;
 
+use DateTime;
+
 /**
  * Final class containing all text messages
  */
@@ -72,6 +74,16 @@ final class TextMessages {
 
   public static function errorInRetriveStops() {
     return "⚠️ Si è verificato un errore nella ricerca delle fermate";
+  }
+
+
+  public static function selectDatetime() {
+    return "⌛ Seleziona la <b>data</b> e l'<b>ora</b> di partenza";
+  }
+
+  public static function recapDatetime(DateTime $_SelectedDatetime) {
+    return "📅  Data selezionata: <b>" . $_SelectedDatetime->format("d F Y") . "</b>\n" .
+      "🕒  Ora selezionata: <b>" . $_SelectedDatetime->format("H:i") . "</b>";
   }
 
 

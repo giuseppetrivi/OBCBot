@@ -9,6 +9,7 @@ use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
+use DateTime;
 
 class ArrivalStop extends AbstractState {
 
@@ -61,14 +62,18 @@ class ArrivalStop extends AbstractState {
     $arrival_stop_callback_data = $this->_Bot->getInputFromChat()->getText();
     $arrival_stop_id = explode("_", $arrival_stop_callback_data)[1];
 
-    $_SearchEU = new SearchEU($this->_User->getUserId());
+    // TODO: da verificare arrival_stop_id
 
+    $_SearchEU = new SearchEU($this->_User->getUserId());
     $_SearchEU->setArrivalStop($arrival_stop_id);
 
-    // TODO: datetime picker
+    /* datetime picker keyboard */
+    $_SelectedDatetime = new DateTime(date("Y-m-d H:00"));
+    $_SearchEU->setDatetime($_SelectedDatetime->format("Y-m-d H:i:s"));
 
     $this->_Bot->sendMessage([
-      'text' => "Messaggio per fare il pick della data e dell'ora"
+      "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+      "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
     ]);
 
     $this->setNextState($this->appendNextState("PickDatetime"));
