@@ -2,7 +2,7 @@
 
 namespace CustomBotName\view;
 
-use DateTime;
+use CustomBotName\entities\DateTimeIT;
 
 /**
  * Final class containing all text messages
@@ -81,8 +81,8 @@ final class TextMessages {
     return "⌛ Seleziona la <b>data</b> e l'<b>ora</b> di partenza";
   }
 
-  public static function recapDatetime(DateTime $_SelectedDatetime) {
-    return "📅  Data selezionata: <b>" . $_SelectedDatetime->format("d F Y") . "</b>\n" .
+  public static function recapDatetime(DateTimeIT $_SelectedDatetime) {
+    return "📅  Data selezionata: <b>" . $_SelectedDatetime->format("d") . " " . $_SelectedDatetime->getLiteralMonth() . " " . $_SelectedDatetime->format("Y") . "</b>\n" .
       "🕒  Ora selezionata: <b>" . $_SelectedDatetime->format("H:i") . "</b>";
   }
 

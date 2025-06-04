@@ -43,7 +43,7 @@ class InlineKeyboards extends ViewWrapper {
 
   public static function calendar(DateTimeIT $_SelectedDatetime) {
 
-    $_TodayDatetime = new DateTimeIT(date("Y-m-d"));
+    $_TodayDatetime = new DateTimeIT(date("Y-m-d H:00"));
     $_ReferenceMonth = new DateTimeIT($_SelectedDatetime->format("Y-m-01"));
     if ($_TodayDatetime < $_ReferenceMonth) {
       $_TodayDatetime = $_ReferenceMonth;
@@ -121,7 +121,7 @@ class InlineKeyboards extends ViewWrapper {
       $day_text = $_TodayDatetime->format("d");
       $day_callback = $_TodayDatetime->format("Y-m-d");
       if ($_TodayDatetime->format("Y-m-d")==$_SelectedDatetime->format("Y-m-d")) {
-        $day_text = "⚬ " . $day_text;
+        $day_text = "[ " . $day_text . " ]";
       }
 
       $calendar_keyboard[$counter_week][$week_day] = [
@@ -140,12 +140,20 @@ class InlineKeyboards extends ViewWrapper {
         "callback_data" => "previous_hour"
       ],
       [
-        "text" => "🕒  " . $_SelectedDatetime->format("H:00"),
+        "text" => $_SelectedDatetime->format("H:00"),
         "callback_data" => $_SelectedDatetime->format("H:00")
       ],
       [
         "text" => "▶️",
         "callback_data" => "next_hour"
+      ]
+    ];
+
+    /* search button */
+    $calendar_keyboard[$counter_week+2]= [
+      [
+        "text" => "🔎  Avvia la ricerca",
+        "callback_data" => "search"
       ]
     ];
 
