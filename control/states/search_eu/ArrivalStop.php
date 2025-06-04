@@ -5,11 +5,12 @@ namespace SearchEU\DepartureLocation\ArrivalLocation\DepartureStop;
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
+use CustomBotName\entities\DateTimeIT;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
-use DateTime;
+
 
 class ArrivalStop extends AbstractState {
 
@@ -68,7 +69,7 @@ class ArrivalStop extends AbstractState {
     $_SearchEU->setArrivalStop($arrival_stop_id);
 
     /* datetime picker keyboard */
-    $_SelectedDatetime = new DateTime(date("Y-m-d H:00"));
+    $_SelectedDatetime = new DateTimeIT(date("Y-m-d H:00"));
     $_SearchEU->setDatetime($_SelectedDatetime->format("Y-m-d H:i:s"));
 
     $this->_Bot->sendMessage([

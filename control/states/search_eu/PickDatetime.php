@@ -6,11 +6,11 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\DatetimeHandler;
+use CustomBotName\entities\DateTimeIT;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
-use DateTime;
 
 class PickDatetime extends AbstractState {
 
@@ -57,7 +57,7 @@ class PickDatetime extends AbstractState {
   protected function selectDateProcedure() {
     $date_selected = $this->_Bot->getInputFromChat()->getText();
     $message_id = $this->_Bot->getWebhookUpdate()->getMessage()->getMessageId();
-    $_SelectedDatetime = new DateTime($date_selected);
+    $_SelectedDatetime = new DateTimeIT($date_selected);
 
     $this->_Bot->editMessageText([
       "message_id" => $message_id,

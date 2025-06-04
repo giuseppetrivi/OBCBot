@@ -2,6 +2,7 @@
 
 namespace CustomBotName\view;
 
+use CustomBotName\entities\DateTimeIT;
 use DateTime;
 
 /**
@@ -40,10 +41,10 @@ class InlineKeyboards extends ViewWrapper {
   }
 
 
-  public static function calendar(DateTime $_SelectedDatetime) {
+  public static function calendar(DateTimeIT $_SelectedDatetime) {
 
-    $_TodayDatetime = new DateTime(date("Y-m-d"));
-    $_ReferenceMonth = new DateTime($_SelectedDatetime->format("Y-m-01"));
+    $_TodayDatetime = new DateTimeIT(date("Y-m-d"));
+    $_ReferenceMonth = new DateTimeIT($_SelectedDatetime->format("Y-m-01"));
     if ($_TodayDatetime < $_ReferenceMonth) {
       $_TodayDatetime = $_ReferenceMonth;
     }
@@ -58,7 +59,7 @@ class InlineKeyboards extends ViewWrapper {
         "callback_data" => "previous_month"
       ],
       [
-        "text" => $_TodayDatetime->format("F Y"),
+        "text" => $_TodayDatetime->getLiteralMonth() . " " . $_TodayDatetime->format("Y"),
         "callback_data" => $_TodayDatetime->format("Y-m")
       ],
       [
