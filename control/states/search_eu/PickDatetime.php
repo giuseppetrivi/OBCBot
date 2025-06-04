@@ -85,6 +85,8 @@ class PickDatetime extends AbstractState {
     $_SelectedDatetime = new DateTimeIT($date_selected . " " . $hour);
     $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
 
+    // TODO: controllare la data (e l'ora soprattutto), che non siano nel passato
+
     $this->_Bot->editMessageText([
       "message_id" => $message_id,
       "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
@@ -128,27 +130,24 @@ class PickDatetime extends AbstractState {
     $datetime = $_SearchEU->getSearchInfo()["sea_datetime"];
     
     $_SelectedDatetime = new DateTimeIT($datetime);
-    $_TodayDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
-    if ($_SelectedDatetime == $_TodayDatetime) {
-      $this->keepThisState();
+    $_SelectedDatetime->modify("-1 month");
+
+    switch ($_SelectedDatetime->isDatetimeInThePast()) {
+      case -1:
+        $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
+      case 0:
+      case 1:
+        $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
+
+        $this->_Bot->editMessageText([
+          "message_id" => $message_id,
+          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
+        ]);
+        break;
     }
-    else {
-      $_SelectedDatetime->modify("-1 month");
 
-      if ($_SelectedDatetime < $_TodayDatetime) {
-        $_SelectedDatetime = $_TodayDatetime;
-      }
-
-      $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
-
-      $this->_Bot->editMessageText([
-        "message_id" => $message_id,
-        "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
-        "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
-      ]);
-
-      $this->keepThisState();
-    }
+    $this->keepThisState();
   }
 
 
@@ -185,27 +184,28 @@ class PickDatetime extends AbstractState {
     $datetime = $_SearchEU->getSearchInfo()["sea_datetime"];
     
     $_SelectedDatetime = new DateTimeIT($datetime);
-    $_TodayDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
-    if ($_SelectedDatetime == $_TodayDatetime) {
-      $this->keepThisState();
+
+    switch ($_SelectedDatetime->isDatetimeInThePast()) {
+      case -1:
+        $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
+        $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
+        break;
+      case 0:
+        break;
+      case 1:
+        $_SelectedDatetime->modify("-1 hour");
+
+        $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
+
+        $this->_Bot->editMessageText([
+          "message_id" => $message_id,
+          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
+        ]);
+        break;
     }
-    else {
-      $_SelectedDatetime->modify("-1 hour");
 
-      if ($_SelectedDatetime < $_TodayDatetime) {
-        $_SelectedDatetime = $_TodayDatetime;
-      }
-
-      $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
-
-      $this->_Bot->editMessageText([
-        "message_id" => $message_id,
-        "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
-        "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
-      ]);
-
-      $this->keepThisState();
-    }
+    $this->keepThisState();
   }
 
 
