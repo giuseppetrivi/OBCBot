@@ -3,20 +3,21 @@
 namespace CustomBotName\entities;
 
 use DateTime;
+use DateTimeZone;
 
 /**
  * Class to handle all datetime components
  */
 class DateTimeIT extends DateTime {
-  const DATABASE_FORMAT = "Y-m-d H:i:s";
+  public const DATABASE_FORMAT = "Y-m-d H:00:00";
 
   /**
    * 
    */
   public function __construct(string $datetime = 'now', \DateTimeZone|null $timezone = null) {
-    parent::__construct();
+    parent::__construct($datetime, new DateTimeZone('Europe/Rome'));
 
-    
+    // TODO: controllare la data
   }
 
   /**
@@ -38,6 +39,13 @@ class DateTimeIT extends DateTime {
    */
   public function nextDay() {
     $this->modify("+1 day");
+    return $this->format(DateTimeIT::DATABASE_FORMAT);
+  }
+
+  /**
+   * 
+   */
+  public function databaseFormat() {
     return $this->format(DateTimeIT::DATABASE_FORMAT);
   }
 }

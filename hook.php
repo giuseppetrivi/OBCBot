@@ -9,8 +9,6 @@ require_once __DIR__ . "/control/states_autoloader.php";
 
 use CustomBotName\init\Init;
 
-date_default_timezone_set('Europe/Rome');
-
 $development_mode = "testing";
 Init::initRequestProcessing($development_mode);
 
