@@ -69,8 +69,8 @@ class ArrivalStop extends AbstractState {
     $_SearchEU->setArrivalStop($arrival_stop_id);
 
     /* datetime picker keyboard */
-    $_SelectedDatetime = new DateTimeIT(date("Y-m-d H:00"));
-    $_SearchEU->setDatetime($_SelectedDatetime->format("Y-m-d H:i:s"));
+    $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
+    $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
 
     $this->_Bot->sendMessage([
       "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
