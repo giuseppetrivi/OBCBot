@@ -3,6 +3,8 @@
 namespace CustomBotName\entities\api_cotrap;
 
 use CustomBotName\entities\BaseEntity;
+use DB;
+use MeekroDBException;
 
 abstract class Search extends BaseEntity {
 
@@ -11,6 +13,21 @@ abstract class Search extends BaseEntity {
 
   public function __construct($user_idtelegram) {
     $this->setUserIdtelegram($user_idtelegram);
+  }
+
+  /**
+   * Method to mechanically update a signle field of search table
+   */
+  protected function updateSingleField($field, $value) {
+    try {
+      $result = DB::update("obc_searches", 
+        [$field => $value], 
+        ["user_idtelegram" => $this->getUserIdtelegram()]
+      );
+      return $result;
+    } catch(MeekroDBException $e) {
+      return 0;
+    }
   }
 
 

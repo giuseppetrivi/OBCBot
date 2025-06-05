@@ -47,137 +47,47 @@ class SearchEU extends Search {
 
   
   public function setDepartureLocation($departure_location_id) {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_departure_id" => $departure_location_id], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_departure_id", $departure_location_id);
   }
 
   public function unsetDepartureLocation() {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_departure_id" => NULL], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_departure_id", NULL);
   }
 
   
   public function setArrivalLocation($arrival_location_id) {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_arrival_id" => $arrival_location_id], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_arrival_id", $arrival_location_id);
   }
   
   public function unsetArrivalLocation() {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_arrival_id" => NULL], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_arrival_id", NULL);
   }
 
 
   public function setDepartureStop($departure_stop_id) {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_departure_stop_id" => $departure_stop_id], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_departure_stop_id", $departure_stop_id);
   }
   
   public function unsetDepartureStop() {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_departure_stop_id" => NULL], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_departure_stop_id", NULL);
   }
 
 
-  public function setArrivalStop($arrival_location_id) {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_arrival_stop_id" => $arrival_location_id], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+  public function setArrivalStop($arrival_stop_id) {
+    return $this->updateSingleField("sea_arrival_stop_id", $arrival_stop_id);
   }
   
   public function unsetArrivalStop() {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_arrival_stop_id" => NULL], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_arrival_stop_id", NULL);
   }
 
 
   public function setDatetime($datetime) {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_datetime" => $datetime], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_datetime", $datetime);
   }
   
   public function unsetDatetime() {
-    $result = 0;
-    try {
-      $result = DB::update("obc_searches", 
-        ["sea_datetime" => NULL], 
-        ["user_idtelegram" => $this->getUserIdtelegram()]
-      );
-      return $result;
-    } catch(MeekroDBException $e) {
-      return $result;
-    }
+    return $this->updateSingleField("sea_datetime", NULL);
   }
 
 }
