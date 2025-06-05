@@ -15,6 +15,7 @@ final class MenuOptions {
   public const SETTINGS = '⚙️  Impostazioni';
 
   public const BACK = "↩  Indietro";
+  public const BACK_TO_MENU = "🏠  Torna al menu principale";
 
   
   /**
