@@ -3,10 +3,12 @@
 namespace SearchEU\DepartureLocation\ArrivalLocation\DepartureStop\ArrivalStop;
 
 use CustomBotName\control\AbstractState;
+use CustomBotName\entities\api_cotrap\ApiCotrapRequestHandler;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\DatetimeHandler;
 use CustomBotName\entities\DateTimeIT;
+use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
@@ -20,42 +22,47 @@ class PickDatetime extends AbstractState {
 
   protected function validateDynamicInputs() {
     $input_text = $this->_Bot->getInputFromChat()->getText();
+    $input_type = $this->_Bot->getInputFromChat()->getMessageType();
 
     /* regex to get callback_data to select day */
     $complete_date_regex = "/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/";
     $yearmonth_regex = "/^\d{4}-(0[1-9]|1[0-2])$/";
 
-    if (preg_match($complete_date_regex, $input_text)) {
+    if (preg_match($complete_date_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectDateProcedure";
       return true;
     }
     /* regex to get callback_data to select month (and year) */
-    else if (preg_match($yearmonth_regex, $input_text)) {
+    else if (preg_match($yearmonth_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectMonthProcedure";
       return true;
     }
     /* select the next month */
-    else if ($input_text=="next_month") {
+    else if ($input_text=="next_month" && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectNextMonthProcedure";
       return true; 
     }
     /* select the previous month */
-    else if ($input_text=="previous_month") {
+    else if ($input_text=="previous_month" && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectPreviousMonthProcedure";
       return true; 
     }
     /* select the next hour */
-    else if ($input_text=="next_hour") {
+    else if ($input_text=="next_hour" && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectNextHourProcedure";
       return true; 
     }
     /* select the previous hour */
-    else if ($input_text=="previous_hour") {
+    else if ($input_text=="previous_hour" && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectPreviousHourProcedure";
       return true; 
     }
-    else if ($input_text=="search") {
+    else if ($input_text=="search" && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "searchProcedure";
+      return true; 
+    }
+    else if ( ($input_text=="week_day" || $input_text=="blank_day") && $input_type==InputTypes::CALLBACK_QUERY) {
+      $this->function_to_call = "searchProcedure"; // TODO: da cambiare (procedura vuota)
       return true; 
     }
 
@@ -236,8 +243,40 @@ class PickDatetime extends AbstractState {
   public function searchProcedure() {
     $_SearchEU = new SearchEU($this->_User->getUserId());
     $search_info = $_SearchEU->getSearchInfo();
-
     
+    $_Datetime = new DateTimeIT($search_info["sea_datetime"]);
+    $formatted_date = $_Datetime->getApiFormattedDate();
+    $formatted_time = $_Datetime->getApiFormattedTime();
+
+    $_ApiCotrap = new ApiCotrapRequestHandler();
+    $request_result_data = $_ApiCotrap->get("search_eu", [], [
+      "idLocalitaPartenza" => $search_info["sea_departure_id"],
+      "idLocalitaArrivo" => $search_info["sea_arrival_id"],
+      "idPoloPartenza" => $search_info["sea_departure_stop_id"],
+      "idPoloArrivo" => $search_info["sea_arrival_stop_id"],
+      "dataPartenza" => $formatted_date,
+      "oraPartenza" => $formatted_time,
+      "numeroCambi" => 0,
+      "pagina" => 1,
+    ]);
+
+    $search_results = $request_result_data["result"]["itinerariTrovati"];
+    if (empty($search_results)) {
+      $this->_Bot->sendMessage([
+        'text' => TextMessages::noSearchResults()
+      ]);
+
+      $this->keepThisState();
+    }
+    else {
+      $this->_Bot->sendMessage([
+        'text' => TextMessages::showSearchResults($search_results, $_Datetime),
+        'reply_markup' => InlineKeyboards::websiteResultsLink($request_result_data["url"]),
+        'disable_web_page_preview' => true
+      ]);
+    }
+
+    $this->keepThisState(); // TODO: da cambiare
   }
 
 
