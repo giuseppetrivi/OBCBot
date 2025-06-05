@@ -17,6 +17,11 @@ class Keyboards extends ViewWrapper {
     [MenuOptions::BACK]
   ];
 
+  public const BACK_AND_MENU = [
+    [MenuOptions::BACK],
+    [MenuOptions::BACK_TO_MENU],
+  ];
+
 
   use KeyboardsTrait;
 
