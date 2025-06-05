@@ -22,4 +22,13 @@ class LocationsU extends BaseEntity {
     return DB::query("SELECT codice, denominazione FROM cotrap_localita_u ORDER BY denominazione ASC");
   }
 
+  /**
+   * 
+   */
+  /*public function getDepartureStop($urban_location_id) {
+    return DB::query("SELECT * FROM cotrap_polilocalita 
+      WHERE idComune=%s_town_id AND urbano=1
+      ORDER BY LENGTH(poliArrivo) DESC", ["town_id" => $urban_location_id]);
+  }*/
+
 }
