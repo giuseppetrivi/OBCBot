@@ -24,10 +24,6 @@ class InlineKeyboards extends ViewWrapper {
         "callback_data" => "polo_" . $info["id"]
       ]]);
     }
-    array_push($inline_keyboard, [[
-      "text" => MenuOptions::FAST_SEARCH,
-      "callback_data" => "fast_search"
-    ]]);
     
     return InlineKeyboards::createInlineKeyboard($inline_keyboard);
   }
