@@ -8,23 +8,7 @@ use DateTime;
 /**
  * Class to handle all inline keyboards 
  */
-class InlineKeyboards extends ViewWrapper {
-
-  private const MAX_INLINE_BUTTONS = 100;
-
-  public const LIST_BUTTON_NAVIGATION = [
-    [
-      [
-        "text" => "\xE2\xAC\x85 Pagina precedente",
-        "callback_data" => "back"
-      ],
-      [
-        "text" => "Prossima pagina \xE2\x9E\xA1",
-        "callback_data" => "forward"
-      ]
-    ]
-  ];
-  
+class InlineKeyboards extends ViewWrapper {  
 
   use InlineKeyboardsTrait;
 
