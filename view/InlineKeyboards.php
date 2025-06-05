@@ -28,6 +28,21 @@ class InlineKeyboards extends ViewWrapper {
     return InlineKeyboards::createInlineKeyboard($inline_keyboard);
   }
 
+  /**
+   * List of urban location
+   */
+  public static function urbanLocationsList($all_urban_locations) {
+    $inline_keyboard = [];
+    foreach($all_urban_locations as $info) {
+      array_push($inline_keyboard, [[
+        "text" => $info["denominazione"],
+        "callback_data" => "location_" . $info["codice"]
+      ]]);
+    }
+    
+    return InlineKeyboards::createInlineKeyboard($inline_keyboard);
+  }
+
 
   /**
    * Calendar generator and datetime picker

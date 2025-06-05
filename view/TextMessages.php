@@ -114,5 +114,13 @@ final class TextMessages {
     return "⚠️ Nessun risultato disponibile. Prova a cambiare qualche parametro di ricerca";
   }
 
+  public static function urbanSearchHeader() {
+    return "🌇 Questo è il procedimento per cercare le tratte urbane";
+  }
+
+  public static function chooseUrbanLocation() {
+    return "📍 Scegli una <b>località tra le seguenti</b>";
+  }
+
 
 }
