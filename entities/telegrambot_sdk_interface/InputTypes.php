@@ -8,8 +8,8 @@ namespace CustomBotName\entities\telegrambot_sdk_interface;
  */
 final class InputTypes {
 
-  const MESSAGE = "TextMessage";
-  const CALLBACK_QUERY = "CallbackQuery";
+  public const MESSAGE = "TextMessage";
+  public const CALLBACK_QUERY = "CallbackQuery";
   
 }
 
