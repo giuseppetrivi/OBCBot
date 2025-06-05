@@ -24,6 +24,10 @@ class InlineKeyboards extends ViewWrapper {
         "callback_data" => "polo_" . $info["id"]
       ]]);
     }
+    array_push($inline_keyboard, [[
+      "text" => MenuOptions::FAST_SEARCH,
+      "callback_data" => "fast_search"
+    ]]);
     
     return InlineKeyboards::createInlineKeyboard($inline_keyboard);
   }
@@ -41,6 +45,13 @@ class InlineKeyboards extends ViewWrapper {
 
     /* month selector */
     $index_keyboard_row = 0;
+    $calendar_keyboard[$index_keyboard_row]= [
+      [
+        "text" => "📅  Scegli il giorno di partenza",
+        "callback_data" => "blank"
+      ]
+    ];
+    $index_keyboard_row++;
     $calendar_keyboard[$index_keyboard_row]= [
       [
         "text" => "◀️",
@@ -61,31 +72,31 @@ class InlineKeyboards extends ViewWrapper {
     $calendar_keyboard[$index_keyboard_row]= [
       [
         "text" => "Lun",
-        "callback_data" => "week_day"
+        "callback_data" => "blank"
       ],
       [
         "text" => "Mar",
-        "callback_data" => "week_day"
+        "callback_data" => "blank"
       ],
       [
         "text" => "Mer",
-        "callback_data" => "week_day"
+        "callback_data" => "blank"
       ],
       [
         "text" => "Gio",
-        "callback_data" => "week_day"
+        "callback_data" => "blank"
       ],
       [
         "text" => "Ven",
-        "callback_data" => "week_day"
+        "callback_data" => "blank"
       ],
       [
         "text" => "Sab",
-        "callback_data" => "week_day"
+        "callback_data" => "blank"
       ],
       [
         "text" => "Dom",
-        "callback_data" => "week_day"
+        "callback_data" => "blank"
       ],
     ];
 
@@ -95,7 +106,7 @@ class InlineKeyboards extends ViewWrapper {
 
     $empty_day = [
       "text" => " ",
-      "callback_data" => "blank_day"
+      "callback_data" => "blank"
     ];
     
     $counter_week = ++$index_keyboard_row;
@@ -130,6 +141,36 @@ class InlineKeyboards extends ViewWrapper {
     $index_keyboard_row++;
     $calendar_keyboard[$index_keyboard_row]= [
       [
+        "text" => "🕒  Scegli l'orario di partenza",
+        "callback_data" => "blank"
+      ]
+    ];
+
+    $_Hours = new DateTimeIT("1970-01-01 00:00:00");
+    for ($row=1; $row<=6; $row++) {
+      $index_keyboard_row++;
+      $calendar_keyboard[$index_keyboard_row] = array_fill(0, 4, " ");
+
+      for ($col=0; $col<4; $col++) {
+        $time = $_Hours->format("H:00");
+        if ($_SelectedDatetime->format("H:00") == $_Hours->format("H:00")) {
+          $time = "[ " . $time . " ]";
+        }
+        $calendar_keyboard[$index_keyboard_row][$col] = [
+          "text" => $time,
+          "callback_data" => $_Hours->format("H:00")
+        ];
+        $_Hours->modify("+1 hour");
+      }
+    }
+
+    /* // dynamic time selector
+    $calendar_keyboard[$index_keyboard_row]= [
+      [
+        "text" => "☀︎ sempre",
+        "callback_data" => "all_day"
+      ],
+      [
         "text" => "◀️",
         "callback_data" => "previous_hour"
       ],
@@ -141,7 +182,7 @@ class InlineKeyboards extends ViewWrapper {
         "text" => "▶️",
         "callback_data" => "next_hour"
       ]
-    ];
+    ];*/
 
     /* search button */
     $index_keyboard_row++;
