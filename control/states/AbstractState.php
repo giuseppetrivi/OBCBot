@@ -168,6 +168,13 @@ abstract class AbstractState {
   }
 
   /**
+   * Empty procedure to simply not do anything
+   */
+  protected function emptyProcedure() {
+    $this->keepThisState();
+  }
+
+  /**
    * Verify all the post-conditions, starting from the
    * change of the state
    */

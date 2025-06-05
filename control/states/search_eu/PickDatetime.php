@@ -58,7 +58,7 @@ class PickDatetime extends AbstractState {
       return true; 
     }
     else if ( $input_text=="blank" && $input_type==InputTypes::CALLBACK_QUERY) {
-      $this->function_to_call = "searchProcedure"; // TODO: da cambiare (procedura vuota)
+      $this->function_to_call = "emptyProcedure"; // TODO: da cambiare (procedura vuota)
       return true; 
     }
 
