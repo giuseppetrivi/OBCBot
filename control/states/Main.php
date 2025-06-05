@@ -1,7 +1,10 @@
 <?php
 
 use CustomBotName\control\AbstractState;
+use CustomBotName\entities\api_cotrap\LocationsU;
 use CustomBotName\entities\api_cotrap\SearchEU;
+use CustomBotName\entities\api_cotrap\SearchU;
+use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
@@ -55,10 +58,31 @@ class Main extends AbstractState {
 
   /**
    * States:
-   * NULL (Main) -> SearchU\???
+   * NULL (Main) -> SearchU\DepartureLocation
    */
   protected function searchUProcedure() {
-    // TODO
+    $_SearchU = new SearchU($this->_User->getUserId());
+    $result = $_SearchU->initializeSearch();
+
+    if ($result!=1) {
+      $_SearchU->destroySearch();
+      $_SearchU->initializeSearch();
+    }
+
+    $_LocationsU = new LocationsU();
+    $all_urbal_locations = $_LocationsU->getAllUrbanLocations();
+
+    $this->_Bot->sendMessage([
+      'text' => TextMessages::urbanSearchHeader(),
+      'reply_markup' => Keyboards::getBackAndMenu()
+    ]);
+
+    $this->_Bot->sendMessage([
+      'text' => TextMessages::chooseUrbanLocation(),
+      'reply_markup' => InlineKeyboards::urbanLocationsList($all_urbal_locations)
+    ]);
+
+    $this->setNextState("SearchU\DepartureLocation");
   }
 
   /**
