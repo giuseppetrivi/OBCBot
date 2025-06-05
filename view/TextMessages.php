@@ -83,7 +83,7 @@ final class TextMessages {
 
   public static function recapDatetime(DateTimeIT $_SelectedDatetime) {
     return "📅  Data selezionata: <b>" . $_SelectedDatetime->format("d") . " " . $_SelectedDatetime->getLiteralMonth() . " " . $_SelectedDatetime->format("Y") . "</b>\n" .
-      "🕒  Ora selezionata: <b>" . $_SelectedDatetime->format("H:i") . "</b>";
+      "🕒  Ora selezionata:   <b>" . $_SelectedDatetime->format("H:i") . "</b>";
   }
 
 
