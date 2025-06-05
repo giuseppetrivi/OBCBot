@@ -92,7 +92,6 @@ class LocationStops extends BaseEntity {
   private function getListPoliArrivo($stop_info) {
     $arrival_stop_ids = array_slice(explode("|", $stop_info["poliArrivo"]), 1, -1);
     return $arrival_stop_ids;
-
   }
 
 
