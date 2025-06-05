@@ -6,7 +6,7 @@ use Telegram\Bot\Keyboard\Keyboard;
 
 
 /**
- * 
+ * Specific function to create inline keyboard
  */
 trait InlineKeyboardsTrait {
   protected static function createInlineKeyboard($inline_keyboard) {
