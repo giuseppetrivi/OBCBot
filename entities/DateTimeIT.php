@@ -10,6 +10,8 @@ use DateTimeZone;
  */
 class DateTimeIT extends DateTime {
   public const DATABASE_FORMAT = "Y-m-d H:00:00";
+  public const API_DATE_FORMAT = "d/m/Y";
+  public const API_TIME_FORMAT = "H:00";
 
   /**
    * 
@@ -47,6 +49,17 @@ class DateTimeIT extends DateTime {
    */
   public function databaseFormat() {
     return $this->format(DateTimeIT::DATABASE_FORMAT);
+  }
+
+  /**
+   * 
+   */
+  public function getApiFormattedDate() {
+    return $this->format(DateTimeIT::API_DATE_FORMAT);
+  }
+
+  public function getApiFormattedTime() {
+    return $this->format(DateTimeIT::API_TIME_FORMAT);
   }
 
   /**
