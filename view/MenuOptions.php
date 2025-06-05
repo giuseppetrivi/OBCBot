@@ -11,7 +11,7 @@ final class MenuOptions {
   public const COMMAND_RESTART = "/restart";
 
   public const SEARCH_EU = "🚌  Cerca Extraurbana";
-  public const SEARCH_U = "🏘️  Cerca Urbana";
+  public const SEARCH_U = "🌇  Cerca Urbana";
   public const SETTINGS = "⚙️  Impostazioni";
 
   public const FAST_SEARCH = "⚡  Avvia la ricerca rapida";
