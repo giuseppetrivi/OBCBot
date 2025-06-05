@@ -7,6 +7,7 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\DateTimeIT;
+use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
@@ -22,10 +23,11 @@ class ArrivalStop extends AbstractState {
 
   protected function validateDynamicInputs() {
     $input_text = $this->_Bot->getInputFromChat()->getText();
+    $input_type = $this->_Bot->getInputFromChat()->getMessageType();
+
     /* regex to get callback_data like polo_ID */
     $stops_regex = "/^polo_[0-9][0-9]*$/";
-    $match_result = preg_match($stops_regex, $input_text);
-    if ($match_result) {
+    if (preg_match($stops_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectArrivalStopProcedure";
       return true;
     }
@@ -55,9 +57,6 @@ class ArrivalStop extends AbstractState {
     $this->setNextState($this->getPreviousState());
   }
 
-  /**
-   * 
-   */
   use BackToMenuTrait;
 
 

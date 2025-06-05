@@ -5,6 +5,7 @@ namespace SearchEU;
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsEU;
 use CustomBotName\entities\api_cotrap\SearchEU;
+use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
@@ -19,10 +20,11 @@ class DepartureLocation extends AbstractState {
 
   protected function validateDynamicInputs() {
     $input_text = $this->_Bot->getInputFromChat()->getText();
+    $input_type = $this->_Bot->getInputFromChat()->getMessageType();
+
     /* regex to get words, eventually containing "-", as valid command. this word should be a location */
     $locations_regex = "/\b[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+(?:\s*-\s*[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+|\s+[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+)*\b/";
-    $match_result = preg_match($locations_regex, $input_text);
-    if ($match_result) {
+    if (preg_match($locations_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectDepartureLocationProcedure";
       return true;
     }

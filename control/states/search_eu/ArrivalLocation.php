@@ -7,6 +7,7 @@ use CustomBotName\entities\api_cotrap\LocationsEU;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use BackToMenuTrait;
+use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
@@ -21,10 +22,11 @@ class ArrivalLocation extends AbstractState {
 
   protected function validateDynamicInputs() {
     $input_text = $this->_Bot->getInputFromChat()->getText();
+    $input_type = $this->_Bot->getInputFromChat()->getMessageType();
+
     /* regex to get words, eventually containing "-", as valid command. this word should be a location */
     $locations_regex = "/\b[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+(?:\s*-\s*[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+|\s+[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+)*\b/";
-    $match_result = preg_match($locations_regex, $input_text);
-    if ($match_result) {
+    if (preg_match($locations_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectArrivalLocationProcedure";
       return true;
     }
@@ -46,9 +48,6 @@ class ArrivalLocation extends AbstractState {
     $this->setNextState($this->getPreviousState());
   }
 
-  /**
-   * 
-   */
   use BackToMenuTrait;
 
 
