@@ -94,20 +94,20 @@ final class TextMessages {
 
     $header = "🌐 Risultati per il giorno <b>" . $_Datetime->format("d") . " " . $_Datetime->getLiteralMonth() . " " . $_Datetime->format("Y") . "</b>"
       . ", dalle ore <b>" . $_Datetime->format("H:00") . "</b> in poi...\n\n"
-      . "📍 <b>" . $first["localitaPartenza"] . "</b>, <a href='$departure_position'>" . $first["denominazionePartenza"] . "</a>\n"
-      . "📍 <b>" . $first["localitaArrivo"] . "</b>, <a href='$arrival_position'>" . $first["denominazioneArrivo"] . "</a>\n\n";
+      . "╒ <b>" . $first["localitaPartenza"] . "</b>, <a href='$departure_position'>" . $first["denominazionePartenza"] . "</a>\n"
+      . "╘ <b>" . $first["localitaArrivo"] . "</b>, <a href='$arrival_position'>" . $first["denominazioneArrivo"] . "</a>\n\n";
 
-    $text = "";
+    $timetables = "";
     foreach($search_results as $ride) {
       $type = "";
       if ($ride["tipologiaFrequenzaCorsa1"]==2) {
         $type = "[<i>Scolastica</i>]";
       }
-      $text .= "🕒  <b>" . $ride["oraPartenza"] . " ➝ " . $ride["oraArrivo"] . "</b> (" . $ride["durata"] . ") $type\n"
+      $timetables .= "🕒  <b>" . $ride["oraPartenza"] . " ➝ " . $ride["oraArrivo"] . "</b> (" . $ride["durata"] . ") $type\n"
         . "💰  <i>€ " . number_format($ride["prezzoUnitario"], 2) . "</i>\n\n";
     }
 
-    return $header . $text;
+    return $header . $timetables;
   }
 
   public static function noSearchResults() {
