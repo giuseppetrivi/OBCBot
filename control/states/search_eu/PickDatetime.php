@@ -27,6 +27,7 @@ class PickDatetime extends AbstractState {
     /* regex to get callback_data to select day */
     $complete_date_regex = "/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/";
     $yearmonth_regex = "/^\d{4}-(0[1-9]|1[0-2])$/";
+    $hour_regex = "/^([01]\d|2[0-3]):00$/";
 
     if (preg_match($complete_date_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectDateProcedure";
@@ -35,6 +36,11 @@ class PickDatetime extends AbstractState {
     /* regex to get callback_data to select month (and year) */
     else if (preg_match($yearmonth_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectMonthProcedure";
+      return true;
+    }
+    /* regex to get callback_data to select hour */
+    else if (preg_match($hour_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
+      $this->function_to_call = "selectHourProcedure";
       return true;
     }
     /* select the next month */
@@ -47,21 +53,11 @@ class PickDatetime extends AbstractState {
       $this->function_to_call = "selectPreviousMonthProcedure";
       return true; 
     }
-    /* select the next hour */
-    else if ($input_text=="next_hour" && $input_type==InputTypes::CALLBACK_QUERY) {
-      $this->function_to_call = "selectNextHourProcedure";
-      return true; 
-    }
-    /* select the previous hour */
-    else if ($input_text=="previous_hour" && $input_type==InputTypes::CALLBACK_QUERY) {
-      $this->function_to_call = "selectPreviousHourProcedure";
-      return true; 
-    }
     else if ($input_text=="search" && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "searchProcedure";
       return true; 
     }
-    else if ( ($input_text=="week_day" || $input_text=="blank_day") && $input_type==InputTypes::CALLBACK_QUERY) {
+    else if ( $input_text=="blank" && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "searchProcedure"; // TODO: da cambiare (procedura vuota)
       return true; 
     }
@@ -185,17 +181,16 @@ class PickDatetime extends AbstractState {
 
 
   /**
-   * Procedure to advance the time by one hour
+   * Set hour
    */
-  protected function selectNextHourProcedure() {
+  protected function selectHourProcedure() {
+    $hour_selected = $this->_Bot->getInputFromChat()->getText();
     $message_id = $this->_Bot->getWebhookUpdate()->getMessage()->getMessageId();
 
     $_SearchEU = new SearchEU($this->_User->getUserId());
-    $datetime = $_SearchEU->getSearchInfo()["sea_datetime"];
-    
-    $_SelectedDatetime = new DateTimeIT($datetime);
-    $_SelectedDatetime->modify("+1 hour");
+    $date = explode(" ", $_SearchEU->getSearchInfo()["sea_datetime"])[0];
 
+    $_SelectedDatetime = new DateTimeIT($date . " " . $hour_selected);
     $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
 
     $this->_Bot->editMessageText([
@@ -207,43 +202,9 @@ class PickDatetime extends AbstractState {
     $this->keepThisState();
   }
 
-  /**
-   * Procedure to go back the time by one hour (checking to not go in the past)
-   */
-  protected function selectPreviousHourProcedure() {
-    $message_id = $this->_Bot->getWebhookUpdate()->getMessage()->getMessageId();
-
-    $_SearchEU = new SearchEU($this->_User->getUserId());
-    $datetime = $_SearchEU->getSearchInfo()["sea_datetime"];
-    
-    $_SelectedDatetime = new DateTimeIT($datetime);
-    /* check if the date is in the past (in this case sets today's date) */
-    switch ($_SelectedDatetime->isDatetimeInThePast()) {
-      case -1:
-        $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
-        $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
-        break;
-      case 0:
-        break;
-      case 1:
-        $_SelectedDatetime->modify("-1 hour");
-
-        $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
-
-        $this->_Bot->editMessageText([
-          "message_id" => $message_id,
-          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
-          "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
-        ]);
-        break;
-    }
-
-    $this->keepThisState();
-  }
-
 
   /**
-   * 
+   * Start the search of timetables, taking all data previously given
    */
   public function searchProcedure() {
     $_SearchEU = new SearchEU($this->_User->getUserId());
@@ -266,6 +227,7 @@ class PickDatetime extends AbstractState {
     ]);
 
     $search_results = $request_result_data["result"]["itinerariTrovati"];
+
     if (empty($search_results)) {
       $this->_Bot->sendMessage([
         'text' => TextMessages::noSearchResults()
