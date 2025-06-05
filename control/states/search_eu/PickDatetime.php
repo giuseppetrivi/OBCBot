@@ -54,6 +54,10 @@ class PickDatetime extends AbstractState {
       $this->function_to_call = "selectPreviousHourProcedure";
       return true; 
     }
+    else if ($input_text=="search") {
+      $this->function_to_call = "searchProcedure";
+      return true; 
+    }
 
     return false;
   }
@@ -65,7 +69,21 @@ class PickDatetime extends AbstractState {
    *  -> SearchEU\DepartureLocation\ArrivalLocation\DepartureStop\ArrivalStop
    */
   protected function backProcedure() {
-    // TODO
+    $_SearchEU = new SearchEU($this->_User->getUserId());
+    $_SearchEU->unsetArrivalStop();
+
+    $departure_stop_id = $_SearchEU->getSearchInfo()["sea_departure_stop_id"];
+    $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
+
+    $_LocationStops = new LocationStops();
+    $location_stops_info = $_LocationStops->getValidArrivalLocationStops($departure_stop_id, $arrival_location_id);
+
+    $this->_Bot->sendMessage([
+      'text' => TextMessages::chooseArrivalStop(),
+      'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
+    ]);
+
+    $this->setNextState($this->getPreviousState());
   }
 
 
@@ -80,7 +98,7 @@ class PickDatetime extends AbstractState {
     $hour = explode(" ", $_SearchEU->getSearchInfo()["sea_datetime"])[1];
 
     $_SelectedDatetime = new DateTimeIT($date_selected . " " . $hour);
-
+    /* check if the date is in the past (in this case sets today's date) */
     switch ($_SelectedDatetime->isDatetimeInThePast()) {
       case -1:
         $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
@@ -95,12 +113,6 @@ class PickDatetime extends AbstractState {
         ]);
         break;
     }
-
-    $this->_Bot->editMessageText([
-      "message_id" => $message_id,
-      "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
-      "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
-    ]);
     
     $this->keepThisState();
   }
@@ -140,7 +152,7 @@ class PickDatetime extends AbstractState {
     
     $_SelectedDatetime = new DateTimeIT($datetime);
     $_SelectedDatetime->modify("-1 month");
-
+    /* check if the date is in the past (in this case sets today's date) */
     switch ($_SelectedDatetime->isDatetimeInThePast()) {
       case -1:
         $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
@@ -193,7 +205,7 @@ class PickDatetime extends AbstractState {
     $datetime = $_SearchEU->getSearchInfo()["sea_datetime"];
     
     $_SelectedDatetime = new DateTimeIT($datetime);
-
+    /* check if the date is in the past (in this case sets today's date) */
     switch ($_SelectedDatetime->isDatetimeInThePast()) {
       case -1:
         $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
@@ -218,8 +230,14 @@ class PickDatetime extends AbstractState {
   }
 
 
-  private function checkDatetime() {
+  /**
+   * 
+   */
+  public function searchProcedure() {
+    $_SearchEU = new SearchEU($this->_User->getUserId());
+    $search_info = $_SearchEU->getSearchInfo();
 
+    
   }
 
 
