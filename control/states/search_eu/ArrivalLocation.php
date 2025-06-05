@@ -26,7 +26,7 @@ class ArrivalLocation extends AbstractState {
 
     /* regex to get words, eventually containing "-", as valid command. this word should be a location */
     $locations_regex = "/\b[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+(?:\s*-\s*[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+|\s+[a-zà-öù-ýA-ZÀ-ÖÙ-Ý]+)*\b/";
-    if (preg_match($locations_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
+    if (preg_match($locations_regex, $input_text) && $input_type==InputTypes::MESSAGE) {
       $this->function_to_call = "selectArrivalLocationProcedure";
       return true;
     }
