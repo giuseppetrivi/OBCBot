@@ -9,20 +9,14 @@ class ApiCotrapRequestHandler extends BaseEntity {
   private $baseUrl = "https://biglietteria.cotrap.it/api/ricerca";
   private $endpoints = [];
 
-  /**
-   * Costruttore della classe ApiClient.
-   *
-   * @param string $baseUrl L'URL base dell'API (es. "https://api.example.com/v1").
-   * @param string|null $apiKey (Opzionale) La chiave API da includere nelle richieste.
-   */
+
   public function __construct() {
     $this->defineEndpoints();
   }
 
 
   /**
-   * Definisce gli endpoint API.
-   * È il luogo dove centralizzi tutti gli URL degli endpoint.
+   * Define API endpoints, to call them with aliases (keys)
    */
   private function defineEndpoints() {
     $this->endpoints = [
@@ -32,35 +26,34 @@ class ApiCotrapRequestHandler extends BaseEntity {
       'poli_localita' => '/polilocalita/{id}',
       'search_eu' => '/extraurbana'
       // ...
-      // Aggiungi qui tutti gli altri endpoint della tua API
     ];
   }
 
 
   /**
-   * Costruisce l'URL completo per una chiamata API.
+   * Build URL to execute an API call
    *
-   * @param string $endpointName Il nome logico dell'endpoint definito in $endpoints.
-   * @param array $pathParams (Opzionale) Un array associativo di parametri per il path (es. ['id' => 123]).
-   * @param array $queryParams (Opzionale) Un array associativo di parametri per la query string (es. ['limit' => 10]).
-   * @return string L'URL completo.
-   * @throws Exception Se l'endpoint non è definito.
+   * @param string $endpointName Endpoint name defined in $endpoints.
+   * @param array $pathParams (Optional) Associative array of parameter for the path (es. ['id' => 123]).
+   * @param array $queryParams (Optional) Associative array of parameter for the query string (es. ['limit' => 10]).
+   * @return string Complete URL.
+   * @throws Exception if endpoint is not defined.
    */
   private function buildUrl(string $endpointName, array $pathParams = [], array $queryParams = []) : string {
     if (!isset($this->endpoints[$endpointName])) {
-      throw new Exception("Endpoint '{$endpointName}' non definito.");
+      throw new Exception("Endpoint '{$endpointName}' not defined");
     }
 
     $endpointPath = $this->endpoints[$endpointName];
 
-    // Sostituisce i parametri nel path (es. {id} con il valore effettivo)
+    /* substitute path parameters (es. {id} with effective value) */
     foreach ($pathParams as $key => $value) {
       $endpointPath = str_replace("{{$key}}", $value, $endpointPath);
     }
 
     $url = $this->baseUrl . $endpointPath;
 
-    // Aggiunge i parametri di query se presenti
+    /* adds query parameters, if them exists */
     if (!empty($queryParams)) {
       $url .= '?' . http_build_query($queryParams);
     }
@@ -70,16 +63,16 @@ class ApiCotrapRequestHandler extends BaseEntity {
 
 
   /**
-   * Esegue una richiesta HTTP generica.
+   * Execute generic HTTP request
    *
-   * @param string $method Il metodo HTTP (GET, POST, PUT, DELETE).
-   * @param string $endpointName Il nome logico dell'endpoint.
-   * @param array $pathParams Parametri per il path dell'URL.
-   * @param array $queryParams Parametri per la query string dell'URL.
-   * @param array $body (Opzionale) Il corpo della richiesta per POST/PUT, solitamente un array associativo.
-   * @param array $headers (Opzionale) Array di header personalizzati.
-   * @return mixed La risposta decodificata (solitamente un array o un oggetto PHP) o false in caso di errore.
-   * @throws Exception Se la richiesta fallisce o ci sono problemi con cURL.
+   * @param string $method HTTP method (GET, POST, PUT, DELETE)
+   * @param string $endpointName Endpoint name
+   * @param array $pathParams URL path parameters
+   * @param array $queryParams URL query parameters
+   * @param array $body (Optional) Body for POST/PUT request, usually an associative array
+   * @param array $headers (Optional) Custom array of headers
+   * @return mixed Decoded response or false in case of error
+   * @throws Exception If request fails or there is some problem with cURL
    */
   private function request(
       string $method,
@@ -113,7 +106,7 @@ class ApiCotrapRequestHandler extends BaseEntity {
         break;
       case 'GET':
       default:
-        // GET è il default, non servono opzioni speciali qui
+        /* GET is default, so no special options here */
         break;
     }
 
@@ -130,23 +123,26 @@ class ApiCotrapRequestHandler extends BaseEntity {
 
     $decodedResponse = json_decode($response, true);
 
-    // Puoi aggiungere una logica più sofisticata per gestire i codici di stato HTTP
+    /* logic to handle special states */
     if ($httpCode >= 400) {
       throw new Exception("API Error: HTTP Code {$httpCode} - Response: " . print_r($decodedResponse, true));
     }
 
-    return $decodedResponse;
+    return [
+      "result" => $decodedResponse,
+      "url" => $url
+    ];
   }
   
 
   /**
-   * Esegue una richiesta GET.
+   * Execute GET request
    *
-   * @param string $endpointName Il nome logico dell'endpoint.
-   * @param array $pathParams Parametri per il path dell'URL.
-   * @param array $queryParams Parametri per la query string dell'URL.
-   * @return mixed La risposta decodificata.
-   * @throws Exception Se la richiesta fallisce.
+   * @param string $endpointName Endpoint name
+   * @param array $pathParams URL path parameters
+   * @param array $queryParams URL query parameters
+   * @return mixed Decoded response
+   * @throws Exception If request fails
    */
   public function get(string $endpointName, array $pathParams = [], array $queryParams = []) {
     return $this->request('GET', $endpointName, $pathParams, $queryParams);
