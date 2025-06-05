@@ -37,6 +37,18 @@ class DateTimeIT extends DateTime {
   }
 
   /**
+   * Get week's day italian name
+   */
+  public function getLiteralWeekDay() {
+    $it_months = [
+      0 => "Domenica", 1 => "Lunedì", 2 => "Martedì", 3 => "Mercoledì", 
+      4 => "Giovedì", 5 => "Venerdì", 6 => "Sabato"
+    ];
+    $month = (int) $this->format("w");
+    return $it_months[$month];
+  }
+
+  /**
    * 
    */
   public function nextDay() {
