@@ -23,22 +23,19 @@ class PickDatetime extends AbstractState {
 
     /* regex to get callback_data to select day */
     $complete_date_regex = "/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/";
-    $match_result = preg_match($complete_date_regex, $input_text);
-    if ($match_result) {
+    $yearmonth_regex = "/^\d{4}-(0[1-9]|1[0-2])$/";
+
+    if (preg_match($complete_date_regex, $input_text)) {
       $this->function_to_call = "selectDateProcedure";
       return true;
     }
-
     /* regex to get callback_data to select month (and year) */
-    $yearmonth_regex = "/^\d{4}-(0[1-9]|1[0-2])$/";
-    $match_result = preg_match($yearmonth_regex, $input_text);
-    if ($match_result) {
+    else if (preg_match($yearmonth_regex, $input_text)) {
       $this->function_to_call = "selectMonthProcedure";
       return true;
     }
-
     /* select the next month */
-    if ($input_text=="next_month") {
+    else if ($input_text=="next_month") {
       $this->function_to_call = "selectNextMonthProcedure";
       return true; 
     }
@@ -83,9 +80,21 @@ class PickDatetime extends AbstractState {
     $hour = explode(" ", $_SearchEU->getSearchInfo()["sea_datetime"])[1];
 
     $_SelectedDatetime = new DateTimeIT($date_selected . " " . $hour);
-    $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
 
-    // TODO: controllare la data (e l'ora soprattutto), che non siano nel passato
+    switch ($_SelectedDatetime->isDatetimeInThePast()) {
+      case -1:
+        $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
+      case 0:
+      case 1:
+        $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
+
+        $this->_Bot->editMessageText([
+          "message_id" => $message_id,
+          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
+        ]);
+        break;
+    }
 
     $this->_Bot->editMessageText([
       "message_id" => $message_id,
