@@ -2,6 +2,7 @@
 
 namespace SearchEU\DepartureLocation\ArrivalLocation\DepartureStop;
 
+use BackToMenuTrait;
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
@@ -15,7 +16,8 @@ use CustomBotName\view\TextMessages;
 class ArrivalStop extends AbstractState {
 
   protected array $valid_static_inputs = [
-    MenuOptions::BACK => "backProcedure"
+    MenuOptions::BACK => "backProcedure",
+    MenuOptions::BACK_TO_MENU => "backToMenuProcedure"
   ];
 
   protected function validateDynamicInputs() {
@@ -52,6 +54,11 @@ class ArrivalStop extends AbstractState {
 
     $this->setNextState($this->getPreviousState());
   }
+
+  /**
+   * 
+   */
+  use BackToMenuTrait;
 
 
   /**

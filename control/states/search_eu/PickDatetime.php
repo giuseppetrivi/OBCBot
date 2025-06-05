@@ -6,18 +6,18 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\ApiCotrapRequestHandler;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
-use CustomBotName\entities\DatetimeHandler;
 use CustomBotName\entities\DateTimeIT;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
+use BackToMenuTrait;
 use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
 
 class PickDatetime extends AbstractState {
 
   protected array $valid_static_inputs = [
-    MenuOptions::BACK => "backProcedure"
+    MenuOptions::BACK => "backProcedure",
+    MenuOptions::BACK_TO_MENU => "backToMenuProcedure"
   ];
 
   protected function validateDynamicInputs() {
@@ -92,6 +92,11 @@ class PickDatetime extends AbstractState {
 
     $this->setNextState($this->getPreviousState());
   }
+
+  /**
+   * 
+   */
+  use BackToMenuTrait;
 
 
   /**

@@ -86,7 +86,7 @@ class DepartureLocation extends AbstractState {
 
       $this->_Bot->sendMessage([
         'text' => TextMessages::chooseArrivalLocation(),
-        'reply_markup' => Keyboards::getOnlyBack()
+        'reply_markup' => Keyboards::getBackAndMenu()
       ]);
 
       $this->setNextState($this->appendNextState("ArrivalLocation"));
