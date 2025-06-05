@@ -87,4 +87,32 @@ final class TextMessages {
   }
 
 
+  public static function showSearchResults($search_results, $_Datetime) {
+    $first = $search_results[0];
+    $departure_position = "https://www.google.com/maps?q=" . $first["latitudinePoloPartenza"] . "," . $first["longitudinePoloPartenza"];
+    $arrival_position = "https://www.google.com/maps?q=" . $first["latitudinePoloArrivo"] . "," . $first["longitudinePoloArrivo"];
+
+    $header = "🌐 Risultati per il giorno <b>" . $_Datetime->format("d") . " " . $_Datetime->getLiteralMonth() . " " . $_Datetime->format("Y") . "</b>"
+      . ", dalle ore <b>" . $_Datetime->format("H:00") . "</b> in poi...\n\n"
+      . "📍 <b>" . $first["localitaPartenza"] . "</b>, <a href='$departure_position'>" . $first["denominazionePartenza"] . "</a>\n"
+      . "📍 <b>" . $first["localitaArrivo"] . "</b>, <a href='$arrival_position'>" . $first["denominazioneArrivo"] . "</a>\n\n";
+
+    $text = "";
+    foreach($search_results as $ride) {
+      $type = "";
+      if ($ride["tipologiaFrequenzaCorsa1"]==2) {
+        $type = "[<i>Scolastica</i>]";
+      }
+      $text .= "🕒  <b>" . $ride["oraPartenza"] . " ➝ " . $ride["oraArrivo"] . "</b> (" . $ride["durata"] . ") $type\n"
+        . "💰  <i>€ " . number_format($ride["prezzoUnitario"], 2) . "</i>\n\n";
+    }
+
+    return $header . $text;
+  }
+
+  public static function noSearchResults() {
+    return "⚠️ Nessun risultato disponibile. Prova a cambiare qualche parametro di ricerca";
+  }
+
+
 }
