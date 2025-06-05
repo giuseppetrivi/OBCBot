@@ -54,12 +54,6 @@ abstract class Search extends BaseEntity {
   abstract public function unsetDepartureLocation();
 
   /**
-   * Set/unset the arrival location id in the initialized search record
-   */
-  abstract public function setArrivalLocation($arrival_location_id);
-  abstract public function unsetArrivalLocation();
-
-  /**
    * Set/unset the departure stop id, based on departure and arrival options
    */
   abstract public function setDepartureStop($departure_stop_id);

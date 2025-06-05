@@ -55,6 +55,9 @@ class SearchEU extends Search {
   }
 
   
+  /**
+   * Set/unset the arrival location id in the initialized search record
+   */
   public function setArrivalLocation($arrival_location_id) {
     return $this->updateSingleField("sea_arrival_id", $arrival_location_id);
   }
