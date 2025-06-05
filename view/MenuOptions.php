@@ -14,7 +14,7 @@ final class MenuOptions {
   public const SEARCH_U = '🏘️  Cerca Urbana';
   public const SETTINGS = '⚙️  Impostazioni';
 
-  public const BACK = "← Indietro";
+  public const BACK = "↩  Indietro";
 
   
   /**
