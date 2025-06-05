@@ -28,6 +28,10 @@ class InlineKeyboards extends ViewWrapper {
 
   use InlineKeyboardsTrait;
 
+
+  /**
+   * List of location stops
+   */
   public static function locationStops($location_stops) {
     $inline_keyboard = [];
     foreach($location_stops as $info) {
@@ -41,6 +45,9 @@ class InlineKeyboards extends ViewWrapper {
   }
 
 
+  /**
+   * Calendar generator and datetime picker
+   */
   public static function calendar(DateTimeIT $_SelectedDatetime) {
     $_TodayDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
     $_FirstDayMonth = new DateTimeIT($_SelectedDatetime->format("Y-m-01"));
@@ -162,6 +169,20 @@ class InlineKeyboards extends ViewWrapper {
     ];
 
     return InlineKeyboards::createInlineKeyboard($calendar_keyboard);
+  }
+
+
+  /**
+   * Inline button to open the web page with search results
+   */
+  public static function websiteResultsLink($url) {
+    $url = "https://biglietteria.cotrap.it/#/ricerca/itinerari;" . str_replace("&", ";", explode("?", $url)[1]);
+    return InlineKeyboards::createInlineKeyboard([[
+      [
+        "text" => "🌍  Visualizza la pagina web con i risultati",
+        "url" => $url
+      ]
+    ]]);
   }
 
 }
