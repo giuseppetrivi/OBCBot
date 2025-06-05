@@ -30,6 +30,7 @@ class ApiCotrapRequestHandler extends BaseEntity {
       'localita_eu' => '/localitaextraurbane',
       'aziende' => '/aziende',
       'poli_localita' => '/polilocalita/{id}',
+      'search_eu' => '/extraurbana'
       // ...
       // Aggiungi qui tutti gli altri endpoint della tua API
     ];
