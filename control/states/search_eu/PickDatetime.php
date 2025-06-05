@@ -181,7 +181,7 @@ class PickDatetime extends AbstractState {
 
 
   /**
-   * Set hour
+   * Procedure to set hour
    */
   protected function selectHourProcedure() {
     $hour_selected = $this->_Bot->getInputFromChat()->getText();
@@ -191,13 +191,21 @@ class PickDatetime extends AbstractState {
     $date = explode(" ", $_SearchEU->getSearchInfo()["sea_datetime"])[0];
 
     $_SelectedDatetime = new DateTimeIT($date . " " . $hour_selected);
-    $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
+    /* check if the date is in the past (in this case sets today's date) */
+    switch ($_SelectedDatetime->isDatetimeInThePast()) {
+      case -1:
+        $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
+      case 0:
+      case 1:
+        $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
 
-    $this->_Bot->editMessageText([
-      "message_id" => $message_id,
-      "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
-      "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
-    ]);
+        $this->_Bot->editMessageText([
+          "message_id" => $message_id,
+          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
+        ]);
+        break;
+    }
     
     $this->keepThisState();
   }
