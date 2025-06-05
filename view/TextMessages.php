@@ -82,7 +82,7 @@ final class TextMessages {
   }
 
   public static function recapDatetime(DateTimeIT $_SelectedDatetime) {
-    return "📅  Data selezionata: <b>" . $_SelectedDatetime->format("d") . " " . $_SelectedDatetime->getLiteralMonth() . " " . $_SelectedDatetime->format("Y") . "</b>\n" .
+    return "📅  Data selezionata: <b>" . $_SelectedDatetime->getLiteralWeekDay() . " " . $_SelectedDatetime->format("d") . " " . $_SelectedDatetime->getLiteralMonth() . " " . $_SelectedDatetime->format("Y") . "</b>\n" .
       "🕒  Ora selezionata:   <b>" . $_SelectedDatetime->format("H:i") . "</b>";
   }
 
@@ -92,7 +92,7 @@ final class TextMessages {
     $departure_position = "https://www.google.com/maps?q=" . $first["latitudinePoloPartenza"] . "," . $first["longitudinePoloPartenza"];
     $arrival_position = "https://www.google.com/maps?q=" . $first["latitudinePoloArrivo"] . "," . $first["longitudinePoloArrivo"];
 
-    $header = "🌐 Risultati per il giorno <b>" . $_Datetime->format("d") . " " . $_Datetime->getLiteralMonth() . " " . $_Datetime->format("Y") . "</b>"
+    $header = "🌐 Risultati per il giorno <b>" . $_Datetime->getLiteralWeekDay() . " " . $_Datetime->format("d") . " " . $_Datetime->getLiteralMonth() . " " . $_Datetime->format("Y") . "</b>"
       . ", dalle ore <b>" . $_Datetime->format("H:00") . "</b> in poi...\n\n"
       . "╒ <b>" . $first["localitaPartenza"] . "</b>, <a href='$departure_position'>" . $first["denominazionePartenza"] . "</a>\n"
       . "╘ <b>" . $first["localitaArrivo"] . "</b>, <a href='$arrival_position'>" . $first["denominazioneArrivo"] . "</a>\n\n";
