@@ -76,6 +76,13 @@ final class TextMessages {
     return "⚠️ Si è verificato un errore nella ricerca delle fermate";
   }
 
+  public static function departureStopSelected($stop_name) {
+    return "✅ Hai selezionato <b>$stop_name</b> come fermata di partenza";
+  }
+  public static function arrivalStopSelected($stop_name) {
+    return "✅ Hai selezionato <b>$stop_name</b> come fermata di arrivo";
+  }
+
 
   public static function selectDatetime() {
     return "⌛ Seleziona la <b>data</b> e l'<b>ora</b> di partenza";
@@ -102,7 +109,7 @@ final class TextMessages {
       if ($ride["oraPartenza"] < $_Datetime->format("H:00")) {
         continue;
       }
-      
+
       $type = "";
       if ($ride["tipologiaFrequenzaCorsa1"]==2) {
         $type = "[<i>Scolastica</i>]";
@@ -123,6 +130,9 @@ final class TextMessages {
   }
   public static function chooseUrbanLocation() {
     return "📍 Scegli una <b>località tra le seguenti</b>";
+  }
+  public static function departureLocationSelected($location_name) {
+    return "✅ Hai selezionato <b>$location_name</b> come località";
   }
 
   public static function chooseUrbanDepartureStop() {
