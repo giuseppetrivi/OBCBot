@@ -2,7 +2,7 @@
 
 use CustomBotName\entities\api_cotrap\Search;
 use CustomBotName\view\Keyboards;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\MainTextMessages;
 
 /**
  * Procedure to come back to the main menu, common to every process
@@ -13,7 +13,7 @@ trait BackToMenuTrait {
     $_Search->destroySearch();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::mainMenu(),
+      'text' => MainTextMessages::mainMenu(),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
 

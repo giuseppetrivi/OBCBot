@@ -6,12 +6,12 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsEU;
 use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
-use BackToMenuTrait;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\Keyboards;
+use CustomBotName\view\InlineKeyboards;
+use CustomBotName\view\SearchEUTextMessages;
+use BackToMenuTrait;
 
 class ArrivalLocation extends AbstractState {
 
@@ -41,7 +41,7 @@ class ArrivalLocation extends AbstractState {
     $_SearchEU->unsetDepartureLocation();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseDepartureLocation(),
+      'text' => SearchEUTextMessages::chooseLocation(true),
       'reply_markup' => Keyboards::getOnlyBack()
     ]);
 
@@ -77,13 +77,13 @@ class ArrivalLocation extends AbstractState {
 
       if ($first_location_similarity_perc >= LocationsEU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::arrivalLocationSelected($first_location_name)
+          'text' => SearchEUTextMessages::locationSelected($first_location_name, false)
         ]);
       }
       else { 
-        $message_to_send = TextMessages::locationAlmostMatched($first_location_name) . 
-          "\n\n" . TextMessages::alternativeLocations(array_slice($locations_info, 1)) .
-          "\n" . TextMessages::arrivalLocationSelected($first_location_name);          
+        $message_to_send = SearchEUTextMessages::maybeYouMeant($first_location_name) . 
+          "\n\n" . SearchEUTextMessages::alternativeOptions(array_slice($locations_info, 1)) .
+          "\n" . SearchEUTextMessages::locationSelected($first_location_name, false);          
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);
@@ -97,14 +97,14 @@ class ArrivalLocation extends AbstractState {
       if ($location_stops_info==null || count($location_stops_info)==0) {
         // TODO: valore da controllare e gestire meglio
         $this->_Bot->sendMessage([
-          'text' => TextMessages::errorInRetriveStops()
+          'text' => SearchEUTextMessages::errorInRetriveStops()
         ]);
 
         $this->backProcedure();
       }
       else {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::chooseDepartureStop(),
+          'text' => SearchEUTextMessages::chooseStop(true),
           'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
         ]);
 
@@ -114,8 +114,8 @@ class ArrivalLocation extends AbstractState {
     }
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
     else {
-      $message_to_send = TextMessages::locationNotMatched($location_to_search) . 
-        "\n\n" . TextMessages::chooseArrivalLocationAgain();
+      $message_to_send = SearchEUTextMessages::maybeYouMeant($location_to_search) . 
+        "\n\n" . SearchEUTextMessages::chooseLocation(false, true);
       $this->_Bot->sendMessage([
         'text' => $message_to_send
       ]);

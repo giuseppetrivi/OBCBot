@@ -4,14 +4,13 @@ namespace SearchU\DepartureLocation\DepartureStop\ArrivalStop;
 
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\ApiCotrapRequestHandler;
-use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchU;
 use CustomBotName\entities\DateTimeIT;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use BackToMenuTrait;
-use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\InlineKeyboards;
+use CustomBotName\view\SearchUTextMessages;
+use BackToMenuTrait;
 
 class PickDatetime extends AbstractState {
 
@@ -76,7 +75,7 @@ class PickDatetime extends AbstractState {
     $_SearchU->unsetArrivalStop();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseUrbanArrivalStop()
+      'text' => SearchUTextMessages::chooseUrbanStop(false)
     ]);
 
     $this->setNextState($this->getPreviousState());
@@ -109,7 +108,7 @@ class PickDatetime extends AbstractState {
 
         $this->_Bot->editMessageText([
           "message_id" => $message_id,
-          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "text" => SearchUTextMessages::selectDatetime() . "\n\n" . SearchUTextMessages::summarySelectedDatetime($_SelectedDatetime),
           "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
         ]);
         break;
@@ -135,7 +134,7 @@ class PickDatetime extends AbstractState {
 
     $this->_Bot->editMessageText([
       "message_id" => $message_id,
-      "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+      "text" => SearchUTextMessages::selectDatetime() . "\n\n" . SearchUTextMessages::summarySelectedDatetime($_SelectedDatetime),
       "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
     ]);
     
@@ -163,7 +162,7 @@ class PickDatetime extends AbstractState {
 
         $this->_Bot->editMessageText([
           "message_id" => $message_id,
-          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "text" => SearchUTextMessages::selectDatetime() . "\n\n" . SearchUTextMessages::summarySelectedDatetime($_SelectedDatetime),
           "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
         ]);
         break;
@@ -194,7 +193,7 @@ class PickDatetime extends AbstractState {
 
         $this->_Bot->editMessageText([
           "message_id" => $message_id,
-          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "text" => SearchUTextMessages::selectDatetime() . "\n\n" . SearchUTextMessages::summarySelectedDatetime($_SelectedDatetime),
           "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
         ]);
         break;
@@ -229,14 +228,14 @@ class PickDatetime extends AbstractState {
 
     if (empty($search_results)) {
       $this->_Bot->sendMessage([
-        'text' => TextMessages::noSearchResults()
+        'text' => SearchUTextMessages::noSearchResults()
       ]);
 
       $this->keepThisState();
     }
     else {
       $this->_Bot->sendMessage([
-        'text' => TextMessages::showSearchResults($search_results, $_Datetime),
+        'text' => SearchUTextMessages::showSearchResults($search_results, $_Datetime),
         'reply_markup' => InlineKeyboards::websiteResultsLink($request_result_data["url"]),
         'disable_web_page_preview' => true
       ]);

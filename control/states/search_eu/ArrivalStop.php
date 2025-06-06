@@ -8,10 +8,9 @@ use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\DateTimeIT;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\InlineKeyboards;
+use CustomBotName\view\SearchEUTextMessages;
 
 
 class ArrivalStop extends AbstractState {
@@ -50,7 +49,7 @@ class ArrivalStop extends AbstractState {
     $location_stops_info = $_LocationStops->getValidDepartureLocationStops($departure_location_id, $arrival_location_id);
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseDepartureStop(),
+      'text' => SearchEUTextMessages::chooseStop(true),
       'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
     ]);
 
@@ -78,7 +77,7 @@ class ArrivalStop extends AbstractState {
     $arrival_stop_name = $_LocationStops->getStopInfoById($arrival_stop_id)["denominazione"];
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::arrivalStopSelected($arrival_stop_name)
+      'text' => SearchEUTextMessages::stopSelected($arrival_stop_name, false)
     ]);
 
     /* datetime picker keyboard */
@@ -86,7 +85,7 @@ class ArrivalStop extends AbstractState {
     $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
 
     $this->_Bot->sendMessage([
-      "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+      "text" => SearchEUTextMessages::selectDatetime() . "\n\n" . SearchEUTextMessages::summarySelectedDatetime($_SelectedDatetime),
       "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
     ]);
 

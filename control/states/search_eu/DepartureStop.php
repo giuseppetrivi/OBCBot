@@ -7,10 +7,10 @@ use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use BackToMenuTrait;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\Keyboards;
+use CustomBotName\view\InlineKeyboards;
+use CustomBotName\view\SearchEUTextMessages;
 
 class DepartureStop extends AbstractState {
 
@@ -41,7 +41,7 @@ class DepartureStop extends AbstractState {
     $_SearchEU->unsetArrivalLocation();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseArrivalLocation(),
+      'text' => SearchEUTextMessages::chooseLocation(false),
       'reply_markup' => Keyboards::getBackAndMenu()
     ]);
 
@@ -69,7 +69,7 @@ class DepartureStop extends AbstractState {
     $departure_stop_name = $_LocationStops->getStopInfoById($departure_stop_id)["denominazione"];
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::departureStopSelected($departure_stop_name)
+      'text' => SearchEUTextMessages::stopSelected($departure_stop_name, true)
     ]);
 
     $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
@@ -80,14 +80,14 @@ class DepartureStop extends AbstractState {
     if ($location_stops_info==null || count($location_stops_info)==0) {
       // TODO: valore da controllare e gestire meglio
       $this->_Bot->sendMessage([
-        'text' => TextMessages::errorInRetriveStops()
+        'text' => SearchEUTextMessages::errorInRetriveStops()
       ]);
 
       $this->backProcedure();
     }
     else {
       $this->_Bot->sendMessage([
-        'text' => TextMessages::chooseArrivalStop(),
+        'text' => SearchEUTextMessages::chooseStop(false),
         'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
       ]);
 

@@ -6,9 +6,10 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsU;
 use CustomBotName\entities\api_cotrap\SearchU;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\Keyboards;
+use CustomBotName\view\MainTextMessages;
+use CustomBotName\view\SearchUTextMessages;
 
 
 class DepartureLocation extends AbstractState {
@@ -41,7 +42,7 @@ class DepartureLocation extends AbstractState {
     $_SearchU->destroySearch();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::mainMenu(),
+      'text' => MainTextMessages::mainMenu(),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
 
@@ -67,11 +68,11 @@ class DepartureLocation extends AbstractState {
     $urban_location_name = $_LocationsU->getUrbanLocationInfoById($urban_location_id)["denominazione"];
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::urbanDepartureLocationSelected($urban_location_name)
+      'text' => SearchUTextMessages::locationSelected($urban_location_name)
     ]);
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseUrbanDepartureStop(),
+      'text' => SearchUTextMessages::chooseUrbanStop(true),
       'reply_markup' => Keyboards::getBackAndMenu()
     ]);
 

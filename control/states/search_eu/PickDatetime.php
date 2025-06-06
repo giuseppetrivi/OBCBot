@@ -8,10 +8,10 @@ use CustomBotName\entities\api_cotrap\LocationStops;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\DateTimeIT;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use BackToMenuTrait;
-use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\InlineKeyboards;
+use CustomBotName\view\SearchEUTextMessages;
+use BackToMenuTrait;
 
 class PickDatetime extends AbstractState {
 
@@ -82,7 +82,7 @@ class PickDatetime extends AbstractState {
     $location_stops_info = $_LocationStops->getValidArrivalLocationStops($departure_stop_id, $arrival_location_id);
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseArrivalStop(),
+      'text' => SearchEUTextMessages::chooseStop(false),
       'reply_markup' => InlineKeyboards::locationStops($location_stops_info)
     ]);
 
@@ -116,7 +116,7 @@ class PickDatetime extends AbstractState {
 
         $this->_Bot->editMessageText([
           "message_id" => $message_id,
-          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "text" => SearchEUTextMessages::selectDatetime() . "\n\n" . SearchEUTextMessages::summarySelectedDatetime($_SelectedDatetime),
           "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
         ]);
         break;
@@ -142,7 +142,7 @@ class PickDatetime extends AbstractState {
 
     $this->_Bot->editMessageText([
       "message_id" => $message_id,
-      "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+      "text" => SearchEUTextMessages::selectDatetime() . "\n\n" . SearchEUTextMessages::summarySelectedDatetime($_SelectedDatetime),
       "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
     ]);
     
@@ -170,7 +170,7 @@ class PickDatetime extends AbstractState {
 
         $this->_Bot->editMessageText([
           "message_id" => $message_id,
-          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "text" => SearchEUTextMessages::selectDatetime() . "\n\n" . SearchEUTextMessages::summarySelectedDatetime($_SelectedDatetime),
           "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
         ]);
         break;
@@ -201,7 +201,7 @@ class PickDatetime extends AbstractState {
 
         $this->_Bot->editMessageText([
           "message_id" => $message_id,
-          "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+          "text" => SearchEUTextMessages::selectDatetime() . "\n\n" . SearchEUTextMessages::summarySelectedDatetime($_SelectedDatetime),
           "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
         ]);
         break;
@@ -238,20 +238,20 @@ class PickDatetime extends AbstractState {
 
     if (empty($search_results)) {
       $this->_Bot->sendMessage([
-        'text' => TextMessages::noSearchResults()
+        'text' => SearchEUTextMessages::noSearchResults()
       ]);
 
       $this->keepThisState();
     }
     else {
       $this->_Bot->sendMessage([
-        'text' => TextMessages::showSearchResults($search_results, $_Datetime),
+        'text' => SearchEUTextMessages::showSearchResults($search_results, $_Datetime),
         'reply_markup' => InlineKeyboards::websiteResultsLink($request_result_data["url"]),
         'disable_web_page_preview' => true
       ]);
     }
 
-    $this->keepThisState(); // TODO: da cambiare
+    $this->keepThisState();
   }
 
 

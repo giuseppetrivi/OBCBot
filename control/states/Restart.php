@@ -4,7 +4,7 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\Search;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\Keyboards;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\MainTextMessages;
 
 
 class Restart extends AbstractState {
@@ -22,7 +22,7 @@ class Restart extends AbstractState {
     $_Search->destroySearch();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::mainMenuFromRestart(),
+      'text' => MainTextMessages::restarted() . "\n\n" . MainTextMessages::mainMenu(),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
   }

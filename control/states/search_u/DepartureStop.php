@@ -6,10 +6,10 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsU;
 use CustomBotName\entities\api_cotrap\SearchU;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\Keyboards;
+use CustomBotName\view\InlineKeyboards;
+use CustomBotName\view\SearchUTextMessages;
 use BackToMenuTrait;
 
 class DepartureStop extends AbstractState {
@@ -45,7 +45,7 @@ class DepartureStop extends AbstractState {
     $all_urbal_locations = $_LocationsU->getAllUrbanLocations();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseUrbanLocation(),
+      'text' => SearchUTextMessages::chooseUrbanLocation(),
       'reply_markup' => InlineKeyboards::urbanLocationsList($all_urbal_locations)
     ]);
 
@@ -81,12 +81,12 @@ class DepartureStop extends AbstractState {
 
       if ($first_stop_similarity_perc >= LocationsU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::departureStopSelected($first_stop_name)
+          'text' => SearchUTextMessages::stopSelected($first_stop_name, true)
         ]);
       }
       else {
-        $message_to_send = TextMessages::stopAlmostMatched($first_stop_name) .
-          "\n\n" . TextMessages::departureStopSelected($first_stop_name);
+        $message_to_send = SearchUTextMessages::maybeYouMeant($first_stop_name) .
+          "\n\n" . SearchUTextMessages::stopSelected($first_stop_name, true);
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);
@@ -95,7 +95,7 @@ class DepartureStop extends AbstractState {
       $_SearchU->setDepartureStop($first_stop_code);
 
       $this->_Bot->sendMessage([
-        'text' => TextMessages::chooseUrbanArrivalStop(),
+        'text' => SearchUTextMessages::chooseUrbanStop(false),
         'reply_markup' => Keyboards::getBackAndMenu()
       ]);
 
@@ -104,8 +104,8 @@ class DepartureStop extends AbstractState {
     }
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
     else {
-      $message_to_send = TextMessages::alternativeStops($stops_info) . 
-        "\n\n" . TextMessages::chooseUrbanDepartureStopAgain();
+      $message_to_send = SearchUTextMessages::alternativeOptions($stops_info) . 
+        "\n\n" . SearchUTextMessages::chooseUrbanStop(true, true);
       $this->_Bot->sendMessage([
         'text' => $message_to_send
       ]);

@@ -6,9 +6,10 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsEU;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\Keyboards;
+use CustomBotName\view\MainTextMessages;
+use CustomBotName\view\SearchEUTextMessages;
 
 
 class DepartureLocation extends AbstractState {
@@ -40,7 +41,7 @@ class DepartureLocation extends AbstractState {
     $_SearchEU->destroySearch();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::mainMenu(),
+      'text' => MainTextMessages::mainMenu(),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
 
@@ -71,13 +72,13 @@ class DepartureLocation extends AbstractState {
 
       if ($first_location_similarity_perc >= LocationsEU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::departureLocationSelected($first_location_name)
+          'text' => SearchEUTextMessages::locationSelected($first_location_name, true)
         ]);
       }
       else {
-        $message_to_send = TextMessages::locationAlmostMatched($first_location_name) . 
-          "\n\n" . TextMessages::alternativeLocations(array_slice($locations_info, 1)) .
-          "\n" . TextMessages::departureLocationSelected($first_location_name);
+        $message_to_send = SearchEUTextMessages::maybeYouMeant($first_location_name) . 
+          "\n\n" . SearchEUTextMessages::alternativeOptions(array_slice($locations_info, 1)) .
+          "\n" . SearchEUTextMessages::locationSelected($first_location_name, true);
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);
@@ -87,7 +88,7 @@ class DepartureLocation extends AbstractState {
       $_SearchEU->setDepartureLocation($first_location_code);
 
       $this->_Bot->sendMessage([
-        'text' => TextMessages::chooseArrivalLocation(),
+        'text' => SearchEUTextMessages::chooseLocation(false),
         'reply_markup' => Keyboards::getBackAndMenu()
       ]);
 
@@ -96,8 +97,8 @@ class DepartureLocation extends AbstractState {
     }
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
     else {
-      $message_to_send = TextMessages::locationNotMatched($location_to_search) . 
-        "\n\n" . TextMessages::chooseDepartureLocationAgain();
+      $message_to_send = SearchEUTextMessages::entityNotFound($location_to_search) . 
+        "\n\n" . SearchEUTextMessages::chooseLocation(true, true);
       $this->_Bot->sendMessage([
         'text' => $message_to_send
       ]);

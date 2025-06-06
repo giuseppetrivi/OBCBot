@@ -6,10 +6,9 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsU;
 use CustomBotName\entities\api_cotrap\SearchU;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\InlineKeyboards;
+use CustomBotName\view\SearchUTextMessages;
 use BackToMenuTrait;
 use CustomBotName\entities\DateTimeIT;
 
@@ -46,7 +45,7 @@ class ArrivalStop extends AbstractState {
     $all_urbal_locations = $_LocationsU->getAllUrbanLocations();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseUrbanLocation(),
+      'text' => SearchUTextMessages::chooseUrbanLocation(),
       'reply_markup' => InlineKeyboards::urbanLocationsList($all_urbal_locations)
     ]);
 
@@ -83,12 +82,12 @@ class ArrivalStop extends AbstractState {
 
       if ($first_stop_similarity_perc >= LocationsU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::arrivalStopSelected($first_stop_name)
+          'text' => SearchUTextMessages::stopSelected($first_stop_name, false)
         ]);
       }
       else {
-        $message_to_send = TextMessages::stopAlmostMatched($first_stop_name) .
-          "\n\n" . TextMessages::arrivalStopSelected($first_stop_name);
+        $message_to_send = SearchUTextMessages::maybeYouMeant($first_stop_name) .
+          "\n\n" . SearchUTextMessages::stopSelected($first_stop_name, false);
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);
@@ -101,7 +100,7 @@ class ArrivalStop extends AbstractState {
       $_SearchU->setDatetime($_SelectedDatetime->databaseFormat());
 
       $this->_Bot->sendMessage([
-        "text" => TextMessages::selectDatetime() . "\n\n" . TextMessages::recapDatetime($_SelectedDatetime),
+        "text" => SearchUTextMessages::selectDatetime() . "\n\n" . SearchUTextMessages::summarySelectedDatetime($_SelectedDatetime),
         "reply_markup" => InlineKeyboards::calendar($_SelectedDatetime)
       ]);
 
@@ -110,8 +109,8 @@ class ArrivalStop extends AbstractState {
     }
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
     else {
-      $message_to_send = TextMessages::alternativeStops($stops_info) . 
-        "\n\n" . TextMessages::chooseUrbanArrivalStopAgain();
+      $message_to_send = SearchUTextMessages::alternativeOptions($stops_info) . 
+        "\n\n" . SearchUTextMessages::chooseUrbanStop(false, true);
       $this->_Bot->sendMessage([
         'text' => $message_to_send
       ]);

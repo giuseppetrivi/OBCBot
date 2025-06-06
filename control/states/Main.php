@@ -4,11 +4,12 @@ use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsU;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\api_cotrap\SearchU;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
-use CustomBotName\view\TextMessages;
-
+use CustomBotName\view\Keyboards;
+use CustomBotName\view\InlineKeyboards;
+use CustomBotName\view\MainTextMessages;
+use CustomBotName\view\SearchEUTextMessages;
+use CustomBotName\view\SearchUTextMessages;
 
 class Main extends AbstractState {
 
@@ -26,7 +27,7 @@ class Main extends AbstractState {
    */
   protected function startProcedure() {
     $this->_Bot->sendMessage([
-      'text' => TextMessages::startingMessage($this->_Bot->getChatWithChecks()->getUsername()),
+      'text' => MainTextMessages::welcome($this->_Bot->getChatWithChecks()->getUsername()),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
   }
@@ -46,7 +47,7 @@ class Main extends AbstractState {
     }
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseDepartureLocation(),
+      'text' => SearchEUTextMessages::chooseLocation(true),
       'reply_markup' => Keyboards::getOnlyBack()
     ]);
 
@@ -71,17 +72,18 @@ class Main extends AbstractState {
     $all_urbal_locations = $_LocationsU->getAllUrbanLocations();
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::urbanSearchHeader(),
+      'text' => SearchUTextMessages::urbanSearchHeader(),
       'reply_markup' => Keyboards::getBackAndMenu()
     ]);
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::chooseUrbanLocation(),
+      'text' => SearchUTextMessages::chooseUrbanLocation(),
       'reply_markup' => InlineKeyboards::urbanLocationsList($all_urbal_locations)
     ]);
 
     $this->setNextState("SearchU\DepartureLocation");
   }
+
 
   /**
    * States:
