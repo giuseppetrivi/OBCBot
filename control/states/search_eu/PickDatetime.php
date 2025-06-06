@@ -247,7 +247,7 @@ class PickDatetime extends AbstractState {
     }
     else {
       $this->_Bot->sendMessage([
-        'text' => SearchEUTextMessages::showSearchResults($specific_search_info, $search_results, $_Datetime),
+        'text' => SearchEUTextMessages::showSearchResults($specific_search_info, $search_results),
         'reply_markup' => InlineKeyboards::websiteResultsLink($request_result_data["url"]),
         'disable_web_page_preview' => true
       ]);

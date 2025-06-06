@@ -56,10 +56,9 @@ abstract class SearchTextMessages {
     return $header;
   }
 
-  /**
-   * 
-   */
-  public static function showSearchResults($specific_search_info, $search_results, $_Datetime) {
+  /** */
+  public static function showSearchResults($specific_search_info, $search_results) {
+    $_Datetime = new DateTimeIT($specific_search_info["departure"]["sea_datetime"]);
     $timetables = "";
     foreach($search_results as $ride) {
       if ($ride["oraPartenza"] < $_Datetime->format("H:00")) {
