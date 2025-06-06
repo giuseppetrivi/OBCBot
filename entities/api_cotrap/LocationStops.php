@@ -21,7 +21,7 @@ class LocationStops extends BaseEntity {
    */
   public function getValidDepartureLocationStops($departure_location_id, $arrival_location_id) {
     $select_query = "SELECT * FROM cotrap_polilocalita 
-      WHERE idComune=%s_town_id AND idFrazione IS NULL AND localitaArrivo LIKE %s_arrival_location_id
+      WHERE idComune=%s_town_id AND idFrazione IS NULL AND localitaArrivo LIKE %s_arrival_location_id AND extraurbano=1
       ORDER BY LENGTH(poliArrivo) DESC";
     $query_arguments = [
       "town_id" => $departure_location_id,
@@ -34,7 +34,7 @@ class LocationStops extends BaseEntity {
       $fraction_id = $exploded_id[1];
 
       $select_query = "SELECT * FROM cotrap_polilocalita 
-        WHERE idComune=%s_town_id AND idFrazione=%s_fraction_id AND localitaArrivo LIKE %s_arrival_location_id
+        WHERE idComune=%s_town_id AND idFrazione=%s_fraction_id AND localitaArrivo LIKE %s_arrival_location_id AND extraurbano=1
         ORDER BY LENGTH(poliArrivo) DESC";
       $query_arguments["town_id"] = $town_id;
       $query_arguments["fraction_id"] = $fraction_id;
@@ -58,7 +58,7 @@ class LocationStops extends BaseEntity {
     $arrival_stop_ids = $this->getListArrivalStops($departure_stop_info);
 
     $select_query = "SELECT * FROM cotrap_polilocalita 
-      WHERE id IN %ls_arrival_stop_ids AND idAzienda=%i_company AND idComune=%s_town_id AND idFrazione IS NULL
+      WHERE id IN %ls_arrival_stop_ids AND idAzienda=%i_company AND idComune=%s_town_id AND idFrazione IS NULL AND extraurbano=1
       ORDER BY LENGTH(poliArrivo) DESC";
     $query_arguments = [
       "arrival_stop_ids" => $arrival_stop_ids,
@@ -72,7 +72,7 @@ class LocationStops extends BaseEntity {
       $fraction_id = $exploded_id[1];
 
       $select_query = "SELECT * FROM cotrap_polilocalita 
-        WHERE id IN %ls_arrival_stop_ids AND idAzienda=%i_company AND idComune=%s_town_id AND idFrazione=%s_fraction_id
+        WHERE id IN %ls_arrival_stop_ids AND idAzienda=%i_company AND idComune=%s_town_id AND idFrazione=%s_fraction_id AND extraurbano=1
         ORDER BY LENGTH(poliArrivo) DESC";
       $query_arguments["town_id"] = $town_id;
       $query_arguments["fraction_id"] = $fraction_id;
