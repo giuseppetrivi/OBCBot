@@ -60,10 +60,17 @@ class DepartureStop extends AbstractState {
     $departure_stop_callback_data = $this->_Bot->getInputFromChat()->getText();
     $departure_stop_id = explode("_", $departure_stop_callback_data)[1];
 
+    // TODO: controllare il departure_stop_id
+
     $_SearchEU = new SearchEU($this->_User->getUserId());
     $_SearchEU->setDepartureStop($departure_stop_id);
 
-    // TODO: controllare il departure_stop_id
+    $_LocationStops = new LocationStops();
+    $departure_stop_name = $_LocationStops->getStopInfoById($departure_stop_id)["denominazione"];
+
+    $this->_Bot->sendMessage([
+      'text' => TextMessages::departureStopSelected($departure_stop_name)
+    ]);
 
     $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
 

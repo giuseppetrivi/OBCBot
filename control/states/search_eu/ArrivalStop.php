@@ -74,6 +74,13 @@ class ArrivalStop extends AbstractState {
     $_SearchEU = new SearchEU($this->_User->getUserId());
     $_SearchEU->setArrivalStop($arrival_stop_id);
 
+    $_LocationStops = new LocationStops();
+    $arrival_stop_name = $_LocationStops->getStopInfoById($arrival_stop_id)["denominazione"];
+
+    $this->_Bot->sendMessage([
+      'text' => TextMessages::arrivalStopSelected($arrival_stop_name)
+    ]);
+
     /* datetime picker keyboard */
     $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
     $_SearchEU->setDatetime($_SelectedDatetime->databaseFormat());
