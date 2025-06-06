@@ -55,7 +55,7 @@ class LocationStops extends BaseEntity {
    */
   public function getValidArrivalLocationStops($departure_stop_id, $arrival_location_id) {
     $departure_stop_info = $this->getStopInfoById($departure_stop_id);
-    $arrival_stop_ids = $this->getListPoliArrivo($departure_stop_info);
+    $arrival_stop_ids = $this->getListArrivalStops($departure_stop_info);
 
     $select_query = "SELECT * FROM cotrap_polilocalita 
       WHERE id IN %ls_arrival_stop_ids AND idAzienda=%i_company AND idComune=%s_town_id AND idFrazione IS NULL
@@ -89,7 +89,7 @@ class LocationStops extends BaseEntity {
     return $result[0];
   }
 
-  private function getListPoliArrivo($stop_info) {
+  private function getListArrivalStops($stop_info) {
     $arrival_stop_ids = array_slice(explode("|", $stop_info["poliArrivo"]), 1, -1);
     return $arrival_stop_ids;
   }
