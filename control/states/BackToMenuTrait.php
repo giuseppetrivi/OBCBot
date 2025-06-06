@@ -1,6 +1,6 @@
 <?php
 
-use CustomBotName\entities\api_cotrap\SearchEU;
+use CustomBotName\entities\api_cotrap\Search;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\TextMessages;
 
@@ -9,8 +9,8 @@ use CustomBotName\view\TextMessages;
  */
 trait BackToMenuTrait {
   protected function backToMenuProcedure() {
-    $_SearchEU = new SearchEU($this->_User->getUserId());
-    $_SearchEU->destroySearch();
+    $_Search = new Search($this->_User->getUserId());
+    $_Search->destroySearch();
 
     $this->_Bot->sendMessage([
       'text' => TextMessages::mainMenu(),
