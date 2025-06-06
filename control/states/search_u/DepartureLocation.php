@@ -3,9 +3,6 @@
 namespace SearchU;
 
 use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\LocationsEU;
-use CustomBotName\entities\api_cotrap\LocationsU;
-use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\api_cotrap\SearchU;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\Keyboards;
