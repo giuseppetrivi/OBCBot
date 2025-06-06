@@ -29,7 +29,7 @@ class LocationsEU extends BaseEntity {
   /**
    * Get all the possible arrival locations (for a specific departure location) and return array with info about them
    */
-  public function getArrivalLocationsFromDepartureLocation($departure_location_id) {
+  public function getArrivalLocationsFromDepartureLocationId($departure_location_id) {
     $query_result = DB::query("SELECT codice, denominazione, localitaArrivo FROM cotrap_localita_eu WHERE codice=%s_departure_location_id", [
       "departure_location_id" => $departure_location_id
     ]);

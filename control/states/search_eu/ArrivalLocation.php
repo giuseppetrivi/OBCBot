@@ -4,7 +4,7 @@ namespace SearchEU\DepartureLocation;
 
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsEU;
-use CustomBotName\entities\api_cotrap\LocationStops;
+use CustomBotName\entities\api_cotrap\LocationStopsEU;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\MenuOptions;
@@ -64,7 +64,7 @@ class ArrivalLocation extends AbstractState {
     $departure_location_id = $_SearchEU->getSearchInfo()["sea_departure_id"];
 
     $_LocationsEU = new LocationsEU();
-    $all_arrival_locations = $_LocationsEU->getArrivalLocationsFromDepartureLocation($departure_location_id);
+    $all_arrival_locations = $_LocationsEU->getArrivalLocationsFromDepartureLocationId($departure_location_id);
     $locations_info = $_LocationsEU->findBestLocationNameMatch($all_arrival_locations, $location_to_search);
     
     $first_location_code = $locations_info[0]["location_code"];
@@ -91,7 +91,7 @@ class ArrivalLocation extends AbstractState {
 
       $_SearchEU->setArrivalLocation($first_location_code);
       
-      $_LocationStops = new LocationStops();
+      $_LocationStops = new LocationStopsEU();
       $location_stops_info = $_LocationStops->getValidDepartureLocationStops($departure_location_id, $first_location_code);
 
       if ($location_stops_info==null || count($location_stops_info)==0) {

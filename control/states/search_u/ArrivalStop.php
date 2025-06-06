@@ -4,13 +4,15 @@ namespace SearchU\DepartureLocation\DepartureStop;
 
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsU;
+use CustomBotName\entities\api_cotrap\LocationStopsU;
 use CustomBotName\entities\api_cotrap\SearchU;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\SearchUTextMessages;
-use BackToMenuTrait;
 use CustomBotName\entities\DateTimeIT;
+use BackToMenuTrait;
+
 
 class ArrivalStop extends AbstractState {
 
@@ -68,9 +70,9 @@ class ArrivalStop extends AbstractState {
     $urban_location_id = $_SearchU->getSearchInfo()["sea_departure_id"];
     $departure_stop_id = $_SearchU->getSearchInfo()["sea_departure_stop_id"];
 
-    $_LocationsU = new LocationsU();
-    $all_departure_stops = $_LocationsU->getAllArrivalStop($urban_location_id, $departure_stop_id);
-    $stops_info = $_LocationsU->findBestStopNameMatch($all_departure_stops, $stop_to_search);
+    $_LocationStopsU = new LocationStopsU();
+    $all_departure_stops = $_LocationStopsU->getAllValidArrivalStop($urban_location_id, $departure_stop_id);
+    $stops_info = $_LocationStopsU->findBestStopNameMatch($all_departure_stops, $stop_to_search);
 
     $first_stop_code = $stops_info[0]["stop_code"];
     $first_stop_name = $stops_info[0]["stop_name"];

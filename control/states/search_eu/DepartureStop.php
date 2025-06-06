@@ -3,14 +3,15 @@
 namespace SearchEU\DepartureLocation\ArrivalLocation;
 
 use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\LocationStops;
+use CustomBotName\entities\api_cotrap\LocationStopsEU;
 use CustomBotName\entities\api_cotrap\SearchEU;
-use BackToMenuTrait;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\SearchEUTextMessages;
+use BackToMenuTrait;
+
 
 class DepartureStop extends AbstractState {
 
@@ -65,7 +66,7 @@ class DepartureStop extends AbstractState {
     $_SearchEU = new SearchEU($this->_User->getUserId());
     $_SearchEU->setDepartureStop($departure_stop_id);
 
-    $_LocationStops = new LocationStops();
+    $_LocationStops = new LocationStopsEU();
     $departure_stop_name = $_LocationStops->getStopInfoById($departure_stop_id)["denominazione"];
 
     $this->_Bot->sendMessage([
@@ -74,7 +75,7 @@ class DepartureStop extends AbstractState {
 
     $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
 
-    $_LocationStops = new LocationStops();
+    $_LocationStops = new LocationStopsEU();
     $location_stops_info = $_LocationStops->getValidArrivalLocationStops($departure_stop_id, $arrival_location_id);
 
     if ($location_stops_info==null || count($location_stops_info)==0) {

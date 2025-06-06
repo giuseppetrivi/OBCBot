@@ -4,7 +4,7 @@ namespace SearchEU\DepartureLocation\ArrivalLocation\DepartureStop\ArrivalStop;
 
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\ApiCotrapRequestHandler;
-use CustomBotName\entities\api_cotrap\LocationStops;
+use CustomBotName\entities\api_cotrap\LocationStopsEU;
 use CustomBotName\entities\api_cotrap\SearchEU;
 use CustomBotName\entities\DateTimeIT;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
@@ -78,7 +78,7 @@ class PickDatetime extends AbstractState {
     $departure_stop_id = $_SearchEU->getSearchInfo()["sea_departure_stop_id"];
     $arrival_location_id = $_SearchEU->getSearchInfo()["sea_arrival_id"];
 
-    $_LocationStops = new LocationStops();
+    $_LocationStops = new LocationStopsEU();
     $location_stops_info = $_LocationStops->getValidArrivalLocationStops($departure_stop_id, $arrival_location_id);
 
     $this->_Bot->sendMessage([
