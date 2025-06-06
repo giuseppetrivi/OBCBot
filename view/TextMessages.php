@@ -117,10 +117,37 @@ final class TextMessages {
   public static function urbanSearchHeader() {
     return "🌇 Questo è il procedimento per cercare le tratte urbane";
   }
-
   public static function chooseUrbanLocation() {
     return "📍 Scegli una <b>località tra le seguenti</b>";
   }
+
+  public static function chooseUrbanDepartureStop() {
+    return "🛑 Invia il nome della <b>fermata di partenza</b>";
+  }
+  public static function chooseUrbanDepartureStopAgain() {
+    return "🛑 Invia nuovamente il nome della <b>fermata di partenza</b>";
+  }
+  public static function chooseUrbanArrivalStop() {
+    return "🛑 Invia il nome della <b>fermata di arrivo</b>";
+  }
+  public static function chooseUrbanArrivalStopAgain() {
+    return "🛑 Invia nuovamente il nome della <b>fermata di arrivo</b>";
+  }
+
+  public static function stopAlmostMatched($stop_name) {
+    return "❓ Forse intendevi <i>$stop_name</i>";
+  }
+  public static function alternativeStops($stops_info) {
+    $text = "🤔 Forse cercavi:\n";
+    foreach ($stops_info as $index => $info) {
+      $text .= "• <code>" . $info["stop_name"] . "</code>\n";
+    }
+    return $text;
+  }
+  public static function departureStopMatched($stop_name) {
+    return "✅ Hai selezionato <b>$stop_name</b> come fermata di partenza";
+  }
+  
 
 
 }
