@@ -37,20 +37,29 @@ abstract class SearchTextMessages {
       "🕒  Ora selezionata:   <b>" . $_SelectedDatetime->format("H:i") . "</b>";
   }
 
-  /**
-   * 
-   */
-  public static function showSearchResults($search_results, $_Datetime) {
-    $first = $search_results[0];
-    $departure_position = "https://www.google.com/maps?q=" . $first["latitudinePoloPartenza"] . "," . $first["longitudinePoloPartenza"];
-    $arrival_position = "https://www.google.com/maps?q=" . $first["latitudinePoloArrivo"] . "," . $first["longitudinePoloArrivo"];
+
+  /** */
+  public static function searchResultsHeader($specific_search_info) {
+    $departure_info = $specific_search_info["departure"];
+    $arrival_info = $specific_search_info["arrival"];
+    $_Datetime = new DateTimeIT($departure_info["sea_datetime"]);
+
+    $departure_position = "https://www.google.com/maps?q=" . $departure_info["latitudine"] . "," . $departure_info["longitudine"];
+    $arrival_position = "https://www.google.com/maps?q=" . $arrival_info["latitudine"] . "," . $arrival_info["longitudine"];
 
     $header = "🌐 Risultati per il giorno <b>" . $_Datetime->getLiteralWeekDay() . " " . $_Datetime->format("d") . " " . $_Datetime->getLiteralMonth() . " " . $_Datetime->format("Y") . "</b>"
       . ", dalle ore <b>" . $_Datetime->format("H:00") . "</b> in poi...\n\n"
-      . "╒ <b>" . $first["localitaPartenza"] . "</b>, <a href='$departure_position'>" . $first["denominazionePartenza"] . "</a>\n"
-      . "╘ <b>" . $first["localitaArrivo"] . "</b>, <a href='$arrival_position'>" . $first["denominazioneArrivo"] . "</a>\n\n"
-      . "🚌  <i>" . $first["azienda1"] . "</i>\n\n";
+      . "╒ <b>" . $departure_info["comune"] . "</b>, <a href='$departure_position'>" . $departure_info["fermata"] . "</a>\n"
+      . "╘ <b>" . $arrival_info["comune"] . "</b>, <a href='$arrival_position'>" . $arrival_info["fermata"] . "</a>\n\n"
+      . "🚌  <i>" . $departure_info["azienda"] . "</i>\n\n";
 
+    return $header;
+  }
+
+  /**
+   * 
+   */
+  public static function showSearchResults($specific_search_info, $search_results, $_Datetime) {
     $timetables = "";
     foreach($search_results as $ride) {
       if ($ride["oraPartenza"] < $_Datetime->format("H:00")) {
@@ -65,11 +74,12 @@ abstract class SearchTextMessages {
         . "💰  <i>€ " . number_format($ride["prezzoUnitario"], 2) . "</i>\n\n";
     }
 
-    return $header . $timetables;
+    return self::searchResultsHeader($specific_search_info) . $timetables;
   }
 
-  public static function noSearchResults() {
-    return "⚠️ Nessun risultato disponibile. Prova a cambiare qualche parametro di ricerca";
+  public static function noSearchResults($specific_search_info) {
+    $error_message = "⚠️ Nessun risultato disponibile...\nProva a cambiare qualche parametro di ricerca";
+    return self::searchResultsHeader($specific_search_info) . $error_message;
   }
 
   /**
