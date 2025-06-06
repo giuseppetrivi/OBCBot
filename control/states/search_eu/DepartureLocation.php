@@ -71,13 +71,13 @@ class DepartureLocation extends AbstractState {
 
       if ($first_location_similarity_perc >= LocationsEU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::departureLocationMatched($first_location_name)
+          'text' => TextMessages::departureLocationSelected($first_location_name)
         ]);
       }
       else {
         $message_to_send = TextMessages::locationAlmostMatched($first_location_name) . 
           "\n\n" . TextMessages::alternativeLocations(array_slice($locations_info, 1)) .
-          "\n" . TextMessages::departureLocationMatched($first_location_name);
+          "\n" . TextMessages::departureLocationSelected($first_location_name);
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);

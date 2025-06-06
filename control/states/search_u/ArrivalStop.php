@@ -83,12 +83,12 @@ class ArrivalStop extends AbstractState {
 
       if ($first_stop_similarity_perc >= LocationsU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::arrivalStopMatched($first_stop_name)
+          'text' => TextMessages::arrivalStopSelected($first_stop_name)
         ]);
       }
       else {
         $message_to_send = TextMessages::stopAlmostMatched($first_stop_name) .
-          "\n\n" . TextMessages::arrivalStopMatched($first_stop_name);
+          "\n\n" . TextMessages::arrivalStopSelected($first_stop_name);
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);

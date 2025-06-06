@@ -67,7 +67,7 @@ class DepartureLocation extends AbstractState {
     $urban_location_name = $_LocationsU->getUrbanLocationInfoById($urban_location_id)["denominazione"];
 
     $this->_Bot->sendMessage([
-      'text' => TextMessages::departureLocationSelected($urban_location_name)
+      'text' => TextMessages::urbanDepartureLocationSelected($urban_location_name)
     ]);
 
     $this->_Bot->sendMessage([

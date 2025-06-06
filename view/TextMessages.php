@@ -36,7 +36,7 @@ final class TextMessages {
   public static function chooseDepartureLocationAgain() {
     return "📍 Invia nuovamente il nome della <b>località di partenza</b>";
   }
-  public static function departureLocationMatched($location_name) {
+  public static function departureLocationSelected($location_name) {
     return "✅ Hai selezionato <b>$location_name</b> come città di partenza";
   }
 
@@ -46,7 +46,7 @@ final class TextMessages {
   public static function chooseArrivalLocationAgain() {
     return "📍 Invia nuovamente il nome della <b>località di arrivo</b>";
   }
-  public static function arrivalLocationMatched($location_name) {
+  public static function arrivalLocationSelected($location_name) {
     return "✅ Hai selezionato <b>$location_name</b> come città di arrivo";
   }
 
@@ -131,7 +131,7 @@ final class TextMessages {
   public static function chooseUrbanLocation() {
     return "📍 Scegli una <b>località tra le seguenti</b>";
   }
-  public static function departureLocationSelected($location_name) {
+  public static function urbanDepartureLocationSelected($location_name) {
     return "✅ Hai selezionato <b>$location_name</b> come località";
   }
 
@@ -158,13 +158,7 @@ final class TextMessages {
     }
     return $text;
   }
-  public static function departureStopMatched($stop_name) {
-    return "✅ Hai selezionato <b>$stop_name</b> come fermata di partenza";
-  }
-  public static function arrivalStopMatched($stop_name) {
-    return "✅ Hai selezionato <b>$stop_name</b> come fermata di arrivo";
-  }
   
-
+  
 
 }

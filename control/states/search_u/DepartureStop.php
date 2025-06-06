@@ -81,12 +81,12 @@ class DepartureStop extends AbstractState {
 
       if ($first_stop_similarity_perc >= LocationsU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::departureStopMatched($first_stop_name)
+          'text' => TextMessages::departureStopSelected($first_stop_name)
         ]);
       }
       else {
         $message_to_send = TextMessages::stopAlmostMatched($first_stop_name) .
-          "\n\n" . TextMessages::departureStopMatched($first_stop_name);
+          "\n\n" . TextMessages::departureStopSelected($first_stop_name);
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);
