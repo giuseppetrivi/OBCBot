@@ -3,6 +3,7 @@
 namespace SearchU;
 
 use CustomBotName\control\AbstractState;
+use CustomBotName\entities\api_cotrap\LocationsU;
 use CustomBotName\entities\api_cotrap\SearchU;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\Keyboards;
@@ -61,6 +62,13 @@ class DepartureLocation extends AbstractState {
 
     $_SearchU = new SearchU($this->_User->getUserId());
     $_SearchU->setDepartureLocation($urban_location_id);
+
+    $_LocationsU = new LocationsU();
+    $urban_location_name = $_LocationsU->getUrbanLocationInfoById($urban_location_id)["denominazione"];
+
+    $this->_Bot->sendMessage([
+      'text' => TextMessages::departureLocationSelected($urban_location_name)
+    ]);
 
     $this->_Bot->sendMessage([
       'text' => TextMessages::chooseUrbanDepartureStop(),
