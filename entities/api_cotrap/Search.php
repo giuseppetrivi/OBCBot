@@ -6,6 +6,9 @@ use CustomBotName\entities\BaseEntity;
 use DB;
 use MeekroDBException;
 
+/**
+ * Base class for handle `obc_searches` table in db
+ */
 class Search extends BaseEntity {
 
   protected $user_idtelegram;

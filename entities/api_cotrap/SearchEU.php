@@ -5,8 +5,10 @@ namespace CustomBotName\entities\api_cotrap;
 use DB;
 use MeekroDBException;
 
+/**
+ * Specific class when in searching eu procedure
+ */
 class SearchEU extends Search {
-
   
   /**
    * Set/unset the arrival location id in the initialized search record

@@ -2,11 +2,10 @@
 
 namespace CustomBotName\entities\api_cotrap;
 
-use DB;
-use MeekroDBException;
 
+/**
+ * Specific class when in searching urban procedure
+ */
 class SearchU extends Search {
-
-  //nothing
   
 }
