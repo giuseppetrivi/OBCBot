@@ -9,9 +9,7 @@ use CustomBotName\view\Keyboards;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\TextMessages;
 
-/**
- * 
- */
+
 class Main extends AbstractState {
 
   protected array $valid_static_inputs = [
