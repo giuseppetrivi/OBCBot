@@ -235,17 +235,19 @@ class PickDatetime extends AbstractState {
     ]);
 
     $search_results = $request_result_data["result"]["itinerariTrovati"];
+    $specific_search_info = $_SearchEU->getSpecificSearchInfo();
 
     if (empty($search_results)) {
       $this->_Bot->sendMessage([
-        'text' => SearchEUTextMessages::noSearchResults()
+        'text' => SearchEUTextMessages::noSearchResults($specific_search_info),
+        'disable_web_page_preview' => true
       ]);
 
       $this->keepThisState();
     }
     else {
       $this->_Bot->sendMessage([
-        'text' => SearchEUTextMessages::showSearchResults($search_results, $_Datetime),
+        'text' => SearchEUTextMessages::showSearchResults($specific_search_info, $search_results, $_Datetime),
         'reply_markup' => InlineKeyboards::websiteResultsLink($request_result_data["url"]),
         'disable_web_page_preview' => true
       ]);
