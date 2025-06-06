@@ -102,7 +102,8 @@ final class TextMessages {
     $header = "🌐 Risultati per il giorno <b>" . $_Datetime->getLiteralWeekDay() . " " . $_Datetime->format("d") . " " . $_Datetime->getLiteralMonth() . " " . $_Datetime->format("Y") . "</b>"
       . ", dalle ore <b>" . $_Datetime->format("H:00") . "</b> in poi...\n\n"
       . "╒ <b>" . $first["localitaPartenza"] . "</b>, <a href='$departure_position'>" . $first["denominazionePartenza"] . "</a>\n"
-      . "╘ <b>" . $first["localitaArrivo"] . "</b>, <a href='$arrival_position'>" . $first["denominazioneArrivo"] . "</a>\n\n";
+      . "╘ <b>" . $first["localitaArrivo"] . "</b>, <a href='$arrival_position'>" . $first["denominazioneArrivo"] . "</a>\n\n"
+      . "🚌  <i>" . $first["azienda1"] . "</i>\n\n";
 
     $timetables = "";
     foreach($search_results as $ride) {
