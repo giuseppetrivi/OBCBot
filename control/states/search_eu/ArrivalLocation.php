@@ -77,13 +77,13 @@ class ArrivalLocation extends AbstractState {
 
       if ($first_location_similarity_perc >= LocationsEU::MATCHED) {
         $this->_Bot->sendMessage([
-          'text' => TextMessages::arrivalLocationMatched($first_location_name)
+          'text' => TextMessages::arrivalLocationSelected($first_location_name)
         ]);
       }
       else { 
         $message_to_send = TextMessages::locationAlmostMatched($first_location_name) . 
           "\n\n" . TextMessages::alternativeLocations(array_slice($locations_info, 1)) .
-          "\n" . TextMessages::arrivalLocationMatched($first_location_name);          
+          "\n" . TextMessages::arrivalLocationSelected($first_location_name);          
         $this->_Bot->sendMessage([
           'text' => $message_to_send
         ]);
