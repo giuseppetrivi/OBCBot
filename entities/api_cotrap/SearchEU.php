@@ -2,9 +2,6 @@
 
 namespace CustomBotName\entities\api_cotrap;
 
-use DB;
-use MeekroDBException;
-
 /**
  * Specific class when in searching eu procedure
  */
