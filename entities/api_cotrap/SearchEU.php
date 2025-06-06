@@ -22,7 +22,7 @@ class SearchEU extends Search {
 
 
   /**
-   * 
+   * Get info to identify basic informations of the search (to build header of the message of results)
    */
   public function getSpecificSearchInfo() {
     $result_departure = DB::query("SELECT eu.denominazione as comune, pl.denominazione as fermata, pl.latitudine, pl.longitudine, az.denominazione as azienda, sea.sea_datetime 
