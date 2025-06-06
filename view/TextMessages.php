@@ -99,6 +99,10 @@ final class TextMessages {
 
     $timetables = "";
     foreach($search_results as $ride) {
+      if ($ride["oraPartenza"] < $_Datetime->format("H:00")) {
+        continue;
+      }
+      
       $type = "";
       if ($ride["tipologiaFrequenzaCorsa1"]==2) {
         $type = "[<i>Scolastica</i>]";
@@ -146,6 +150,9 @@ final class TextMessages {
   }
   public static function departureStopMatched($stop_name) {
     return "✅ Hai selezionato <b>$stop_name</b> come fermata di partenza";
+  }
+  public static function arrivalStopMatched($stop_name) {
+    return "✅ Hai selezionato <b>$stop_name</b> come fermata di arrivo";
   }
   
 
