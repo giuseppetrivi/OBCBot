@@ -28,6 +28,15 @@ class LocationsU extends BaseEntity {
   /**
    * 
    */
+  public function getUrbanLocationInfoById($urban_location_id) {
+    return DB::query("SELECT * FROM cotrap_localita_u WHERE codice=%s_urban_location_id", [
+      "urban_location_id" => $urban_location_id
+    ])[0];
+  }
+
+  /**
+   * 
+   */
   public function getAllDepartureStop($urban_location_id) {
     return DB::query("SELECT * FROM cotrap_polilocalita 
       WHERE idComune=%s_town_id AND urbano=1
