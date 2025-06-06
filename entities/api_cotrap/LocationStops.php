@@ -83,15 +83,13 @@ class LocationStops extends BaseEntity {
   }
 
   public function getStopInfoById($stop_id) {
-    $result = DB::query("SELECT * FROM cotrap_polilocalita WHERE id=%s_stop_id", [
+    return DB::query("SELECT * FROM cotrap_polilocalita WHERE id=%s_stop_id", [
       "stop_id" => $stop_id
-    ]);
-    return $result[0];
+    ])[0];
   }
 
   private function getListArrivalStops($stop_info) {
-    $arrival_stop_ids = array_slice(explode("|", $stop_info["poliArrivo"]), 1, -1);
-    return $arrival_stop_ids;
+    return array_slice(explode("|", $stop_info["poliArrivo"]), 1, -1);
   }
 
 
