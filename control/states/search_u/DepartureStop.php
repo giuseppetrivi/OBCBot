@@ -91,7 +91,6 @@ class DepartureStop extends AbstractState {
           'text' => $message_to_send
         ]);
       }
-
       
       $_SearchU->setDepartureStop($first_stop_code);
 
@@ -100,8 +99,7 @@ class DepartureStop extends AbstractState {
         'reply_markup' => Keyboards::getBackAndMenu()
       ]);
 
-      //$this->setNextState($this->appendNextState("ArrivalStop"));
-      $this->keepThisState();
+      $this->setNextState($this->appendNextState("ArrivalStop"));
       
     }
     /* the match between the values ​​in the database and the value sent is not sufficient: the location must be resent */
