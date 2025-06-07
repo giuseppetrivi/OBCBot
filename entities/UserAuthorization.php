@@ -5,7 +5,6 @@ namespace CustomBotName\entities;
 use CustomBotName\exceptions\RuleException;
 use CustomBotName\entities\authorization_rules\Rule;
 use CustomBotName\entities\authorization_rules\CheckIfUserIsActiveRule;
-use CustomBotName\entities\authorization_rules\CheckIfUserIsSubscribedRule;
 
 
 /**
@@ -40,7 +39,6 @@ class UserAuthorization extends BaseEntity {
    */
   private function rulesToAdd() {
     $this->addRule(new CheckIfUserIsActiveRule($this->getUser()));
-    $this->addRule(new CheckIfUserIsSubscribedRule($this->getUser()));
   }
 
 

@@ -9,9 +9,9 @@ use CustomBotName\entities\telegrambot_sdk_interface\TelegramBotSdkCustomInterfa
 use CustomBotName\entities\User;
 use CustomBotName\entities\BotAuthorization;
 use CustomBotName\entities\UserAuthorization;
-use Restart;
 use CustomBotName\exceptions\state_exceptions\StateInputException;
-use CustomBotName\view\TextMessages;
+use CustomBotName\view\MainTextMessages;
+use Restart;
 
 class Init {
 
@@ -99,19 +99,14 @@ class Init {
   }
 
   /**
-   * [Example of] preliminary authorization of user rules
+   * Preliminary authorization of user rules
    */
   private static function checkUserAuthorization() {
     try {
       $_UserAuthorization = new UserAuthorization(self::$_User);
       $_UserAuthorization->verifyAuthorization();
-      self::$_Bot->sendMessage([
-        'text' => "User authorization check gone well..."
-      ]);
     } catch(Exception $e) {
-      self::$_Bot->sendMessage([
-        'text' => "User is not authorized: " . $e->getMessage()
-      ]);
+      echo $e->getMessage();
       exit;
     }
   }
@@ -142,7 +137,7 @@ class Init {
       $_State->codeToRun();
     } catch(StateInputException $e) {
       self::$_Bot->sendMessage([
-        'text' => TextMessages::inputError()
+        'text' => MainTextMessages::inputError()
       ]);
     }
   }
