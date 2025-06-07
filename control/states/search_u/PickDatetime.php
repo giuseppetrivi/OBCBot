@@ -100,9 +100,10 @@ class PickDatetime extends AbstractState {
     $_SelectedDatetime = new DateTimeIT($date_selected . " " . $hour);
     /* check if the date is in the past (in this case sets today's date) */
     switch ($_SelectedDatetime->isDatetimeInThePast()) {
-      case -1:
-        $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
       case 0:
+        break;
+      case -1:
+        $_SelectedDatetime = new DateTimeIT();
       case 1:
         $_SearchU->setDatetime($_SelectedDatetime->databaseFormat());
 
@@ -154,9 +155,10 @@ class PickDatetime extends AbstractState {
     $_SelectedDatetime->modify("-1 month");
     /* check if the date is in the past (in this case sets today's date) */
     switch ($_SelectedDatetime->isDatetimeInThePast()) {
-      case -1:
-        $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
       case 0:
+        break;
+      case -1:
+        $_SelectedDatetime = new DateTimeIT();
       case 1:
         $_SearchU->setDatetime($_SelectedDatetime->databaseFormat());
 
@@ -185,9 +187,10 @@ class PickDatetime extends AbstractState {
     $_SelectedDatetime = new DateTimeIT($date . " " . $hour_selected);
     /* check if the date is in the past (in this case sets today's date) */
     switch ($_SelectedDatetime->isDatetimeInThePast()) {
-      case -1:
-        $_SelectedDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
       case 0:
+        break;
+      case -1:
+        $_SelectedDatetime = new DateTimeIT();
       case 1:
         $_SearchU->setDatetime($_SelectedDatetime->databaseFormat());
 
@@ -211,6 +214,18 @@ class PickDatetime extends AbstractState {
     $search_info = $_SearchU->getSearchInfo();
     
     $_Datetime = new DateTimeIT($search_info["sea_datetime"]);
+    $message_id = $this->_Bot->getWebhookUpdate()->getMessage()->getMessageId();
+    if ($_Datetime->isDatetimeInThePast()==-1) {
+      $_Datetime = new DateTimeIT();
+      
+      $_SearchU->setDatetime($_Datetime->databaseFormat());
+      $this->_Bot->editMessageText([
+        "message_id" => $message_id,
+        "text" => SearchUTextMessages::selectDatetime() . "\n\n" . SearchUTextMessages::summarySelectedDatetime($_Datetime),
+        "reply_markup" => InlineKeyboards::calendar($_Datetime)
+      ]);
+    }
+
     $formatted_date = $_Datetime->getApiFormattedDate();
     $formatted_time = $_Datetime->getApiFormattedTime();
 
@@ -242,7 +257,7 @@ class PickDatetime extends AbstractState {
       ]);
     }
 
-    $this->keepThisState(); // TODO: da cambiare
+    $this->keepThisState();
   }
 
 

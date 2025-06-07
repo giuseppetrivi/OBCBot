@@ -20,9 +20,9 @@ class DateTimeIT extends DateTime {
   public function __construct(string $datetime = 'now') {
     parent::__construct($datetime, new DateTimeZone('Europe/Rome'));
 
-    if (!$this->isValidDateTime($datetime)) {
+    /*if (!$this->isValidDateTime($datetime)) {
       new Exception("Datetime \"$datetime\" is not valid");
-    }
+    }*/
   }
 
   /** */

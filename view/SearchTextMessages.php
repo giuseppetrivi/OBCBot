@@ -88,4 +88,8 @@ abstract class SearchTextMessages {
     $type_of_location_text = $departure ? "fermata di partenza" : "fermata di arrivo";
     return "✅ Hai selezionato <b>$stop_name</b> come " . $type_of_location_text;
   }
+
+  public static function errorDatetimeInThePast() {
+    return "⚠️ Stai provando a selezionare una data + ora nel passato...";
+  }
 }
