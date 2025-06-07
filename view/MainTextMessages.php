@@ -2,7 +2,7 @@
 
 namespace CustomBotName\view;
 
-use CustomBotName\entities\DateTimeIT;
+use CustomBotName\utilities\DateTimeIT;
 
 /**
  * Final class containing all text messages

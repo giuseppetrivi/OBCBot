@@ -2,8 +2,8 @@
 
 namespace CustomBotName\view;
 
-use CustomBotName\entities\DateTimeIT;
-use DateTime;
+use CustomBotName\utilities\DateTimeIT;
+
 
 /**
  * Class to handle all inline keyboards 

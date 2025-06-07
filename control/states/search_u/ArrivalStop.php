@@ -10,7 +10,7 @@ use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\SearchUTextMessages;
-use CustomBotName\entities\DateTimeIT;
+use CustomBotName\utilities\DateTimeIT;
 use BackToMenuTrait;
 
 

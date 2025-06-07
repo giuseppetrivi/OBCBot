@@ -2,15 +2,15 @@
 
 namespace SearchEU\DepartureLocation\ArrivalLocation\DepartureStop;
 
-use BackToMenuTrait;
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationStopsEU;
 use CustomBotName\entities\api_cotrap\SearchEU;
-use CustomBotName\entities\DateTimeIT;
 use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
+use CustomBotName\utilities\DateTimeIT;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\SearchEUTextMessages;
+use BackToMenuTrait;
 
 
 class ArrivalStop extends AbstractState {

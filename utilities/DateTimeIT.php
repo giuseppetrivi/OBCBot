@@ -1,25 +1,35 @@
 <?php
 
-namespace CustomBotName\entities;
+namespace CustomBotName\utilities;
 
 use DateTime;
 use DateTimeZone;
+use Exception;
 
 /**
  * Class to handle all datetime components
  */
 class DateTimeIT extends DateTime {
+
   public const DATABASE_FORMAT = "Y-m-d H:00:00";
   public const API_DATE_FORMAT = "d/m/Y";
   public const API_TIME_FORMAT = "H:00";
 
-  /**
-   * 
-   */
-  public function __construct(string $datetime = 'now', \DateTimeZone|null $timezone = null) {
+
+  /** */
+  public function __construct(string $datetime = 'now') {
     parent::__construct($datetime, new DateTimeZone('Europe/Rome'));
 
-    // TODO: controllare la data
+    if (!$this->isValidDateTime($datetime)) {
+      new Exception("Datetime \"$datetime\" is not valid");
+    }
+  }
+
+  /** */
+  private function isValidDateTime(string $datetime, string $format = 'Y-m-d H:i:s'): bool {
+    $formatted_datetime = DateTimeIT::createFromFormat($format, $datetime);
+    $errors = DateTimeIT::getLastErrors();
+    return $formatted_datetime !== false && $errors['warning_count'] === 0 && $errors['error_count'] === 0;
   }
 
   /**
@@ -48,24 +58,17 @@ class DateTimeIT extends DateTime {
     return $it_months[$month];
   }
 
-  /**
-   * 
-   */
+  /** */
   public function nextDay() {
     $this->modify("+1 day");
     return $this->format(DateTimeIT::DATABASE_FORMAT);
   }
 
-  /**
-   * 
-   */
+  /** */
   public function databaseFormat() {
     return $this->format(DateTimeIT::DATABASE_FORMAT);
   }
 
-  /**
-   * 
-   */
   public function getApiFormattedDate() {
     return $this->format(DateTimeIT::API_DATE_FORMAT);
   }
@@ -75,18 +78,19 @@ class DateTimeIT extends DateTime {
   }
 
   /**
-   * 
+   * Check if $this datetime is in the past, is equale to the present or is in the future
+   * @return int -1 datetime in the past | 0 datetime==present | 1 datetime in the future
    */
   public function isDatetimeInThePast() {
     $_TodayDatetime = new DateTimeIT(date(DateTimeIT::DATABASE_FORMAT));
     if ($this < $_TodayDatetime) {
-      return -1; // datetime in the past
+      return -1;
     }
     else if ($this == $_TodayDatetime) {
-      return 0; // equal datetime
+      return 0;
     }
     else {
-      return 1; // datetime in the future
+      return 1;
     }
   }
 }
