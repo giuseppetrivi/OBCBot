@@ -12,6 +12,7 @@ use CustomBotName\view\MenuOptions;
 use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\SearchEUTextMessages;
 use BackToMenuTrait;
+use CustomBotName\entities\api_cotrap\SearchHistory;
 
 class PickDatetime extends AbstractState {
 
@@ -272,6 +273,9 @@ class PickDatetime extends AbstractState {
         'reply_markup' => InlineKeyboards::websiteResultsLink($request_result_data["url"]),
         'disable_web_page_preview' => true
       ]);
+
+      $_SearchHistory = new SearchHistory($this->_User->getUserId());
+      $_SearchHistory->insertSearchHistory($_SearchEU->getSearchInfo());
     }
 
     $this->keepThisState();
