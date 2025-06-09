@@ -3,6 +3,7 @@
 use CustomBotName\control\AbstractState;
 use CustomBotName\entities\api_cotrap\LocationsU;
 use CustomBotName\entities\api_cotrap\SearchEU;
+use CustomBotName\entities\api_cotrap\SearchHistory;
 use CustomBotName\entities\api_cotrap\SearchU;
 use CustomBotName\view\MenuOptions;
 use CustomBotName\view\Keyboards;
@@ -26,6 +27,7 @@ class Main extends AbstractState {
    * NULL (Main) -> NULL (Main)
    */
   protected function startProcedure() {
+
     $this->_Bot->sendMessage([
       'text' => MainTextMessages::welcome($this->_Bot->getChatWithChecks()->getUsername()),
       'reply_markup' => Keyboards::getMainMenu()

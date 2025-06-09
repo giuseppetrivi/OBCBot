@@ -23,7 +23,7 @@ class SearchHistory extends BaseEntity {
    * 
    */
   public function getAllSearchHistory() {
-    return DB::query("SELECT id FROM obc_search_history WHERE user_idtelegram=%s_user_idtelegram ORDER BY his_search_datetime DESC", [
+    return DB::query("SELECT his_id, his_departure_id, his_arrival_id FROM obc_search_history WHERE user_idtelegram=%s_user_idtelegram ORDER BY his_search_datetime DESC", [
       "user_idtelegram" => $this->getUserIdtelegram()
     ]);
   }
