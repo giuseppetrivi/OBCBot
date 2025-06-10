@@ -9,8 +9,7 @@ namespace CustomBotName\view;
 class Keyboards extends ViewWrapper {
 
   public const MAIN_MENU = [
-    [MenuOptions::SEARCH_EU, MenuOptions::SEARCH_U],
-    [MenuOptions::SETTINGS]
+    [MenuOptions::SEARCH_EU, MenuOptions::SEARCH_U]
   ];
 
   public const ONLY_BACK = [

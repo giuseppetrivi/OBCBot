@@ -17,8 +17,7 @@ class Main extends AbstractState {
   protected array $valid_static_inputs = [
     MenuOptions::COMMAND_START => "startProcedure",
     MenuOptions::SEARCH_EU => "searchEuProcedure",
-    MenuOptions::SEARCH_U => "searchUProcedure",
-    MenuOptions::SETTINGS => "settingsProcedure",
+    MenuOptions::SEARCH_U => "searchUProcedure"
   ];
 
 
@@ -84,15 +83,6 @@ class Main extends AbstractState {
     ]);
 
     $this->setNextState("SearchU\DepartureLocation");
-  }
-
-
-  /**
-   * States:
-   * NULL (Main) -> Settings
-   */
-  protected function settingsProcedure() {
-    // TODO
   }
 
 
