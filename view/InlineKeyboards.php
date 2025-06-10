@@ -21,7 +21,7 @@ class InlineKeyboards extends ViewWrapper {
     foreach($location_stops as $info) {
       array_push($inline_keyboard, [[
         "text" => $info["denominazione"],
-        "callback_data" => "polo_" . $info["id"]
+        "callback_data" => "stop_" . $info["id"]
       ]]);
     }
     

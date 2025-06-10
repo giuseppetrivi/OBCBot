@@ -24,8 +24,8 @@ class ArrivalStop extends AbstractState {
     $input_text = $this->_Bot->getInputFromChat()->getText();
     $input_type = $this->_Bot->getInputFromChat()->getMessageType();
 
-    /* regex to get callback_data like polo_ID */
-    $stops_regex = "/^polo_[0-9][0-9]*$/";
+    /* regex to get callback_data like stop_ID */
+    $stops_regex = "/^stop_[0-9][0-9]*$/";
     if (preg_match($stops_regex, $input_text) && $input_type==InputTypes::CALLBACK_QUERY) {
       $this->function_to_call = "selectArrivalStopProcedure";
       return true;
