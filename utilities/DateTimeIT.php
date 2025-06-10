@@ -12,6 +12,7 @@ use Exception;
 class DateTimeIT extends DateTime {
 
   public const DATABASE_FORMAT = "Y-m-d H:00:00";
+  public const CURRENT_DATETIME_FORMAT = "Y-m-d H:i:s";
   public const API_DATE_FORMAT = "d/m/Y";
   public const API_TIME_FORMAT = "H:00";
 
@@ -67,6 +68,10 @@ class DateTimeIT extends DateTime {
   /** */
   public function databaseFormat() {
     return $this->format(DateTimeIT::DATABASE_FORMAT);
+  }
+
+  public function currentDatetimeFormat() {
+    return $this->format(DateTimeIT::CURRENT_DATETIME_FORMAT);
   }
 
   public function getApiFormattedDate() {

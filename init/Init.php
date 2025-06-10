@@ -76,7 +76,9 @@ class Init {
    */
   private static function initializeUser() {
     $user_id = self::$_Bot->getChatId();
-    self::$_User = new User($user_id);
+    $username = self::$_Bot->getChatWithChecks()->getUsername();
+    $first_name = self::$_Bot->getChatWithChecks()->getFirstName();
+    self::$_User = new User($user_id, $username, $first_name);
   }
 
 

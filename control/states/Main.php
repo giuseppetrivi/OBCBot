@@ -30,7 +30,7 @@ class Main extends AbstractState {
     $most_frequent_routes = $_SearchHistory->getMostFrequentRoutes();
 
     $this->_Bot->sendMessage([
-      'text' => MainTextMessages::welcome($this->_Bot->getChatWithChecks()->getUsername()),
+      'text' => MainTextMessages::welcome($this->_User->getUsername()),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
 
