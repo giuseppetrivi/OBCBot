@@ -39,4 +39,11 @@ final class MainTextMessages {
     return "↻ Hai riavviato il bot";
   }
 
+
+  /** */
+  public static function chooseBetweenMostFrequentRoutes() {
+    return "📈 Le seguenti sono le tratte che hai cercato più di frequente.\n\n" .
+      "👉 Clicca su una di esse per avviare una ricerca rapida, oppure su 🔁 per cercare la tratta inversa (se possibile)";
+  }
+
 }

@@ -28,6 +28,29 @@ class InlineKeyboards extends ViewWrapper {
     return InlineKeyboards::createInlineKeyboard($inline_keyboard);
   }
 
+
+  /**
+   * List of most frequent routes
+   */
+  public static function mostFrequentRoutesList($most_frequent_routes) {
+    $inline_keyboard = [];
+    foreach($most_frequent_routes as $info) {
+      array_push($inline_keyboard, [
+        [
+          "text" => $info["tratta"],
+          "callback_data" => "route_" . $info["idPartenza"] . "_" . $info["idArrivo"]
+        ],
+        [
+          "text" => "🔁",
+          "callback_data" => "route_" . $info["idArrivo"] . "_" . $info["idPartenza"]
+        ]
+      ]);
+    }
+    
+    return InlineKeyboards::createInlineKeyboard($inline_keyboard);
+  }
+
+
   /**
    * List of urban location
    */
