@@ -26,15 +26,16 @@ class Main extends AbstractState {
    * NULL (Main) -> NULL (Main)
    */
   protected function startProcedure() {
-    $_SearchHistory = new SearchHistory($this->_User->getUserId());
-    $most_frequent_routes = $_SearchHistory->getMostFrequentRoutes();
-
+    
     $this->_Bot->sendMessage([
       'text' => MainTextMessages::welcome($this->_User->getUsername()),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
 
-    /*$this->_Bot->sendMessage([
+    /*$_SearchHistory = new SearchHistory($this->_User->getUserId());
+    $most_frequent_routes = $_SearchHistory->getMostFrequentRoutes();
+    
+    $this->_Bot->sendMessage([
       'text' => MainTextMessages::chooseBetweenMostFrequentRoutes(),
       'reply_markup' => InlineKeyboards::mostFrequentRoutesList($most_frequent_routes)
     ]);*/
