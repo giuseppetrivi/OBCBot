@@ -1,6 +1,8 @@
 <?php
 
 use CustomBotName\entities\api_cotrap\Search;
+use CustomBotName\entities\api_cotrap\SearchHistory;
+use CustomBotName\view\InlineKeyboards;
 use CustomBotName\view\Keyboards;
 use CustomBotName\view\MainTextMessages;
 
@@ -16,6 +18,15 @@ trait BackToMenuTrait {
       'text' => MainTextMessages::mainMenu(),
       'reply_markup' => Keyboards::getMainMenu()
     ]);
+
+    
+    /*$_SearchHistory = new SearchHistory($this->_User->getUserId());
+    $most_frequent_routes = $_SearchHistory->getMostFrequentRoutes();
+
+    $this->_Bot->sendMessage([
+      'text' => MainTextMessages::chooseBetweenMostFrequentRoutes(),
+      'reply_markup' => InlineKeyboards::mostFrequentRoutesList($most_frequent_routes)
+    ]);*/
 
     $this->setNextState(NULL);
   }
