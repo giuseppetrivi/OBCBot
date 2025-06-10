@@ -45,24 +45,29 @@ class SearchHistory extends BaseEntity {
 
 
   /**
-   * Get info to identify basic informations of the search (to build header of the message of results)
+   * Get info to get the most frequent routes, no matter which are the departure-arrival.
+   * Routes A->B and B->A are considered the same.
    */
-  public function getSpecificSearchHistoryInfo($search_history_id) {
-    /*$result_departure = DB::query("SELECT eu.denominazione as comune, pl.denominazione as fermata, pl.latitudine, pl.longitudine, az.denominazione as azienda, sea.sea_datetime 
-      FROM obc_searches as sea JOIN cotrap_localita_eu as eu JOIN cotrap_polilocalita as pl JOIN cotrap_aziende as az 
-      WHERE sea.sea_departure_id=eu.codice AND pl.idAzienda=az.id AND sea.sea_departure_stop_id=pl.id AND sea.user_idtelegram=%i_user_idtelegram", [
-        "user_idtelegram" => $this->getUserIdtelegram()
-      ])[0];
-    $result_arrival = DB::query("SELECT eu.denominazione as comune, pl.denominazione as fermata, pl.latitudine, pl.longitudine
-      FROM obc_searches as sea JOIN cotrap_localita_eu as eu JOIN cotrap_polilocalita as pl 
-      WHERE sea.sea_arrival_id=eu.codice AND sea.sea_arrival_stop_id=pl.id AND sea.user_idtelegram=%i_user_idtelegram", [
-        "user_idtelegram" => $this->getUserIdtelegram()
-      ])[0];
-    
-    return [
-      "departure" => $result_departure,
-      "arrival" => $result_arrival
-    ];*/
+  public function getMostFrequentRoutes() {
+    $select_query = "SELECT l1.codice as idPartenza, l2.codice as idArrivo, CONCAT(l1.denominazione, ' ➝ ', l2.denominazione) AS tratta, rs.search_count
+      FROM (
+        SELECT
+          user_idtelegram,
+          LEAST(his_departure_id, his_arrival_id) AS location1_id,
+          GREATEST(his_departure_id, his_arrival_id) AS location2_id,
+          COUNT(*) AS search_count
+        FROM obc_search_history
+        GROUP BY location1_id, location2_id
+      ) AS rs
+      JOIN cotrap_localita_eu AS l1 ON l1.codice = rs.location1_id
+      JOIN cotrap_localita_eu AS l2 ON l2.codice = rs.location2_id
+      WHERE rs.user_idtelegram=%s_user_idtelegram
+      ORDER BY rs.search_count DESC
+      LIMIT 5";
+
+    return DB::query($select_query, [
+      "user_idtelegram" => $this->getUserIdtelegram()
+    ]);
   }
 
 }
