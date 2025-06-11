@@ -22,6 +22,8 @@ Le tabelle dela database `obc_users` e `obc_searches` servono rispettivamente pe
 
 In questo progetto ho seguito il coding style descritto nel framework ed ho usato l'inglese per la scrittura di tutte le parti di codice (commenti, variabili, classi, metodi, ecc...), mentre ho usato l'italiano nel database, per avere una corrispondenza 1:1 con i campi restituiti dalle chiamate agli endpoint delle API COTRAP, e qui, nel file README.
 
+La cartella `utilities/` non è presente nel progetto originale di StatefulBot. Al suo interno ho inserito la classe `DateTimeIT`, una estensione della classe di default `DateTime` fornita da PHP per la manipolazione delle date, con degli specifici metodi per la formattazione e per la traduzione dei giorni e dei mesi in italiano.
+
 ---
 ## 📲 Funzionalità
 Questo bot permette di fare due cose: 
