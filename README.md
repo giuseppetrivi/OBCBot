@@ -77,12 +77,11 @@ es. [https://biglietteria.cotrap.it/api/ricerca/urbana?idLocalita=268\&idPoloPar
 
 La ricerca per una tratta urbana richiede le stesse informazioni della precedente eccetto per la località di arrivo, che in tal caso è omessa perché il trasporto è interno alla località indicata dal parametro `idLocalita`.
 
-Gli attributi che bisogna indicare per questa richiesta sono i seguenti \=
-
-* idLocalita (int)  
-* idPoloPartenza (int)  
-* idPoloArrivo (int)  
-* dataPartenza (string date gg/mm/aaaa)  
-* oraPartenza (string time hh:mm)  
-* pagina (int)
+I parametri che bisogna indicare per questa richiesta, quindi, sono i seguenti:
+- idLocalita
+- idPoloPartenza
+- idPoloArrivo
+- dataPartenza (in formato gg/mm/aaaa)
+- oraPartenza (in formato hh:mm)
+- pagina, praticamente sempre = 1
 
