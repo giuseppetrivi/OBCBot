@@ -2,9 +2,9 @@
 
 <img src="https://github.com/user-attachments/assets/40827a66-d55d-453f-af53-232fbb6286e7" alt="Description" width="120" height="120" style="margin-right: 20px;"> </br>
 
-Lo scopo di questo bot Telegram è consentire la ricerca delle tratte coperte da aziende appartenenti a [COTRAP](https://www.cotrap.it/). Nello specifico, con questo bot è possibile eseguire le stesse operazioni di ricerca del [sito di COTRAP per la ricerca delle tratte](https://biglietteria.cotrap.it/#/ricerca), ma in modo più veloce e pratico dalla semplice interfaccia di bot Telegram </br>
-
 🤖 Il bot è utilizzabile qui ➝ [@orari_biglietteria_cotrap_bot](https://t.me/orari_biglietteria_cotrap_bot)
+
+Lo scopo di questo bot Telegram è consentire la ricerca delle tratte coperte da aziende appartenenti a [COTRAP](https://www.cotrap.it/). Nello specifico, con questo bot è possibile eseguire le stesse operazioni di ricerca del [sito di COTRAP per la ricerca delle tratte](https://biglietteria.cotrap.it/#/ricerca), ma in modo più veloce e pratico dalla semplice interfaccia di bot Telegram </br>
 
 Questo è un prodotto NON UFFICIALE, ovvero non è commissionato né mantenuto da COTRAP.
 
@@ -17,6 +17,16 @@ Una volta clonato i repository con il comando `git clone https://github.com/gius
 Ho utilizzato delle tabelle nel database anche per memorizzare tutte le informazioni statiche (relative alle località, alle aziende e ai poli), per evitare di dover eseguire una richiesta HTTP alle API ogni volta. In questo modo ho velocizzato la ricerca. Nello specifico la chiamata alle API viene fatta solamente nel momento in cui, impostati tutti i parametri, la ricerca viene avviata. Infatti è l'operazione che impiega più tempo per restituire i risultati e la risposta. </br>
 
 In questo progetto ho seguito il coding style descritto nel framework ed ho usato l'inglese per la scrittura di tutte le parti di codice (commenti, variabili, classi, metodi, ecc...), mentre ho usato l'italiano nel database, per avere una corrispondenza 1:1 con i campi restituiti dalle chiamate agli endpoint delle API COTRAP, e qui, nel file README.
+
+---
+## 📲 Funzionalità
+Questo bot permette di fare due cose: 
+- **Cercare una tratta urbana**, specificando quindi la località tra quelle possibili, la fermata di partenza e quella di arrivo e, infine, la data e l'ora.
+- **Cercare una tratta extraurbana**, specificando quindi la località di partenza, la località di arrivo tra quelle possibili (data la località di partenza), la fermata della località di partenza e quella della località di arrivo e, infine, la data e l'ora.
+
+Entrambe le ricerche restituiranno, se possibile, gli orari di partenza e di arrivo e il relativo costo del biglietto.
+
+🚧 \[work in progress]: sarà presente anche una funzionalità che permette di avviare rapidamente le ricerche effettuate più di frequente.
 
 ---
 ## 📝 Documentazione API COTRAP
