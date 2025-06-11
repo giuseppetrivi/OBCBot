@@ -6,7 +6,7 @@
 
 Lo scopo di questo bot Telegram è consentire la ricerca delle tratte coperte da aziende appartenenti a [COTRAP](https://www.cotrap.it/). Nello specifico, con questo bot è possibile eseguire le stesse operazioni di ricerca del [sito di COTRAP per la ricerca delle tratte](https://biglietteria.cotrap.it/#/ricerca), ma in modo più veloce e pratico dalla semplice interfaccia di bot Telegram </br>
 
-Questo è un prodotto NON UFFICIALE, ovvero non è commissionato né mantenuto da COTRAP.
+<small>ℹ️ Questo è un prodotto NON UFFICIALE, ovvero non è commissionato né mantenuto da COTRAP.</small>
 
 ---
 ## 🛠️ Installazione e cenni su scelte progettuali
