@@ -57,21 +57,18 @@ Questi endpoint danno una lista delle località presenti nel database della COTR
 - 
 Le località urbane sono quelle in cui ci sono tratte interne allo stesso paese, quindi non hanno località di arrivo e, in generale, sono più povere di informazioni.
 
----
 ### Aziende di trasporto
 
 [https://biglietteria.cotrap.it/api/ricerca/aziende](https://biglietteria.cotrap.it/api/ricerca/aziende)
 
 Questo endpoint restituisce informazioni semplici (`id`, `denominazione` e `descrizione`) relative alle aziende di trasporto.
 
----
 ### Poli relativi ad un comune
 
 [https://biglietteria.cotrap.it/api/ricerca/polilocalita/{idComune}](https://biglietteria.cotrap.it/api/ricerca/polilocalita/892)
 
 I poli corrispondono alle fermate presenti in un determinato comune. Questo endpoint restituisce informazioni relative alle fermate, compresa l'azienda di trasporto che ne usufruisce.
 
----
 ### Ricerca biglietti per linea extraurbana
 
 es. [https://biglietteria.cotrap.it/api/ricerca/extraurbana?idLocalitaPartenza=892\&idLocalitaArrivo=303\&idPoloPartenza=1491\&idPoloArrivo=1542\&dataPartenza=30/03/2027\&oraPartenza=16:00\&numeroCambi=0\&pagina=1](https://biglietteria.cotrap.it/api/ricerca/extraurbana?idLocalitaPartenza=892&idLocalitaArrivo=303&idPoloPartenza=1491&idPoloArrivo=1542&dataPartenza=30/03/2027&oraPartenza=16:00&numeroCambi=0&pagina=1)
@@ -87,7 +84,6 @@ I parametri che bisogna indicare per questa richiesta, quindi, sono i seguenti:
 - numeroCambi, praticamente sempre = 0
 - pagina, praticamente sempre = 1
 
----
 ### Ricerca biglietti per linea urbana
 
 es. [https://biglietteria.cotrap.it/api/ricerca/urbana?idLocalita=268\&idPoloPartenza=3312\&idPoloArrivo=3274\&dataPartenza=30/03/2027\&oraPartenza=01:00\&pagina=1](https://biglietteria.cotrap.it/api/ricerca/urbana?idLocalita=268&idPoloPartenza=3312&idPoloArrivo=3274&dataPartenza=30/03/2027&oraPartenza=01:00&pagina=1)
