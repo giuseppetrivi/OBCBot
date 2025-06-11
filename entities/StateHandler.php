@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomBotName\entities;
+namespace OBCBot\entities;
 
 use DB;
 

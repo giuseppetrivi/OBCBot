@@ -1,9 +1,9 @@
 <?php
 
-namespace CustomBotName\view;
+namespace OBCBot\view;
 
 use Error;
-use CustomBotName\exceptions\ViewException;
+use OBCBot\exceptions\ViewException;
 use ReflectionClass;
 
 

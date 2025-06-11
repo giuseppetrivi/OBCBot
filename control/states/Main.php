@@ -1,16 +1,16 @@
 <?php
 
-use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\LocationsU;
-use CustomBotName\entities\api_cotrap\SearchEU;
-use CustomBotName\entities\api_cotrap\SearchHistory;
-use CustomBotName\entities\api_cotrap\SearchU;
-use CustomBotName\view\MenuOptions;
-use CustomBotName\view\Keyboards;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\MainTextMessages;
-use CustomBotName\view\SearchEUTextMessages;
-use CustomBotName\view\SearchUTextMessages;
+use OBCBot\control\AbstractState;
+use OBCBot\entities\api_cotrap\LocationsU;
+use OBCBot\entities\api_cotrap\SearchEU;
+use OBCBot\entities\api_cotrap\SearchHistory;
+use OBCBot\entities\api_cotrap\SearchU;
+use OBCBot\view\MenuOptions;
+use OBCBot\view\Keyboards;
+use OBCBot\view\InlineKeyboards;
+use OBCBot\view\MainTextMessages;
+use OBCBot\view\SearchEUTextMessages;
+use OBCBot\view\SearchUTextMessages;
 
 class Main extends AbstractState {
 

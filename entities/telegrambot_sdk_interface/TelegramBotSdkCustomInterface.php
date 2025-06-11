@@ -1,8 +1,8 @@
 <?php
 
-namespace CustomBotName\entities\telegrambot_sdk_interface;
+namespace OBCBot\entities\telegrambot_sdk_interface;
 
-use CustomBotName\exceptions\TelegramBotInterfaceException;
+use OBCBot\exceptions\TelegramBotInterfaceException;
 use Psr\Http\Message\RequestInterface;
 use Telegram\Bot\Api;
 use Telegram\Bot\HttpClients\HttpClientInterface;

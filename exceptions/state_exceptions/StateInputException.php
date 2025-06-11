@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomBotName\exceptions\state_exceptions;
+namespace OBCBot\exceptions\state_exceptions;
 
 use Exception;
 

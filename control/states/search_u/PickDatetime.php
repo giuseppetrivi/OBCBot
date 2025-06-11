@@ -2,14 +2,14 @@
 
 namespace SearchU\DepartureLocation\DepartureStop\ArrivalStop;
 
-use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\ApiCotrapRequestHandler;
-use CustomBotName\entities\api_cotrap\SearchU;
-use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\utilities\DateTimeIT;
-use CustomBotName\view\MenuOptions;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\SearchUTextMessages;
+use OBCBot\control\AbstractState;
+use OBCBot\entities\api_cotrap\ApiCotrapRequestHandler;
+use OBCBot\entities\api_cotrap\SearchU;
+use OBCBot\entities\telegrambot_sdk_interface\InputTypes;
+use OBCBot\utilities\DateTimeIT;
+use OBCBot\view\MenuOptions;
+use OBCBot\view\InlineKeyboards;
+use OBCBot\view\SearchUTextMessages;
 use BackToMenuTrait;
 
 class PickDatetime extends AbstractState {

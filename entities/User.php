@@ -1,8 +1,8 @@
 <?php
 
-namespace CustomBotName\entities;
+namespace OBCBot\entities;
 
-use CustomBotName\utilities\DateTimeIT;
+use OBCBot\utilities\DateTimeIT;
 use DB;
 
 /**

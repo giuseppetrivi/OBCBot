@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomBotName\view;
+namespace OBCBot\view;
 
 /**
  * Final class containing all menu options constants

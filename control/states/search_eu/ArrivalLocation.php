@@ -2,15 +2,15 @@
 
 namespace SearchEU\DepartureLocation;
 
-use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\LocationsEU;
-use CustomBotName\entities\api_cotrap\LocationStopsEU;
-use CustomBotName\entities\api_cotrap\SearchEU;
-use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\MenuOptions;
-use CustomBotName\view\Keyboards;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\SearchEUTextMessages;
+use OBCBot\control\AbstractState;
+use OBCBot\entities\api_cotrap\LocationsEU;
+use OBCBot\entities\api_cotrap\LocationStopsEU;
+use OBCBot\entities\api_cotrap\SearchEU;
+use OBCBot\entities\telegrambot_sdk_interface\InputTypes;
+use OBCBot\view\MenuOptions;
+use OBCBot\view\Keyboards;
+use OBCBot\view\InlineKeyboards;
+use OBCBot\view\SearchEUTextMessages;
 use BackToMenuTrait;
 
 class ArrivalLocation extends AbstractState {

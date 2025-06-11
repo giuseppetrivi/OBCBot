@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomBotName\exceptions;
+namespace OBCBot\exceptions;
 
 use Exception;
 

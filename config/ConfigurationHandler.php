@@ -1,8 +1,8 @@
 <?php
 
-namespace CustomBotName\config;
+namespace OBCBot\config;
 
-use CustomBotName\exceptions\ConfigurationException;
+use OBCBot\exceptions\ConfigurationException;
 
 
 /**

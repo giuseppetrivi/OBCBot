@@ -1,9 +1,9 @@
 <?php
 
-namespace CustomBotName\entities\authorization_rules;
+namespace OBCBot\entities\authorization_rules;
 
 use ReflectionClass;
-use CustomBotName\entities\BaseEntity;
+use OBCBot\entities\BaseEntity;
 
 
 /**

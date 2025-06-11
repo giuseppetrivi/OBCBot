@@ -1,10 +1,10 @@
 <?php
 
-use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\Search;
-use CustomBotName\view\MenuOptions;
-use CustomBotName\view\Keyboards;
-use CustomBotName\view\MainTextMessages;
+use OBCBot\control\AbstractState;
+use OBCBot\entities\api_cotrap\Search;
+use OBCBot\view\MenuOptions;
+use OBCBot\view\Keyboards;
+use OBCBot\view\MainTextMessages;
 
 
 class Restart extends AbstractState {

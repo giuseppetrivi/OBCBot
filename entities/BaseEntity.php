@@ -1,9 +1,9 @@
 <?php
 
-namespace CustomBotName\entities;
+namespace OBCBot\entities;
 
 use Error;
-use CustomBotName\exceptions\BaseEntityException;
+use OBCBot\exceptions\BaseEntityException;
 
 
 /**

@@ -1,10 +1,10 @@
 <?php
 
-namespace CustomBotName\entities;
+namespace OBCBot\entities;
 
-use CustomBotName\exceptions\RuleException;
-use CustomBotName\entities\authorization_rules\Rule;
-use CustomBotName\entities\authorization_rules\CheckIfUserIsActiveRule;
+use OBCBot\exceptions\RuleException;
+use OBCBot\entities\authorization_rules\Rule;
+use OBCBot\entities\authorization_rules\CheckIfUserIsActiveRule;
 
 
 /**

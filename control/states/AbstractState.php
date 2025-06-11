@@ -1,9 +1,9 @@
 <?php
 
-namespace CustomBotName\control;
+namespace OBCBot\control;
 
-use CustomBotName\exceptions\state_exceptions\StateFunctionException;
-use CustomBotName\exceptions\state_exceptions\StateInputException;
+use OBCBot\exceptions\state_exceptions\StateFunctionException;
+use OBCBot\exceptions\state_exceptions\StateInputException;
 
 /**
  * Base class to handle states.

@@ -1,10 +1,10 @@
 <?php
 
-use CustomBotName\entities\api_cotrap\Search;
-use CustomBotName\entities\api_cotrap\SearchHistory;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\Keyboards;
-use CustomBotName\view\MainTextMessages;
+use OBCBot\entities\api_cotrap\Search;
+use OBCBot\entities\api_cotrap\SearchHistory;
+use OBCBot\view\InlineKeyboards;
+use OBCBot\view\Keyboards;
+use OBCBot\view\MainTextMessages;
 
 /**
  * Procedure to come back to the main menu, common to every process

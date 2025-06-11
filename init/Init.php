@@ -1,16 +1,16 @@
 <?php
 
-namespace CustomBotName\init;
+namespace OBCBot\init;
 
 use DB;
 use Exception;
-use CustomBotName\config\ConfigurationHandler;
-use CustomBotName\entities\telegrambot_sdk_interface\TelegramBotSdkCustomInterface;
-use CustomBotName\entities\User;
-use CustomBotName\entities\BotAuthorization;
-use CustomBotName\entities\UserAuthorization;
-use CustomBotName\exceptions\state_exceptions\StateInputException;
-use CustomBotName\view\MainTextMessages;
+use OBCBot\config\ConfigurationHandler;
+use OBCBot\entities\telegrambot_sdk_interface\TelegramBotSdkCustomInterface;
+use OBCBot\entities\User;
+use OBCBot\entities\BotAuthorization;
+use OBCBot\entities\UserAuthorization;
+use OBCBot\exceptions\state_exceptions\StateInputException;
+use OBCBot\view\MainTextMessages;
 use Restart;
 
 class Init {

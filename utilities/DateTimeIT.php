@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomBotName\utilities;
+namespace OBCBot\utilities;
 
 use DateTime;
 use DateTimeZone;

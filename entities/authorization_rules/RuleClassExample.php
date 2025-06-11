@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomBotName\entities\authorization_rules;
+namespace OBCBot\entities\authorization_rules;
 
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomBotName\entities\api_cotrap;
+namespace OBCBot\entities\api_cotrap;
 
 use DB;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace CustomBotName\entities\api_cotrap;
+namespace OBCBot\entities\api_cotrap;
 
-use CustomBotName\entities\BaseEntity;
+use OBCBot\entities\BaseEntity;
 use Exception;
 
 class ApiCotrapRequestHandler extends BaseEntity {

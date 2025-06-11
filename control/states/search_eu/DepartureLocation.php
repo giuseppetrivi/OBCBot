@@ -2,14 +2,14 @@
 
 namespace SearchEU;
 
-use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\LocationsEU;
-use CustomBotName\entities\api_cotrap\SearchEU;
-use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\view\MenuOptions;
-use CustomBotName\view\Keyboards;
-use CustomBotName\view\MainTextMessages;
-use CustomBotName\view\SearchEUTextMessages;
+use OBCBot\control\AbstractState;
+use OBCBot\entities\api_cotrap\LocationsEU;
+use OBCBot\entities\api_cotrap\SearchEU;
+use OBCBot\entities\telegrambot_sdk_interface\InputTypes;
+use OBCBot\view\MenuOptions;
+use OBCBot\view\Keyboards;
+use OBCBot\view\MainTextMessages;
+use OBCBot\view\SearchEUTextMessages;
 
 
 class DepartureLocation extends AbstractState {

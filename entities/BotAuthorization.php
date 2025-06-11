@@ -1,11 +1,11 @@
 <?php
 
-namespace CustomBotName\entities;
+namespace OBCBot\entities;
 
-use CustomBotName\exceptions\RuleException;
-use CustomBotName\config\ConfigurationHandler;
-use CustomBotName\entities\authorization_rules\Rule;
-use CustomBotName\entities\authorization_rules\CheckIfBotIsOpenToAccessRule;
+use OBCBot\exceptions\RuleException;
+use OBCBot\config\ConfigurationHandler;
+use OBCBot\entities\authorization_rules\Rule;
+use OBCBot\entities\authorization_rules\CheckIfBotIsOpenToAccessRule;
 
 
 /**

@@ -2,17 +2,17 @@
 
 namespace SearchEU\DepartureLocation\ArrivalLocation\DepartureStop\ArrivalStop;
 
-use CustomBotName\control\AbstractState;
-use CustomBotName\entities\api_cotrap\ApiCotrapRequestHandler;
-use CustomBotName\entities\api_cotrap\LocationStopsEU;
-use CustomBotName\entities\api_cotrap\SearchEU;
-use CustomBotName\entities\telegrambot_sdk_interface\InputTypes;
-use CustomBotName\utilities\DateTimeIT;
-use CustomBotName\view\MenuOptions;
-use CustomBotName\view\InlineKeyboards;
-use CustomBotName\view\SearchEUTextMessages;
+use OBCBot\control\AbstractState;
+use OBCBot\entities\api_cotrap\ApiCotrapRequestHandler;
+use OBCBot\entities\api_cotrap\LocationStopsEU;
+use OBCBot\entities\api_cotrap\SearchEU;
+use OBCBot\entities\telegrambot_sdk_interface\InputTypes;
+use OBCBot\utilities\DateTimeIT;
+use OBCBot\view\MenuOptions;
+use OBCBot\view\InlineKeyboards;
+use OBCBot\view\SearchEUTextMessages;
 use BackToMenuTrait;
-use CustomBotName\entities\api_cotrap\SearchHistory;
+use OBCBot\entities\api_cotrap\SearchHistory;
 
 class PickDatetime extends AbstractState {
 

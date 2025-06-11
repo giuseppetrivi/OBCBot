@@ -151,7 +151,7 @@ class Psr4AutoloaderClass {
 
 $_Psr4AutoloaderClass = new Psr4AutoloaderClass();
 /** namespace prefix */
-$_Psr4AutoloaderClass->addNamespace("CustomBotName", __DIR__);
+$_Psr4AutoloaderClass->addNamespace("OBCBot", __DIR__);
 /** register the standard autoloader */
 $_Psr4AutoloaderClass->register();
 
