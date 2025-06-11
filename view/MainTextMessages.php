@@ -24,7 +24,8 @@ final class MainTextMessages {
    * Message after /start command
    */
   public static function welcome($username) {
-    return "👋 Ciao @$username!\n\n".
+    $username = $username!=null ? " @".$username : "";
+    return "👋 Ciao$username!\n\n".
     "🤖 Con questo bot puoi cercare rapidamente gli orari delle tratte COTRAP, partendo dal menu principale qui sotto.";
   }
   
