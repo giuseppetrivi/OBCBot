@@ -9,12 +9,16 @@ Lo scopo di questo bot Telegram è consentire la ricerca delle tratte coperte da
 <small>ℹ️ Questo è un prodotto NON UFFICIALE, ovvero non è commissionato né mantenuto da COTRAP.</small>
 
 ---
-## 🛠️ Installazione e cenni su scelte progettuali
+## 🛠️ Installazione
 Per la realizzazione di questo bot ho usato il [framework StatefulBot](https://github.com/giuseppetrivi/StatefulBot-framework). </br>
 Per installare il bot ed eseguirlo correttamente bisogna rispettare essenzialmente i requisiti indicati nel repo StatefulBot. </br>
-Una volta clonato i repository con il comando `git clone https://github.com/giuseppetrivi/OBCBot.git`, bisogna importare il database MySQL contenente le tabelle per la gestione delle procedure di ricerca. Il file per l'importazione è contenuto nella cartella `database/`.
+Una volta clonato i repository con il comando `git clone https://github.com/giuseppetrivi/OBCBot.git`, bisogna importare il database MySQL contenente le tabelle per la gestione delle procedure di ricerca. Il file per l'importazione è `config/obcbot.sql`. </br>
+Poi bisogna modificare il file `config/config.json` in base alle proprie impostazioni e infine bisogna modificare l'attributo `$config_filename` nella classe `config/ConfigurationHandler`.
 
-Ho utilizzato delle tabelle nel database anche per memorizzare tutte le informazioni statiche (relative alle località, alle aziende e ai poli), per evitare di dover eseguire una richiesta HTTP alle API ogni volta. In questo modo ho velocizzato la ricerca. Nello specifico la chiamata alle API viene fatta solamente nel momento in cui, impostati tutti i parametri, la ricerca viene avviata. Infatti è l'operazione che impiega più tempo per restituire i risultati e la risposta. </br>
+
+---
+## ✍ Cenni su scelte progettuali
+Le tabelle dela database `obc_users` e `obc_searches` servono rispettivamente per memotizzare informazioni sull'utente e sulla ricerca in corso. Oltre a queste, ho utilizzato delle tabelle nel database anche per memorizzare tutte le informazioni statiche (relative alle località, alle aziende e ai poli), per evitare di dover eseguire una richiesta HTTP alle API ogni volta. In questo modo ho velocizzato la ricerca. Nello specifico la chiamata alle API viene fatta solamente nel momento in cui, impostati tutti i parametri, la ricerca viene avviata, ed infatti è l'operazione che impiega più tempo per restituire i risultati e la risposta. </br>
 
 In questo progetto ho seguito il coding style descritto nel framework ed ho usato l'inglese per la scrittura di tutte le parti di codice (commenti, variabili, classi, metodi, ecc...), mentre ho usato l'italiano nel database, per avere una corrispondenza 1:1 con i campi restituiti dalle chiamate agli endpoint delle API COTRAP, e qui, nel file README.
 
